@@ -5,5 +5,5 @@ C++ implementation of parallel DFS based on the techniques described in [Paralle
 
 ```
 make
-./dfs graph_examples/test.gra
+./dfs graph_examples/test.gra
 ```
