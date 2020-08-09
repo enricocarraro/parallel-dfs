@@ -1,4 +1,4 @@
-PROG = dfs
+PROG = ../dfs
 CC = g++
 CPPFLAGS = -g -Wall -I./source
 OBJS = main.o Graph.o
@@ -16,4 +16,4 @@ Graph.o : Graph.hpp
 
 
 clean:
-	rm -f core $(PROG) $(OBJS)
+	rm -f $(PROG) $(OBJS)

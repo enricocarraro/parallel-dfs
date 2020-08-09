@@ -21,7 +21,7 @@ Graph::Graph(FILE * fp)
     
 }
 
-Graph::Graph(int nodes): nNodes(nodes)
+Graph::Graph(int nNodes): nNodes(nNodes)
 {
     nodes.resize(nNodes);
     for (int i = 0; i < nNodes; i++)
