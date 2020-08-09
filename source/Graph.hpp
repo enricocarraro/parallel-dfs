@@ -9,10 +9,14 @@
 #ifndef Graph_hpp
 #define Graph_hpp
 
+#include <stdio.h>
+#include <string.h>
 #include <vector>
 #include <iostream>
 #include <algorithm>
 #include <fstream>
+
+#define GRAPH_DEBUG 0
 
 using namespace std;
 
@@ -32,12 +36,13 @@ class Graph
     int nNodes;
     vector<Node> nodes;
 public:
-    Graph(int nEdges);
+    Graph(FILE * fp);
     void addEdge(int u, int v);
     void printGraph();
     void sortVectors();
-    void build(ifstream InFile);
+    void build(FILE * fp);
 };
 
 
 #endif /* Graph_hpp */
+

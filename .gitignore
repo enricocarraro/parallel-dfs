@@ -30,3 +30,6 @@
 *.exe
 *.out
 *.app
+
+# OS hidden files
+.DS_Store
