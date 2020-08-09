@@ -1,0 +1,7 @@
+./dag_gen_stq 200 20 200 v200e20 
+Writing graph to file v200e20.gra
+   |V| = 200
+   |E| = 1803
+   |Eavg| = 9.015000
+   Depth Max = 45
+Writing (200) queries to file v200e20.que

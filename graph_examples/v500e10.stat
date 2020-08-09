@@ -1,0 +1,7 @@
+./dag_gen_stq 500 10 500 v500e10 
+Writing graph to file v500e10.gra
+   |V| = 500
+   |E| = 2556
+   |Eavg| = 5.112000
+   Depth Max = 36
+Writing (500) queries to file v500e10.que

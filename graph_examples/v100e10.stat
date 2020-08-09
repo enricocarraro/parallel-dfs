@@ -1,0 +1,7 @@
+./dag_gen_stq 100 10 100 v100e10 
+Writing graph to file v100e10.gra
+   |V| = 100
+   |E| = 482
+   |Eavg| = 4.820000
+   Depth Max = 23
+Writing (100) queries to file v100e10.que

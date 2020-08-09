@@ -37,7 +37,7 @@ class Graph
     vector<Node> nodes;
 public:
     Graph(FILE * fp);
-    Graph(int nodes);
+        Graph(int nodes);
     void addEdge(int u, int v);
     void printGraph();
     void sortVectors();
