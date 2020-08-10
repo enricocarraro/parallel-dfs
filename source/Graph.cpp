@@ -52,13 +52,28 @@ void Graph::addEdge(int u, int v)
     nodes[u].adj.push_back(v);
 }
 
+
+void Graph::addEdges(int u, const int adj[], int adj_size)
+{
+    if(nodes[u].adj.size() == 0) {
+        nodes[u].adj.resize(adj_size);
+        for(int i = 0; i < adj_size; i++)
+            nodes[u].adj[i] = adj[i];
+    }
+    else
+        nodes[u].adj.insert(nodes[u].adj.end(), &adj[0], &adj[adj_size]);
+}
+
 void Graph::build(FILE * fp) {
     int u, v;
     char str[500];
     char tmp[3];
+    int buf[10000];
+    
     while(fscanf(fp, "%[^#]s", str) != EOF) {
         fscanf(fp, "%s", tmp);
         char *token;
+        int i = 0;
         
         /* get the first token */
         token = strtok(str, " ");
@@ -73,8 +88,11 @@ void Graph::build(FILE * fp) {
             printf( " %s\n", token );
 #endif
             sscanf(token, "%d", &v);
-            this->addEdge(u, v);
+            buf[i++] = v;
             token = strtok(NULL, " ");
+        }
+        if(i > 0 && i < 10000) {
+           this->addEdges(u, buf, i);
         }
         
     }

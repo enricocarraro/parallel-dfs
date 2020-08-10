@@ -39,6 +39,7 @@ public:
     Graph(FILE * fp);
         Graph(int nodes);
     void addEdge(int u, int v);
+    void addEdges(int u, const int adj[], int adj_size);
     void printGraph();
     void sortVectors();
     void build(FILE * fp);

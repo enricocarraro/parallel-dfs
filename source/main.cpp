@@ -9,6 +9,7 @@
 #include <iostream>
 #include <stdio.h>
 #include "Graph.hpp"
+#include "Timer.cpp"
 
 using namespace std;
 
@@ -29,10 +30,18 @@ int main(int argc, const char * argv[]) {
         return -1;
     }
     
+    Timer t;
+    t.start();
+    
+    
+    
     Graph g(fp);
     fclose(fp);
     
     g.sortVectors();
+    t.stop();
+    t.printElapsed();
+
     g.printGraph();
     return 0;
 
