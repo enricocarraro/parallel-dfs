@@ -9,13 +9,16 @@
 #include <iostream>
 #include <stdio.h>
 #include "Graph.hpp"
+#include "Timer.cpp"
 
 using namespace std;
 
 
+#define E 50000
+#define V 10000000
 
 int main(int argc, const char * argv[]) {
-    FILE * fp;
+    /*FILE * fp;
     
     // 1 parameter of format .gra is required.
     if(argc != 2) {
@@ -33,7 +36,30 @@ int main(int argc, const char * argv[]) {
     fclose(fp);
     
     g.sortVectors();
-    g.printGraph();
+    g.printGraph();*/
+	
+	Graph grafo(E);
+	vector<int> adj[E];
+	int ran, val1, val2;
+	srand(time(nullptr));
+	ran = rand();
+	
+	Timer t;
+	t.start();
+	
+	for (int i = 0; i < V; i++)
+	{
+		srand(ran);
+		ran = rand();
+		val1 = ran % E;
+		srand(ran);
+		ran = rand();
+		val2 = ran % E;
+		grafo.addEdge(val1, val2);
+	}
+	
+	t.stop();
+	t.printElapsed();
     return 0;
 
 

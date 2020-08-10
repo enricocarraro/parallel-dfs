@@ -28,7 +28,7 @@ struct Node
     int start = -1;
     int end = -1;
     int subTreeSize = -1;
-    vector<int> adj;
+    set<int> adj;
 };
 
 class Graph
@@ -40,7 +40,7 @@ public:
         Graph(int nodes);
     void addEdge(int u, int v);
     void printGraph();
-    void sortVectors();
+    //void sortVectors();
     void build(FILE * fp);
 };
 

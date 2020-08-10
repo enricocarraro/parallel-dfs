@@ -39,13 +39,13 @@ void Graph::printGraph()
     }
 }
 
-void Graph::sortVectors()
+/*void Graph::sortVectors()
 {
     for (int v = 0; v < nNodes; ++v)
     {
         sort(nodes[v].adj.begin(), nodes[v].adj.end(), std::less<int>());
     }
-}
+}*/
 
 void Graph::addEdge(int u, int v)
 {
