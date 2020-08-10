@@ -49,7 +49,7 @@ void Graph::printGraph()
 
 void Graph::addEdge(int u, int v)
 {
-    nodes[u].adj.push_back(v);
+    nodes[u].adj.insert(v);
 }
 
 void Graph::build(FILE * fp) {
