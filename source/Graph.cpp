@@ -63,6 +63,18 @@ void Graph::addEdges(unsigned u, const unsigned adj[], unsigned adj_size)
         nodes[u].adj.insert(nodes[u].adj.end(), &adj[0], &adj[adj_size]);
 }
 
+
+/*
+ Presuming the graph input file is well formed:
+ max_size = (log10(nNodes) + 2) * (nNodes + 1) + 3
+ log10(nNodes) = max characters to represent nodeId
+ + 1 for the intermitting space between edges
+ + 1 for slack
+ * nNodes = maxmimumg amount of nodes in adj list
+ + includes the node to which the list refers to
+ + 3 slack
+ */
+
 void Graph::build(FILE * fp) {
     unsigned u, v;
     unsigned max_line_size = (log10(nNodes) + 2) * (nNodes + 1) + 3;
