@@ -10,7 +10,6 @@
 
 using namespace std;
 
-
 Graph::Graph(FILE * fp)
 {
     fscanf(fp, "%d", &nNodes);
@@ -21,7 +20,7 @@ Graph::Graph(FILE * fp)
     
 }
 
-Graph::Graph(int nNodes): nNodes(nNodes)
+Graph::Graph(unsigned nNodes): nNodes(nNodes)
 {
     nodes.resize(nNodes);
     for (int i = 0; i < nNodes; i++)
@@ -47,13 +46,13 @@ void Graph::sortVectors()
     }
 }
 
-void Graph::addEdge(int u, int v)
+void Graph::addEdge(unsigned u, unsigned v)
 {
     nodes[u].adj.push_back(v);
 }
 
 
-void Graph::addEdges(int u, const int adj[], int adj_size)
+void Graph::addEdges(unsigned u, const unsigned adj[], unsigned adj_size)
 {
     if(nodes[u].adj.size() == 0) {
         nodes[u].adj.resize(adj_size);
@@ -65,13 +64,14 @@ void Graph::addEdges(int u, const int adj[], int adj_size)
 }
 
 void Graph::build(FILE * fp) {
-    int u, v;
-    char str[1000*4];
-    char tmp[3];
-    int buf[1000];
+    unsigned u, v;
+    unsigned max_line_size = (log10(nNodes) + 2) * (nNodes + 1) + 3;
+    char str[max_line_size];
+    char dontcare[3];
+    vector<unsigned> buf(nNodes);
     
     while(fscanf(fp, "%[^#]s", str) != EOF) {
-        fscanf(fp, "%s", tmp);
+        fscanf(fp, "%s", dontcare);
         char *token;
         int i = 0;
         
@@ -92,7 +92,7 @@ void Graph::build(FILE * fp) {
             token = strtok(NULL, " ");
         }
         if(i > 0 && i < 10000) {
-           this->addEdges(u, buf, i);
+            this->addEdges(u, buf.data(), i);
         }
         
     }

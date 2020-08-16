@@ -15,6 +15,7 @@
 #include <iostream>
 #include <algorithm>
 #include <fstream>
+#include <cmath>
 
 #define GRAPH_DEBUG 0
 
@@ -33,13 +34,13 @@ struct Node
 
 class Graph
 {
-    int nNodes;
+    unsigned nNodes;
     vector<Node> nodes;
 public:
     Graph(FILE * fp);
-        Graph(int nodes);
-    void addEdge(int u, int v);
-    void addEdges(int u, const int adj[], int adj_size);
+    Graph(unsigned nodes);
+    void addEdge(unsigned u, unsigned v);
+    void addEdges(unsigned u, const unsigned adj[], unsigned adj_size);
     void printGraph();
     void sortVectors();
     void build(FILE * fp);
