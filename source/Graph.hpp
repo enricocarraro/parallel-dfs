@@ -38,7 +38,7 @@ class Graph
     unsigned nNodes;
     vector<Node> nodes;
     unordered_set<unsigned> roots;
-    void init(unsigned nNodes);
+    void init();
     void build(FILE * fp);
     void addEdges_build(unsigned u, const unsigned adj[], unsigned adj_size);
 public:
@@ -47,7 +47,9 @@ public:
     void addEdge(unsigned u, unsigned v);
     void printGraph();
     void sortVectors();
-    
+    void makeDT();
+    void computeSubGraphSize();
+    void computePrePostOrder();
 };
 
 
