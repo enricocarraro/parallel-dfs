@@ -16,6 +16,7 @@
 #include <algorithm>
 #include <fstream>
 #include <cmath>
+#include <unordered_set>
 
 #define GRAPH_DEBUG 0
 
@@ -36,11 +37,13 @@ class Graph
 {
     unsigned nNodes;
     vector<Node> nodes;
+    unordered_set<unsigned> roots;
+    void init(unsigned nNodes);
+    void addEdges_build(unsigned u, const unsigned adj[], unsigned adj_size);
 public:
     Graph(FILE * fp);
     Graph(unsigned nodes);
     void addEdge(unsigned u, unsigned v);
-    void addEdges(unsigned u, const unsigned adj[], unsigned adj_size);
     void printGraph();
     void sortVectors();
     void build(FILE * fp);

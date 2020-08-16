@@ -10,32 +10,54 @@
 
 using namespace std;
 
+
 Graph::Graph(FILE * fp)
 {
     fscanf(fp, "%d", &nNodes);
-    nodes.resize(nNodes);
-    for (int i = 0; i < nNodes; i++)
-        nodes[i].id = i;
+    nodes.reserve(nNodes);
+    roots.reserve(nNodes);
+    init(nNodes);
     this->build(fp);
     
 }
 
 Graph::Graph(unsigned nNodes): nNodes(nNodes)
 {
-    nodes.resize(nNodes);
-    for (int i = 0; i < nNodes; i++)
-        nodes[i].id = i;
+    nodes.reserve(nNodes);
+    roots.reserve(nNodes);
+    init(nNodes);
 }
+
+void Graph::init(unsigned nNodes) {
+    if(roots.size() > 0)
+        return;
+    for (int i = 0; i < nNodes; i++) {
+        nodes[i].id = i;
+        roots.insert(i);
+    }
+}
+
 
 void Graph::printGraph()
 {
+   
+    
     for (int v = 0; v < nNodes; ++v)
     {
-        cout << "\n Adjacency list of vertex " << v << "\n head ";
+   
+            cout << "\n Adjacency list of vertex " << v << "\n head ";
+
         for (auto x : nodes[v].adj)
             cout << "-> " << x;
-        printf("\n");
+        cout << endl;
+
+            
     }
+    
+    cout << "Roots (" << roots.size() << "): " << endl;
+       for ( const auto& x: roots )
+           cout << x << " ";
+       cout << endl;
 }
 
 void Graph::sortVectors()
@@ -51,16 +73,14 @@ void Graph::addEdge(unsigned u, unsigned v)
     nodes[u].adj.push_back(v);
 }
 
-
-void Graph::addEdges(unsigned u, const unsigned adj[], unsigned adj_size)
+// should only be used by build
+void Graph::addEdges_build(unsigned u, const unsigned adj[], unsigned adj_size)
 {
-    if(nodes[u].adj.size() == 0) {
-        nodes[u].adj.resize(adj_size);
-        for(int i = 0; i < adj_size; i++)
-            nodes[u].adj[i] = adj[i];
+
+    nodes[u].adj.resize(adj_size);
+    for(int i = 0; i < adj_size; i++) {
+        nodes[u].adj[i] = adj[i];
     }
-    else
-        nodes[u].adj.insert(nodes[u].adj.end(), &adj[0], &adj[adj_size]);
 }
 
 
@@ -80,7 +100,7 @@ void Graph::build(FILE * fp) {
     unsigned max_line_size = (log10(nNodes) + 2) * (nNodes + 1) + 3;
     char str[max_line_size];
     char dontcare[3];
-    vector<unsigned> buf(nNodes);
+    unsigned *buf = new unsigned(nNodes);
     
     while(fscanf(fp, "%[^#]s", str) != EOF) {
         fscanf(fp, "%s", dontcare);
@@ -100,11 +120,15 @@ void Graph::build(FILE * fp) {
             printf( " %s\n", token );
 #endif
             sscanf(token, "%d", &v);
+            
+            if(roots.find(v) != roots.end())
+                roots.erase(v);
+            
             buf[i++] = v;
             token = strtok(NULL, " ");
         }
         if(i > 0 && i < 10000) {
-            this->addEdges(u, buf.data(), i);
+            this->addEdges_build(u, buf, i);
         }
         
     }
