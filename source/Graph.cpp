@@ -136,10 +136,3 @@ void Graph::addEdge(unsigned u, unsigned v)
 {
     nodes[u].adj.push_back(v);
 }
-
-
-
-
-void Graph::makeDT() {}
-void Graph::computeSubGraphSize(){}
-void Graph::computePrePostOrder(){}

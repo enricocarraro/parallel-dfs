@@ -47,9 +47,6 @@ public:
     void addEdge(unsigned u, unsigned v);
     void printGraph();
     void sortVectors();
-    void makeDT();
-    void computeSubGraphSize();
-    void computePrePostOrder();
 };
 
 
