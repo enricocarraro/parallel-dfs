@@ -66,9 +66,9 @@ void Graph::addEdges(int u, const int adj[], int adj_size)
 
 void Graph::build(FILE * fp) {
     int u, v;
-    char str[500];
+    char str[1000*4];
     char tmp[3];
-    int buf[10000];
+    int buf[1000];
     
     while(fscanf(fp, "%[^#]s", str) != EOF) {
         fscanf(fp, "%s", tmp);

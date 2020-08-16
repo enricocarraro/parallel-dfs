@@ -42,7 +42,7 @@ int main(int argc, const char * argv[]) {
     t.stop();
     t.printElapsed();
 
-    g.printGraph();
+    //g.printGraph();
     return 0;
 
 
