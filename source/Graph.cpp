@@ -26,9 +26,10 @@ void Graph::addEdges_build(unsigned u, const unsigned adj[], unsigned adj_size)
 {
   
     nodes[u].adj.resize(adj_size);
-    nodes[u].adj_visited.resize(adj_size);
     for(int i = 0; i < adj_size; i++) {
         nodes[u].adj[i] = adj[i];
+        nodes[adj[i]].inc.push_back(u);
+        nodes[adj[i]].inc_visited.push_back(false);
     }
 }
 
@@ -136,7 +137,8 @@ void Graph::sortVectors()
 void Graph::addEdge(unsigned u, unsigned v)
 {
     nodes[u].adj.push_back(v);
-    nodes[u].adj_visited.resize(nodes[u].adj.size());
+    nodes[v].inc_visited.push_back(false);
+    
 }
 
 void Graph::makeDT() {

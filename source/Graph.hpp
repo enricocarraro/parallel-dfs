@@ -32,7 +32,8 @@ struct Node
     int end = -1;
     int subTreeSize = -1;
     vector<unsigned> adj;
-    vector<bool> adj_visited;
+    vector<unsigned> inc;
+    vector<bool> inc_visited;
     vector<unsigned> path;
 };
 
