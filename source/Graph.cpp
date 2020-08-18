@@ -126,11 +126,13 @@ void Graph::printGraph()
        cout << endl;
 }
 
+// meant to be used after building the graph.
 void Graph::sortVectors()
 {
     for (int v = 0; v < nNodes; ++v)
     {
         sort(nodes[v].adj.begin(), nodes[v].adj.end(), std::less<int>());
+        sort(nodes[v].inc.begin(), nodes[v].inc.end(), std::less<int>());
     }
 }
 
