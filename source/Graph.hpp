@@ -17,6 +17,7 @@
 #include <fstream>
 #include <cmath>
 #include <unordered_set>
+#include <queue>
 
 #define GRAPH_DEBUG 0
 
@@ -25,12 +26,14 @@ using namespace std;
 
 struct Node
 {
-    int id;
-    int father = -1;
+    unsigned id;
+    int parent = -1;
     int start = -1;
     int end = -1;
     int subTreeSize = -1;
-    vector<int> adj;
+    vector<unsigned> adj;
+    vector<bool> adj_visited;
+    vector<unsigned> path;
 };
 
 class Graph

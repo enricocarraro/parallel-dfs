@@ -26,6 +26,7 @@ void Graph::addEdges_build(unsigned u, const unsigned adj[], unsigned adj_size)
 {
   
     nodes[u].adj.resize(adj_size);
+    nodes[u].adj_visited.resize(adj_size);
     for(int i = 0; i < adj_size; i++) {
         nodes[u].adj[i] = adj[i];
     }
@@ -135,11 +136,26 @@ void Graph::sortVectors()
 void Graph::addEdge(unsigned u, unsigned v)
 {
     nodes[u].adj.push_back(v);
+    nodes[u].adj_visited.resize(nodes[u].adj.size());
 }
 
+void Graph::makeDT() {
+    queue<unsigned> Q;
+    
+    if(roots.size() <= 0) {
+        cout << "Error: no roots" << endl;
+        return;
+    }
+    
+    for (const auto& x: roots) Q.push(x);
+    
+    while(Q.size() > 0) {
+        // min(4,Q.size) -> running at most 4 threads in parallel
+        for(int i = 0; i < min((size_t) 4, Q.size()); i++) {
+            //future<queue> 
+        }
+    }
+}
 
-
-
-void Graph::makeDT() {}
 void Graph::computeSubGraphSize(){}
 void Graph::computePrePostOrder(){}
