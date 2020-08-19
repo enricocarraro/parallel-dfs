@@ -9,7 +9,6 @@
 #include "Graph.hpp"
 
 
-
 using namespace std;
 
 void Graph::init() {
@@ -24,13 +23,13 @@ void Graph::init() {
 }
 
 // should only be used by build
-void Graph::build_addEdges(unsigned u, const unsigned adj[], unsigned adj_size)
+void Graph::build_addEdges(unsigned u, vector<unsigned> adj[], unsigned adj_size)
 {
-    
+
     nodes[u].adj.resize(adj_size);
     for(int i = 0; i < adj_size; i++) {
-        nodes[u].adj[i] = adj[i];
-        nodes[adj[i]].inc.emplace(u, false);
+        nodes[u].adj[i] = adj->at(i);
+        nodes[adj->at(i)].inc.emplace(u, false);
     }
 }
 
@@ -51,13 +50,13 @@ void Graph::build(FILE * fp) {
     unsigned max_line_size = (log10(nNodes) + 2) * (nNodes + 1) + 3;
     char str[max_line_size];
     char dontcare[3];
-    unsigned* buf = new unsigned(nNodes + 1);
-    
+    vector<unsigned> buf = vector<unsigned> (nNodes + 1);
+
     while(fscanf(fp, "%[^#]s", str) != EOF) {
         fscanf(fp, "%s", dontcare);
         char *token;
         unsigned i = 0;
-        
+
         /* get the first token */
         token = strtok(str, " ");
 #if GRAPH_DEBUG
@@ -71,17 +70,17 @@ void Graph::build(FILE * fp) {
             printf( " %s\n", token );
 #endif
             sscanf(token, "%d", &v);
-            
+
             roots.erase(v);
-            
-            buf[i++] = v;
+
+            buf.at(i++) = v;
             token = strtok(NULL, " ");
         }
-        
-        this->build_addEdges(u, buf, i);
-        
+
+        this->build_addEdges(u, &buf, i);
+
     }
-    
+
 }
 
 
@@ -91,7 +90,7 @@ Graph::Graph(FILE * fp): nodes(), roots(), P()
     fscanf(fp, "%d", &nNodes);
     init();
     build(fp);
-    
+
 }
 
 Graph::Graph(unsigned nNodes): nodes(), roots(), P()
@@ -105,24 +104,24 @@ Graph::Graph(unsigned nNodes): nodes(), roots(), P()
 
 void Graph::printGraph()
 {
-   
-    
+
+
     for (int v = 0; v < nNodes; ++v)
     {
-   
-            cout << "\n Adjacency list of vertex " << v << "\n head ";
+
+        cout << "\n Adjacency list of vertex " << v << "\n head ";
 
         for (auto x : nodes[v].adj)
             cout << "-> " << x;
         cout << endl;
 
-            
+
     }
-    
+
     cout << "Roots (" << roots.size() << "): " << endl;
-       for ( const auto& x: roots )
-           cout << x << " ";
-       cout << endl;
+    for ( const auto& x: roots )
+        cout << x << " ";
+    cout << endl;
 }
 
 // meant to be used after building the graph.
@@ -138,21 +137,21 @@ void Graph::addEdge(unsigned u, unsigned v)
 {
     nodes[u].adj.push_back(v);
     nodes[v].inc.emplace(u, false);
-    
+
 }
 
 void Graph::buildDT() {
     queue<unsigned> Q;
-    
+
     if(roots.size() <= 0) {
         cout << "Error: no roots" << endl;
         return;
     }
-    
+
     for (const auto& x: roots) Q.push(x);
-    
-    
-    
+
+
+
     while(Q.size() > 0) {
         // min(4,Q.size) -> running at most 4 threads in parallel
         std::vector<std::future<void> > bfs;
@@ -162,10 +161,10 @@ void Graph::buildDT() {
             bfs.push_back(std::async(std::launch::async, &Graph::buildDT_processParent, this, Q.front()));
             Q.pop();
         }
-        
+
         for(int i = 0; i < bfs.size(); i++)
             bfs[i].get();
-        
+
         Q = P.move_underlying_queue();
     }
 }
@@ -176,7 +175,7 @@ void Graph::buildDT_processParent(const unsigned p) {
     children.reserve(nodes[p].adj.size());
     for(int i = 0; i < nodes[p].adj.size(); i++)
         children.push_back(std::async(std::launch::async, &Graph::buildDT_processChildren, this, nodes[p].adj[i], p));
-    
+
     for(int i = 0; i < children.size(); i++)
         children[i].get();
 }
@@ -191,18 +190,16 @@ void Graph::buildDT_processChildren(unsigned child, unsigned p) {
             break;
         }
     }
-   
+
     if(nodes[child].path.size() == 0 || select_new_path)
         nodes[child].path = std::move(new_path);
-    
+
     if(nodes[child].inc.find(p) == nodes[child].inc.end()) {
         throw string("Error, impossible, father must be in inc list");
     }
     nodes[child].inc[p] = true;
-    
+
 }
 
 void Graph::computeSubGraphSize(){}
 void Graph::computePrePostOrder(){}
-
-
