@@ -1,7 +1,7 @@
 PROG = ../dfs
 CC = g++
 CPPFLAGS = -g -Wall -I./source 
-OBJS = main.o Graph.o
+OBJS = main.o Graph.o Semaphore.o Worker.o FeederManager.o EmptierManager.o
 
 $(PROG) : $(OBJS)
 	$(CC) -o $(PROG) $(OBJS) -lstdc++ -O3 	
