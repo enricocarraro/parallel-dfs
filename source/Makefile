@@ -1,7 +1,7 @@
 PROG = ../dfs
 CC = g++
-CPPFLAGS = -g -std=c++11 -Wall -I./source 
-OBJS = main.o Graph.o
+CPPFLAGS = -g -std=c++17 -Wall -I./source 
+OBJS = main.o Graph.o SafeQueue.o
 
 $(PROG) : $(OBJS)
 	$(CC) -o $(PROG) $(OBJS) -lstdc++ -O3 	

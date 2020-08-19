@@ -39,10 +39,12 @@ int main(int argc, const char * argv[]) {
     fclose(fp);
     
     g.sortVectors();
+    
     t.stop();
     t.printElapsed();
-
-    g.printGraph();
+   // g.buildDT();
+    
+    //g.printGraph();
     return 0;
 
 

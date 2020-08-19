@@ -17,6 +17,7 @@
 #include <algorithm>
 #include <fstream>
 #include <cmath>
+#include <unordered_map>
 #include <unordered_set>
 #include <queue>
 #include <future>
@@ -36,11 +37,13 @@ struct Node
 {
     unsigned id;
     int parent,start,end,subTreeSize;
-    vector<unsigned> adj;
-    vector<unsigned> inc;
+    vector<unsigned > adj;
+    unordered_map<unsigned, bool> inc;
+    /*vector<unsigned> inc;
     vector<bool> inc_visited;
+     */
     vector<unsigned> path;
-    Node(): adj(), inc(), inc_visited(), path()  {
+    Node(): adj(), inc(5), path()  {
         parent = -1;
         start = -1;
         end = -1;
@@ -53,10 +56,11 @@ class Graph
     unsigned nNodes;
     vector<Node> nodes;
     unordered_set<unsigned> roots;
+    SafeQueue<unsigned> P;
     void init();
     void build(FILE * fp);
     void build_addEdges(unsigned u, const unsigned adj[], unsigned adj_size);
-    void buildDT_processParent(unsigned p);
+    void buildDT_processParent(const unsigned p);
     void buildDT_processChildren(unsigned i, unsigned p);
 public:
     Graph(FILE * fp);
