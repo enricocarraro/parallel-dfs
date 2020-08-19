@@ -9,7 +9,8 @@
 #ifndef Graph_hpp
 #define Graph_hpp
 
-#include <stdio.h>
+
+#include "SafeQueue.cpp"
 #include <string.h>
 #include <vector>
 #include <iostream>
@@ -18,6 +19,13 @@
 #include <cmath>
 #include <unordered_set>
 #include <queue>
+#include <future>
+#include <vector>
+#include <future>
+#include <algorithm>
+#include <chrono>
+#include <random>
+
 
 #define GRAPH_DEBUG 0
 
@@ -27,14 +35,17 @@ using namespace std;
 struct Node
 {
     unsigned id;
-    int parent = -1;
-    int start = -1;
-    int end = -1;
-    int subTreeSize = -1;
+    int parent,start,end,subTreeSize;
     vector<unsigned> adj;
     vector<unsigned> inc;
     vector<bool> inc_visited;
     vector<unsigned> path;
+    Node(): adj(), inc(), inc_visited(), path()  {
+        parent = -1;
+        start = -1;
+        end = -1;
+        subTreeSize = -1;
+    }
 };
 
 class Graph
@@ -44,14 +55,16 @@ class Graph
     unordered_set<unsigned> roots;
     void init();
     void build(FILE * fp);
-    void addEdges_build(unsigned u, const unsigned adj[], unsigned adj_size);
+    void build_addEdges(unsigned u, const unsigned adj[], unsigned adj_size);
+    void buildDT_processParent(unsigned p);
+    void buildDT_processChildren(unsigned i, unsigned p);
 public:
     Graph(FILE * fp);
     Graph(unsigned nodes);
     void addEdge(unsigned u, unsigned v);
     void printGraph();
     void sortVectors();
-    void makeDT();
+    void buildDT();
     void computeSubGraphSize();
     void computePrePostOrder();
 };

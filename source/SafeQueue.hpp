@@ -13,34 +13,27 @@
 #include <mutex>
 #include <condition_variable>
 
-#define WITH_CONDVAR 1
 
-#if WITH_CONDVAR
-
-template <class T>
+template <typename T>
 class SafeQueue
 {
 
     std::queue<T> q;
     mutable std::mutex m;
     std::condition_variable c;
-
 public:
     SafeQueue();
-
 // Add an element to the queue.
-    void enqueue(T t);
-    
-
+    void push(T t);
+    size_t size();
 // Get the "front"-element.
 // If the queue is empty, wait till a element is avaiable.
-    T dequeue(void);
-
+    T pop(void);
+    std::queue<T> move_underlying_queue();
 };
 
-#else
-
-template<class T>
+/*
+template<typename T>
 class SafeQueue {
 
     std::queue<T> q;
@@ -65,6 +58,5 @@ public:
 
 };
 
-#endif
-
+*/
 #endif /* SafeQueue_hpp */

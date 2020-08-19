@@ -1,6 +1,6 @@
 PROG = ../dfs
 CC = g++
-CPPFLAGS = -g -Wall -I./source 
+CPPFLAGS = -g -std=c++11 -Wall -I./source 
 OBJS = main.o Graph.o
 
 $(PROG) : $(OBJS)
@@ -11,9 +11,11 @@ $(PROG) : $(OBJS)
 main.o : Graph.o
 	$(CC) $(CPPFLAGS) -c main.cpp Graph.o -lstdc++
 
-Graph.o : Graph.hpp
-	$(CC) $(CPPFLAGS) -c Graph.cpp -lstdc++
+Graph.o : Graph.hpp SafeQueue.o
+	$(CC) $(CPPFLAGS) -c Graph.cpp SafeQueue.o  -lstdc++
 
+SafeQueue.o : SafeQueue.hpp
+	$(CC) $(CPPFLAGS) -c SafeQueue.cpp -lstdc++
 
 clean:
 	rm -f $(PROG) $(OBJS)

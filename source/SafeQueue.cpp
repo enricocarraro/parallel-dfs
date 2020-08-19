@@ -8,24 +8,31 @@
 
 #include "SafeQueue.hpp"
 
-#if WITH_CONDVAR
 
-template <class T>
-SafeQueue<T>::SafeQueue(void): q(), m(), c() {}
+template <typename T>
+SafeQueue<T>::SafeQueue(): q(), m(), c() {}
 
+template <typename T>
+size_t SafeQueue<T>::size() {
+    return q.size();
+}
 // Add an element to the queue.
-template <class T>
-void SafeQueue<T>::enqueue(T t)
+template <typename T>
+void SafeQueue<T>::push(T t)
 {
     std::lock_guard<std::mutex> lock(m);
     q.push(t);
     c.notify_one();
 }
 
+template <typename T>
+std::queue<T> SafeQueue<T>::move_underlying_queue() {
+    return q;
+}
 // Get the "front"-element.
 // If the queue is empty, wait till a element is avaiable.
-template <class T>
-T SafeQueue<T>::dequeue(void) {
+template <typename T>
+T SafeQueue<T>::pop() {
     std::unique_lock<std::mutex> lock(m);
     while(q.empty())
     {
@@ -36,16 +43,16 @@ T SafeQueue<T>::dequeue(void) {
     q.pop();
     return val;
 }
+ 
+ /*
 
-#else
-
-template<class T>
+template<typename T>
 void SafeQueue<T>::push(T elem) {
     std::lock_guard<std::mutex> lock(m);
     q.push(elem);
 }
 
-template<class T>
+template<typename T>
 bool SafeQueue<T>::pop(T& elem) {
     std::lock_guard<std::mutex> lock(m);
     if (q.empty()) {
@@ -57,4 +64,4 @@ bool SafeQueue<T>::pop(T& elem) {
 }
 
 
-#endif
+*/

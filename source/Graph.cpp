@@ -8,6 +8,8 @@
 
 #include "Graph.hpp"
 
+
+
 using namespace std;
 
 void Graph::init() {
@@ -22,9 +24,9 @@ void Graph::init() {
 }
 
 // should only be used by build
-void Graph::addEdges_build(unsigned u, const unsigned adj[], unsigned adj_size)
+void Graph::build_addEdges(unsigned u, const unsigned adj[], unsigned adj_size)
 {
-  
+    
     nodes[u].adj.resize(adj_size);
     for(int i = 0; i < adj_size; i++) {
         nodes[u].adj[i] = adj[i];
@@ -78,7 +80,7 @@ void Graph::build(FILE * fp) {
             token = strtok(NULL, " ");
         }
         if(i > 0 && i < 10000) {
-            this->addEdges_build(u, buf, i);
+            this->build_addEdges(u, buf, i);
         }
         
     }
@@ -87,7 +89,7 @@ void Graph::build(FILE * fp) {
 
 
 
-Graph::Graph(FILE * fp)
+Graph::Graph(FILE * fp): nodes(), roots()
 {
     fscanf(fp, "%d", &nNodes);
     init();
@@ -95,7 +97,7 @@ Graph::Graph(FILE * fp)
     
 }
 
-Graph::Graph(unsigned nNodes)
+Graph::Graph(unsigned nNodes): nodes(), roots()
 {
     this->nNodes = nNodes;
     init();
@@ -143,7 +145,7 @@ void Graph::addEdge(unsigned u, unsigned v)
     
 }
 
-void Graph::makeDT() {
+void Graph::buildDT() {
     queue<unsigned> Q;
     
     if(roots.size() <= 0) {
@@ -153,13 +155,31 @@ void Graph::makeDT() {
     
     for (const auto& x: roots) Q.push(x);
     
+    
+    
     while(Q.size() > 0) {
         // min(4,Q.size) -> running at most 4 threads in parallel
-        for(int i = 0; i < min((size_t) 4, Q.size()); i++) {
-            //future<queue> 
+        std::vector<std::future<void> > bfs(Q.size());
+        SafeQueue<unsigned> P;
+        for(int i = 0; i < Q.size(); i++) {
+            bfs[i] = std::async(std::launch::async, &Graph::buildDT_processParent, this, Q.front());
+            Q.pop();
         }
+        
+        for(int i = 0; i < bfs.size(); i++)
+            bfs[i].get();
+        
+        Q = P.move_underlying_queue();
     }
+}
+
+
+void Graph::buildDT_processParent(const unsigned p) {
+}
+void Graph::buildDT_processChildren(unsigned i, unsigned p) {
 }
 
 void Graph::computeSubGraphSize(){}
 void Graph::computePrePostOrder(){}
+
+
