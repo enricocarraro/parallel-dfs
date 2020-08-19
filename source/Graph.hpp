@@ -36,19 +36,13 @@ using namespace std;
 struct Node
 {
     unsigned id;
-    int parent,start,end,subTreeSize;
+    int parent = -1,start = -1,end = -1,subTreeSize = -1;
     vector<unsigned > adj;
     unordered_map<unsigned, bool> inc;
     /*vector<unsigned> inc;
     vector<bool> inc_visited;
      */
     vector<unsigned> path;
-    Node(): adj(), inc(5), path()  {
-        parent = -1;
-        start = -1;
-        end = -1;
-        subTreeSize = -1;
-    }
 };
 
 class Graph
@@ -59,7 +53,7 @@ class Graph
     SafeQueue<unsigned> P;
     void init();
     void build(FILE * fp);
-    void build_addEdges(unsigned u, const unsigned adj[], unsigned adj_size);
+    void build_addEdges(unsigned u, vector<unsigned> *adj, unsigned adj_size);
     void buildDT_processParent(const unsigned p);
     void buildDT_processChildren(unsigned i, unsigned p);
 public:
