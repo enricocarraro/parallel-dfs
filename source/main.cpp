@@ -7,7 +7,7 @@
 #include "FeederManager.hpp"
 #include "Graph.hpp"
 #include "Timer.cpp"
-#include "Worker.hpp"
+#include "Worker.cpp"
 
 using namespace std;
 

@@ -7,6 +7,7 @@
 #include <iostream>
 #include <algorithm>
 #include <fstream>
+#include <cmath>
 
 #define GRAPH_DEBUG 0
 
@@ -20,6 +21,7 @@ struct Node {
 	int subTreeSize = -1;
 	vector<int> adj;
 	vector<int> trueAdj;
+    Node(): adj(), trueAdj() {}
 };
 
 class Graph {
