@@ -1,11 +1,3 @@
-//
-//  SafeQueue.cpp
-//  parallel-dfs
-//
-//  Created by Enrico on 18/08/2020.
-//  Copyright © 2020 Enrico. All rights reserved.
-//
-
 #include "SafeQueue.hpp"
 
 
@@ -29,6 +21,18 @@ template <typename T>
 std::queue<T> SafeQueue<T>::move_underlying_queue() {
     return q;
 }
+
+template <typename T>
+SafeQueue<T>& SafeQueue<T>::operator=(const SafeQueue<T>& other)
+{
+    if(this == &other)
+        return *this;
+    
+    this->q = other.q;
+    return *this;
+}
+
+
 // Get the "front"-element.
 // If the queue is empty, wait till a element is avaiable.
 template <typename T>

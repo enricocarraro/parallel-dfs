@@ -1,11 +1,3 @@
-//
-//  main.cpp
-//  ParallelDFS
-//
-//  Created by Enrico on 09/08/2020.
-//  Copyright © 2020 Enrico. All rights reserved.
-//
-
 #include <iostream>
 #include <stdio.h>
 #include "Graph.hpp"
@@ -31,7 +23,7 @@ int main(int argc, const char * argv[]) {
     }
     
     Timer t;
-    t.start();
+    
     
     
     
@@ -40,11 +32,12 @@ int main(int argc, const char * argv[]) {
     
     g.sortVectors();
     
-    t.stop();
-    t.printElapsed();
-   // g.buildDT();
     
-    //g.printGraph();
+    t.start();
+    g.buildDT();
+    t.stop();
+    g.printNodesStatus();
+    t.printElapsed();
     return 0;
 
 

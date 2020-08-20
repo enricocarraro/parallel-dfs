@@ -1,11 +1,3 @@
-//
-//  SafeQueue.hpp
-//  parallel-dfs
-//
-//  Created by Enrico on 18/08/2020.
-//  Copyright © 2020 Enrico. All rights reserved.
-//
-
 #ifndef SafeQueue_hpp
 #define SafeQueue_hpp
 
@@ -23,6 +15,7 @@ class SafeQueue
     std::condition_variable c;
 public:
     SafeQueue();
+    SafeQueue<T>& operator=(const SafeQueue<T>&);
 // Add an element to the queue.
     void push(T t);
     size_t size();
