@@ -22,23 +22,46 @@ int main(int argc, const char * argv[]) {
         return -1;
     }
     
-    Timer t;
     
     
     
     
-    Graph g(fp);
+    
+    Graph gp(fp);
     fclose(fp);
     
-    g.sortVectors();
+    gp.sortVectors();
+    
+    Timer tp;
+    tp.start();
+    gp.buildDT();
+    tp.stop();
+    gp.printNodesStatus();
+    tp.printElapsed();
     
     
-    t.start();
-    g.buildDT();
-    t.stop();
-    g.printNodesStatus();
-    t.printElapsed();
+   
+    
+    if((fp = fopen(graname.c_str(), "r")) == NULL) {
+        cout << "Error: File doesn't exist." << endl;
+        return -1;
+    }
+    
+    
+    Graph gs(fp);
+    fclose(fp);
+    gs.sortVectors();
+    
+    Timer ts;
+    ts.start();
+    gs.sequentialDFS();
+    ts.stop();
+    gs.printNodesStatus();
+    ts.printElapsed();
+    
+    
+    
     return 0;
-
-
+    
+    
 }

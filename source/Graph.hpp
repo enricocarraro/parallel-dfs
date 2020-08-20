@@ -35,13 +35,15 @@ struct Node
     vector<bool> inc_visited;
      */
     bool no_path = true;
+    bool visited = false;
     vector<unsigned> path;
     mutex mux;
+    
 };
 
 class Graph
 {
-    unsigned nNodes;
+    unsigned nNodes, pre, post;
     vector<mutex> muxes;
     vector<Node> nodes;
     unordered_set<unsigned> roots;
@@ -51,6 +53,8 @@ class Graph
     void build_addEdges(unsigned u, vector<unsigned>& adj, unsigned adj_size);
     void buildDT_processParent(const unsigned p);
     void buildDT_processChildren(unsigned i, unsigned p);
+    
+    void sequentialDFS_r(unsigned p);
 public:
     Graph(FILE * fp);
     Graph(unsigned nodes);
@@ -58,6 +62,7 @@ public:
     void printGraph();
     void printNodesStatus();
     void sortVectors();
+    void sequentialDFS();
     void buildDT();
     void computeSubGraphSize();
     void computePrePostOrder();

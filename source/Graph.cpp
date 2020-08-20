@@ -233,5 +233,26 @@ void Graph::buildDT_processChildren(unsigned child, unsigned p) {
         P.push(child);
 }
 
+void Graph::sequentialDFS() {
+    pre = post = 0;
+    
+    for(auto& root: roots)
+        sequentialDFS_r(root);
+    
+    pre = post = 0;
+}
+
+void Graph::sequentialDFS_r(unsigned p) {
+    nodes[p].visited = true; // node visited
+    nodes[p].start = pre++;
+    for(auto& child: nodes[p].adj) {
+        if(!nodes[child].visited) {
+            nodes[child].parent = p;
+            sequentialDFS_r(child);
+        }
+    }
+    nodes[p].end = post++;
+}
+
 void Graph::computeSubGraphSize(){}
 void Graph::computePrePostOrder(){}
