@@ -232,19 +232,20 @@ void Graph::buildDT_processParent(const unsigned p, unsigned worker_id) {
 
 void Graph::buildDT_processChild(unsigned child, unsigned p) {
     bool select_new_path = false;
-    vector<unsigned> new_path(nodes[p].path);
-    new_path.push_back(p);
-    
-    
-    for(int i = 0; i < min(new_path.size(), nodes[child].path.size()); i++) {
-        if(new_path[i] != nodes[child].path[i] ) {
-            select_new_path = new_path[i] < nodes[child].path[i];
-            break;
+    for(int i = 0; i < min(nodes[p].path.size() + 1, nodes[child].path.size()); i++) {
+        if(i < nodes[p].path.size()) {
+            if(nodes[p].path[i] != nodes[child].path[i] ) {
+                select_new_path = nodes[p].path[i] < nodes[child].path[i];
+                break;
+            }
+        } else {
+            select_new_path = p < nodes[child].path[i];
         }
     }
     
     if(select_new_path || nodes[child].no_path) {
-        nodes[child].path = std::move(new_path);
+        nodes[child].path = vector<unsigned>(nodes[p].path);
+        nodes[child].path.push_back(p);
         nodes[child].parent = p;
     }
     
