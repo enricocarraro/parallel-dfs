@@ -47,7 +47,8 @@ class Graph
     unsigned nNodes, pre, post;
     vector<mutex> muxes;
     vector<Node> nodes;
-    vector<ThreadWorker> workers;
+    vector<ThreadWorker> parent_workers;
+    vector<ThreadWorker> child_workers;
     unordered_set<unsigned> roots;
     SafeQueue<unsigned> P, processParentQ;
     SafeQueue<std::pair<unsigned, unsigned>>processChildQ;
