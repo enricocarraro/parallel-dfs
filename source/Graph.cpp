@@ -173,7 +173,7 @@ void Graph::buildDT() {
     
     
     while(Q.size() > 0) {
-        // min(4,Q.size) -> running at most 4 threads in parallel
+        
         std::vector<std::future<void>> bfs;
         bfs.reserve(Q.size());
         while(Q.size() > 0) {
@@ -194,13 +194,13 @@ void Graph::buildDT_processParent(const unsigned p) {
     vector<future<void>> children;
     children.reserve(nodes[p].adj.size());
     for(int i = 0; i < nodes[p].adj.size(); i++)
-        children.push_back(std::async(std::launch::async, &Graph::buildDT_processChildren, this, nodes[p].adj[i], p));
+        children.push_back(std::async(std::launch::async, &Graph::buildDT_processChild, this, nodes[p].adj[i], p));
     
     for(int i = 0; i < children.size(); i++)
         children[i].get();
 }
 
-void Graph::buildDT_processChildren(unsigned child, unsigned p) {
+void Graph::buildDT_processChild(unsigned child, unsigned p) {
     bool select_new_path = false;
     vector<unsigned> new_path(nodes[p].path);
     new_path.push_back(p);

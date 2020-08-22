@@ -47,12 +47,13 @@ class Graph
     vector<mutex> muxes;
     vector<Node> nodes;
     unordered_set<unsigned> roots;
-    SafeQueue<unsigned> P;
+    SafeQueue<unsigned> P, processParentQ;
+    SafeQueue<std::pair<unsigned, unsigned>>processChildQ;
     void init();
     void build(FILE * fp);
     void build_addEdges(unsigned u, vector<unsigned>& adj, unsigned adj_size);
     void buildDT_processParent(const unsigned p);
-    void buildDT_processChildren(unsigned i, unsigned p);
+    void buildDT_processChild(unsigned i, unsigned p);
     
     void sequentialDFS_r(unsigned p);
 public:
