@@ -30,20 +30,13 @@ int main(int argc, const char * argv[]) {
         return -1;
     }
     
-    Timer t;
-    t.start();
-    
-    
-    
+    auto istart = std::chrono::steady_clock::now();
     Graph g(fp);
     fclose(fp);
-    
     g.sortVectors();
-    t.stop();
-    t.printElapsed();
-
+    auto iend = std::chrono::steady_clock::now();
+    std::chrono::duration<double> ielapsed_seconds = iend - istart;
+    std::cout << "Init elapsed time: " << ielapsed_seconds.count() << "s\n";
     g.printGraph();
     return 0;
-
-
 }

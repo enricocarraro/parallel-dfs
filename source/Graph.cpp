@@ -44,43 +44,56 @@ void Graph::addEdges_build(unsigned u, const unsigned adj[], unsigned adj_size)
  */
 
 void Graph::build(FILE * fp) {
-    unsigned u, v;
+    std::mutex mux;
+
     unsigned max_line_size = (log10(nNodes) + 2) * (nNodes + 1) + 3;
-    char str[max_line_size];
+    unsigned tasks = std::thread::hardware_concurrency();
+    vector<std::mutex> str_mux(tasks);
+    char str[tasks][max_line_size];
     char dontcare[3];
-    unsigned* buf = new unsigned(nNodes);
-    
-    while(fscanf(fp, "%[^#]s", str) != EOF) {
-        fscanf(fp, "%s", dontcare);
-        char *token;
-        int i = 0;
+    std::vector<std::vector<unsigned> > buf(tasks, vector<unsigned>(nNodes));
+    unsigned t = 0;
+    std::vector<std::future<void> > async_tasks;
+    while(fscanf(fp, "%[^#]s", str[t]) != EOF) {
+
         
-        /* get the first token */
-        token = strtok(str, " ");
-#if GRAPH_DEBUG
-        printf( " %s\n", token );
-#endif
-        sscanf(token, "%d", &u);
-        token = strtok(NULL, " ");
-        /* walk through other tokens */
-        while(token != NULL){
+        fscanf(fp, "%s", dontcare);
+        async_tasks.push_back(async(std::launch::async, [this, t, &str, &buf, &mux, &str_mux]() {
+            char *token;
+            int i = 0;
+            
+            unsigned u, v;
+            unique_lock<mutex> lock(str_mux[t]);
+            /* get the first token */
+            token = strtok(str[t], " ");
 #if GRAPH_DEBUG
             printf( " %s\n", token );
 #endif
-            sscanf(token, "%d", &v);
-            
-            if(roots.find(v) != roots.end())
-                roots.erase(v);
-            
-            buf[i++] = v;
+            sscanf(token, "%d", &u);
             token = strtok(NULL, " ");
-        }
-        if(i > 0 && i < 10000) {
-            this->addEdges_build(u, buf, i);
-        }
+            /* walk through other tokens */
+            while(token != NULL){
+#if GRAPH_DEBUG
+                printf( " %s\n", token );
+#endif
+                sscanf(token, "%d", &v);
+                mux.lock();
+                if(roots.find(v) != roots.end())
+                    roots.erase(v);
+                
+                mux.unlock();
+                buf[t][i++] = v;
+                token = strtok(NULL, " ");
+            }
+            
+            this->addEdges_build(u, buf[t].data(), i);
+        }));
         
+        t = (t + 1) % tasks;
     }
-    
+
+    for(auto& t: async_tasks)
+        t.get();
 }
 
 

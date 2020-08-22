@@ -17,6 +17,8 @@
 #include <fstream>
 #include <cmath>
 #include <unordered_set>
+#include <future>
+#include <mutex>
 
 #define GRAPH_DEBUG 0
 
