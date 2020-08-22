@@ -11,6 +11,7 @@
 #include <iostream>
 #include <algorithm>
 #include <fstream>
+#include <cmath>
 
 #define GRAPH_DEBUG 0
 
@@ -34,7 +35,7 @@ public:
     explicit Graph(FILE *fp);
     explicit Graph(int nodes);
     void addEdge(int u, int v);
-    void addEdges(int u, const int adj[], int adj_size);
+    void build_addEdges(unsigned u, vector<unsigned>& adj, unsigned adj_size);
     void printGraph();
     void printTrueGraph();
     void sortVectors();

@@ -54,7 +54,7 @@ void Graph::addEdge(int u, int v) {
     bits.at(v) = true;
 }
 
-void Graph::addEdges(int u, const int adj[], int adj_size) {
+void Graph::build_addEdges(unsigned u, vector<unsigned>& adj, unsigned adj_size) {
     if (nodes[u].adj.size() == 0) {
         nodes[u].adj.resize(adj_size);
         for (int i = 0; i < adj_size; i++) {
@@ -65,17 +65,18 @@ void Graph::addEdges(int u, const int adj[], int adj_size) {
         nodes[u].adj.insert(nodes[u].adj.end(), &adj[0], &adj[adj_size]);
 }
 
-void Graph::build(FILE *fp) {
-    int u, v;
-    char str[500];
-    char tmp[3];
-    int buf[10000];
-
-    while (fscanf(fp, "%[^#]s", str) != EOF) {
-        fscanf(fp, "%s", tmp);
+void Graph::build(FILE * fp) {
+    unsigned u, v;
+    unsigned max_line_size = (log10(nNodes) + 2) * (nNodes + 1) + 3;
+    char str[max_line_size];
+    char dontcare[3];
+    vector<unsigned> buf = vector<unsigned> (nNodes + 1);
+    
+    while(fscanf(fp, "%[^#]s", str) != EOF) {
+        fscanf(fp, "%s", dontcare);
         char *token;
-        int i = 0;
-
+        unsigned i = 0;
+        
         /* get the first token */
         token = strtok(str, " ");
 #if GRAPH_DEBUG
@@ -84,20 +85,20 @@ void Graph::build(FILE *fp) {
         sscanf(token, "%d", &u);
         token = strtok(NULL, " ");
         /* walk through other tokens */
-        while (token != NULL) {
+        while(token != NULL){
 #if GRAPH_DEBUG
             printf( " %s\n", token );
 #endif
             sscanf(token, "%d", &v);
             buf[i++] = v;
+            
             token = strtok(NULL, " ");
         }
-        if (i > 0 && i < 10000) {
-            this->addEdges(u, buf, i);
-        }
-
+        
+        this->build_addEdges(u, buf, i);
+        
     }
-
+    
 }
 
 std::vector<bool> Graph::returnRoots() {
