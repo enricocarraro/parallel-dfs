@@ -4,6 +4,8 @@ C++ implementation of parallel DFS based on the techniques described in [Paralle
 ## Making it work
 
 ```
+cd source
+cmake .
 make
-./dfs graph_examples/test.gra
+./sdp_pipelineSolution ../graph_examples/v100000e100.gra
 ```
