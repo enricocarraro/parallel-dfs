@@ -163,8 +163,10 @@ void Graph::buildDT() {
     Semaphore sem;
     vector<ThreadWorker> to_swapp(std::thread::hardware_concurrency());
     parent_workers.swap(to_swapp);
-    vector<ThreadWorker> to_swapc(std::thread::hardware_concurrency()*2);
+    vector<ThreadWorker> to_swapc(std::thread::hardware_concurrency());
     child_workers.swap(to_swapc);
+    vector<Semaphore> to_swap_sem(std::thread::hardware_concurrency());
+    worker_semaphores.swap(to_swap_sem);
     queue<unsigned> Q;
     if(roots.size() <= 0) {
         cout << "Error: no roots" << endl;
@@ -183,23 +185,25 @@ void Graph::buildDT() {
     
     while(Q.size() > 0) {
 
-/*        std::vector<std::promise<void>> p_list(Q.size());
-        std::vector<std::future<void>> f_list;
-        f_list.reserve(Q.size());
-  */
+  //      std::vector<std::promise<void>> p_list(Q.size());
+//        std::vector<std::future<void>> f_list;
+//        f_list.reserve(Q.size());
+  
         size_t level_nodes = Q.size();
+//        unsigned index = 0;
         while(Q.size() > 0) {
-    //        f_list.push_back(p_list[index++].get_future());
-            unsigned node = Q.front(); Q.pop();
-            parent_workers[hash(node) %  parent_workers.size()].addTask([this, node, &sem] () -> void {
-                this->buildDT_processParent(node);
+//            f_list.push_back(p_list[index++].get_future());
+            unsigned node = Q.front();
+            Q.pop();
+            unsigned worker_id = hash(node) %  parent_workers.size();
+            parent_workers[worker_id].addTask([this, node, &sem, worker_id] () -> void {
+                this->buildDT_processParent(node, worker_id);
                 sem.signal();
             });
         }
         
-        for(int i = 0; i < level_nodes; i++) {
+        for(int i = 0; i < level_nodes; i++)
             sem.wait();
-        }
         
         Q = P.move_underlying_queue();
         P = SafeQueue<unsigned>();
@@ -209,22 +213,21 @@ void Graph::buildDT() {
 }
 
 
-void Graph::buildDT_processParent(const unsigned p) {
-    Semaphore sem;
+void Graph::buildDT_processParent(const unsigned p, unsigned worker_id) {
+//  std::vector<std::promise<void>> p_list(nodes[p].adj.size());
+//    std::vector<std::future<void>> f_list;
+//    f_list.reserve(nodes[p].adj.size());
     for(int i = 0; i < nodes[p].adj.size(); i++) {
-        //f_list.push_back(p_list[i].get_future());
+//        f_list.push_back(p_list[i].get_future());
         unsigned node = nodes[p].adj[i];
-    //    f_list.push_back(p_list[i].get_future());
-        child_workers[hash(node) %  child_workers.size()].addTask([this, node, p, &sem] () -> void {
+        child_workers[hash(node) %  child_workers.size()].addTask([this, node, p, worker_id] () -> void {
             this->buildDT_processChild(node, p);
-            sem.signal();
+            this->worker_semaphores[worker_id].signal();
         });
     }
     
-    for(int i = 0; i < nodes[p].adj.size(); i++) {
-        sem.wait();
-    }//        f_list[i].get();
-
+    for(int i = 0; i < nodes[p].adj.size(); i++)
+        this->worker_semaphores[worker_id].wait();
 }
 
 void Graph::buildDT_processChild(unsigned child, unsigned p) {

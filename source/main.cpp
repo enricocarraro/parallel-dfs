@@ -22,45 +22,42 @@ int main(int argc, const char * argv[]) {
         return -1;
     }
     
-    
-    
-    
-    
-    
-    Graph gp(fp);
-    fclose(fp);
-    
-    gp.sortVectors();
-    
-    Timer tp;
-    tp.start();
-    gp.buildDT();
-    tp.stop();
-    gp.printNodesStatus();
-    tp.printElapsed();
-    
-    
-   
+    {
+        auto istart = std::chrono::steady_clock::now();
+        Graph gp(fp);
+        fclose(fp);
+        gp.sortVectors();
+        auto iend = std::chrono::steady_clock::now();
+        std::chrono::duration<double> ielapsed_seconds = iend - istart;
+        std::cout << "Init elapsed time: " << ielapsed_seconds.count() << "s\n";
+        auto start = std::chrono::steady_clock::now();
+        gp.buildDT();
+        auto end = std::chrono::steady_clock::now();
+        std::chrono::duration<double> elapsed_seconds = end-start;
+        std::cout << "DT elapsed time: " << elapsed_seconds.count() << "s\n";
+       // gp.printNodesStatus();
+    }
     
     if((fp = fopen(graname.c_str(), "r")) == NULL) {
         cout << "Error: File doesn't exist." << endl;
         return -1;
     }
     
-    
-    Graph gs(fp);
-    fclose(fp);
-    gs.sortVectors();
-    
-    Timer ts;
-    ts.start();
-    gs.sequentialDFS();
-    ts.stop();
-    gs.printNodesStatus();
-    ts.printElapsed();
-    
-    
-    
+    {
+        auto istart = std::chrono::steady_clock::now();
+        Graph gs(fp);
+        fclose(fp);
+        gs.sortVectors();
+        auto iend = std::chrono::steady_clock::now();
+        std::chrono::duration<double> ielapsed_seconds = iend - istart;
+        std::cout << "Init elapsed time: " << ielapsed_seconds.count() << "s\n";
+        auto start = std::chrono::steady_clock::now();
+        gs.sequentialDFS();
+        auto end = std::chrono::steady_clock::now();
+        std::chrono::duration<double> elapsed_seconds = end-start;
+        std::cout << "Sequential elapsed time: " << elapsed_seconds.count() << "s\n";
+       // gs.printNodesStatus();
+    }
     return 0;
     
     
