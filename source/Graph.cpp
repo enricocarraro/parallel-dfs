@@ -1,8 +1,12 @@
-#include "Graph.hpp"
+//
+// Created by lire on 8/19/20.
+//
+
+#include "Graph.h"
 
 using namespace std;
 
-Graph::Graph(FILE *fp): bits() {
+Graph::Graph(FILE *fp) {
     fscanf(fp, "%d", &nNodes);
     nodes.resize(nNodes);
     bits.resize(nNodes);
@@ -11,11 +15,11 @@ Graph::Graph(FILE *fp): bits() {
         bits.at(i) = false;
     }
     this->build(fp);
-    
+
 }
 
-Graph::Graph(int nNodes): bits(), 
-nNodes(nNodes) {
+Graph::Graph(int nNodes) :
+        nNodes(nNodes) {
     nodes.resize(nNodes);
     for (int i = 0; i < nNodes; i++)
         nodes[i].id = i;
@@ -63,16 +67,15 @@ void Graph::addEdges(int u, const int adj[], int adj_size) {
 
 void Graph::build(FILE *fp) {
     int u, v;
-    unsigned max_line_size = (log10(nNodes) + 2) * (nNodes + 1) + 3;
-    char str[max_line_size];
+    char str[500];
     char tmp[3];
     int buf[10000];
-    
+
     while (fscanf(fp, "%[^#]s", str) != EOF) {
         fscanf(fp, "%s", tmp);
         char *token;
         int i = 0;
-        
+
         /* get the first token */
         token = strtok(str, " ");
 #if GRAPH_DEBUG
@@ -92,9 +95,9 @@ void Graph::build(FILE *fp) {
         if (i > 0 && i < 10000) {
             this->addEdges(u, buf, i);
         }
-        
+
     }
-    
+
 }
 
 std::vector<bool> Graph::returnRoots() {
