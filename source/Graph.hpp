@@ -2,7 +2,9 @@
 #define Graph_hpp
 
 
-#include "SafeQueue.cpp"
+#include "SafeQueue.hpp"
+#include "ThreadWorker.hpp"
+#include "Semaphore.hpp"
 #include <string.h>
 #include <vector>
 #include <iostream>
@@ -37,7 +39,6 @@ struct Node
     bool no_path = true;
     bool visited = false;
     vector<unsigned> path;
-    mutex mux;
     
 };
 
@@ -46,6 +47,7 @@ class Graph
     unsigned nNodes, pre, post;
     vector<mutex> muxes;
     vector<Node> nodes;
+    vector<ThreadWorker> workers;
     unordered_set<unsigned> roots;
     SafeQueue<unsigned> P, processParentQ;
     SafeQueue<std::pair<unsigned, unsigned>>processChildQ;
@@ -56,6 +58,7 @@ class Graph
     void buildDT_processChild(unsigned i, unsigned p);
     
     void sequentialDFS_r(unsigned p);
+    unsigned int hash(unsigned int x);
 public:
     Graph(FILE * fp);
     Graph(unsigned nodes);

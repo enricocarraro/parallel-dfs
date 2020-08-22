@@ -5,8 +5,7 @@ using namespace std;
 
 void Graph::init() {
     roots.reserve(nNodes);
-    vector<Node> to_swap(nNodes);
-    nodes.swap(to_swap);
+    nodes.resize(nNodes);
     if(roots.size() > 0)
         return;
     for (int i = 0; i < nNodes; i++) {
@@ -161,6 +160,9 @@ void Graph::addEdge(unsigned u, unsigned v)
 }
 
 void Graph::buildDT() {
+    Semaphore sem;
+    vector<ThreadWorker> to_swap(std::thread::hardware_concurrency());
+    workers.swap(to_swap);
     queue<unsigned> Q;
     
     if(roots.size() <= 0) {
@@ -168,21 +170,31 @@ void Graph::buildDT() {
         return;
     }
     
+    for(auto& worker: workers) {
+        auto new_thread = std::thread([&worker]() { worker.processTasks(); } );
+        new_thread.detach();
+    }
     for (const auto& x: roots) Q.push(x);
     
-    
-    
     while(Q.size() > 0) {
-        
-        std::vector<std::future<void>> bfs;
-        bfs.reserve(Q.size());
+
+/*        std::vector<std::promise<void>> p_list(Q.size());
+        std::vector<std::future<void>> f_list;
+        f_list.reserve(Q.size());
+  */
+        size_t level_nodes = Q.size();
         while(Q.size() > 0) {
-            bfs.push_back(std::async(std::launch::async, &Graph::buildDT_processParent, this, Q.front()));
-            Q.pop();
+    //        f_list.push_back(p_list[index++].get_future());
+            unsigned node = Q.front(); Q.pop();
+            workers[hash(node) %  workers.size()].addTask([this, node, &sem] () -> void {
+                this->buildDT_processParent(node);
+                sem.signal();
+            });
         }
         
-        for(int i = 0; i < bfs.size(); i++)
-            bfs[i].get();
+        for(int i = 0; i < level_nodes; i++) {
+            sem.wait();
+        }
         
         Q = P.move_underlying_queue();
         P = SafeQueue<unsigned>();
@@ -191,13 +203,22 @@ void Graph::buildDT() {
 
 
 void Graph::buildDT_processParent(const unsigned p) {
-    vector<future<void>> children;
-    children.reserve(nodes[p].adj.size());
-    for(int i = 0; i < nodes[p].adj.size(); i++)
-        children.push_back(std::async(std::launch::async, &Graph::buildDT_processChild, this, nodes[p].adj[i], p));
+    Semaphore sem;
+    for(int i = 0; i < nodes[p].adj.size(); i++) {
+        //f_list.push_back(p_list[i].get_future());
+        unsigned node = nodes[p].adj[i];
+    //    f_list.push_back(p_list[i].get_future());
+        workers[hash(node) %  workers.size()].addTask([this, node, p, &sem] () -> void {
+            this->buildDT_processChild(node, p);
+            sem.signal();
+        });
+    }
     
-    for(int i = 0; i < children.size(); i++)
-        children[i].get();
+    for(int i = 0; i < nodes[p].adj.size(); i++) {
+        sem.wait();
+    }
+//        f_list[i].get();
+
 }
 
 void Graph::buildDT_processChild(unsigned child, unsigned p) {
@@ -205,7 +226,6 @@ void Graph::buildDT_processChild(unsigned child, unsigned p) {
     vector<unsigned> new_path(nodes[p].path);
     new_path.push_back(p);
     
-    nodes[child].mux.lock();
     
     for(int i = 0; i < min(new_path.size(), nodes[child].path.size()); i++) {
         if(new_path[i] != nodes[child].path[i] ) {
@@ -227,7 +247,6 @@ void Graph::buildDT_processChild(unsigned child, unsigned p) {
         nodes[child].inc[p] = true;
         nodes[child].inc_visited_count++;
     }
-    nodes[child].mux.unlock();
     
     if(nodes[child].inc_visited_count == nodes[child].inc.size())
         P.push(child);
@@ -256,3 +275,10 @@ void Graph::sequentialDFS_r(unsigned p) {
 
 void Graph::computeSubGraphSize(){}
 void Graph::computePrePostOrder(){}
+
+unsigned int Graph::hash(unsigned int x) {
+    x = ((x >> 16) ^ x) * 0x45d9f3b;
+    x = ((x >> 16) ^ x) * 0x45d9f3b;
+    x = (x >> 16) ^ x;
+    return x;
+}
