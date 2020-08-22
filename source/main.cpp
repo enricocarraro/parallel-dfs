@@ -32,13 +32,13 @@ void start(int nWorkers, Graph *g) {
 
     vector<Worker> allWorkers(nWorkers);
     for (int i = 0; i < nWorkers; i++) {
-        allWorkers.at(i).setId(i);
+        //allWorkers.at(i).setId(i);
+        //allWorkers.at(i).setGraphSize(g->size());
+        allWorkers.at(i).initialize(i, g->size(), nWorkers);
     }
-    Semaphore commonSemQueueFull = Semaphore(0, g->size() * queueSize);
-    Semaphore commonSemQueueEmpty = Semaphore(g->size() * queueSize,
-                                                   g->size() * queueSize);
-    std::vector<intint> commonQueue = std::vector<intint>(
-            g->size() * queueSize);
+    Semaphore commonSemQueueFull = Semaphore(0, g->size());
+    Semaphore commonSemQueueEmpty = Semaphore(g->size(), g->size());
+    std::vector<intint> commonQueue = std::vector<intint>(g->size());
     emptierManager eManager(&allWorkers, nWorkers, &commonSemQueueFull,
                             &commonSemQueueEmpty, &commonQueue, g->size());
     feederManager fManager(&allWorkers, nWorkers, &commonSemQueueFull,
@@ -63,11 +63,13 @@ int main(int argc, const char *argv[]) {
     FILE *fp;
 
     // 1 parameter of format .gra is required.
-    if (argc != 2) {
+    /*if (argc != 2) {
         cout << "Error: Missing parameter" << endl;
         return -1;
     }
-    string graname(argv[1]);
+    string graname(argv[1]);*/
+
+    string graname("/home/lire/CLionProjects/sdp_pipelineReSolution/v100000e100.gra");
 
     if ((fp = fopen(graname.c_str(), "r")) == NULL) {
         cout << "Error: File doesn't exist." << endl;
@@ -83,6 +85,8 @@ int main(int argc, const char *argv[]) {
     g.sortVectors();
     t.stop();
     t.printElapsed();
+
+    //g.printGraph();
 
     t.start();
     start(2, &g);

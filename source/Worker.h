@@ -26,23 +26,28 @@ struct intCouple {
 class Worker {
 
     int id;
+    int positionIntoGraphVector = 0;
 
 public:
 
-    Semaphore *askManagerToEmpty = new Semaphore();
-    Semaphore *askManagerToFeed = new Semaphore(1, 1);
-    Semaphore *managerHasFed = new Semaphore(0, 1);
-    Semaphore *queueExclusion = new Semaphore(1, 1);
+    Semaphore askManagerToEmpty = Semaphore();
+    int graphSize;
+    //Semaphore managerHasEmptied = Semaphore();
+    Semaphore askManagerToFeed = Semaphore(1, 1);
+    Semaphore managerHasFed = Semaphore(0, 1);
+    //Semaphore queueExclusion = Semaphore(1, 1);
 
     //Node *separator;
     int getId () { return id; };
 
-    std::queue<intCouple> neighbours;
+    std::vector<intCouple> neighbours;
     Node next;
 
     //explicit Worker(int id/*, Node *separator*/);
-    //Worker();
+    //Worker(int id, int graphSize);
     void setId(int id) { this->id = id; };
+    void setGraphSize(int size) { graphSize = size; neighbours.resize(graphSize); };
+    void initialize(int id, int size, int nWorkers);
     void work();
 };
 

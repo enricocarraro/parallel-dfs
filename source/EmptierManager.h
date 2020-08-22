@@ -12,7 +12,8 @@
 #include "Worker.h"
 
 class emptierManager {
-    vector<Worker> *workers;
+    std::vector<Worker> *workers;
+    std::vector<int> positionsIntoWorkQueues;
     Semaphore *commonSemQueueFull;
     Semaphore *commonSemQueueEmpty;
     int queueInsertPosition = 0;
@@ -24,7 +25,7 @@ class emptierManager {
     int nodeRead = 0;
 
 public:
-    emptierManager(vector<Worker> *allWorkers, int nWorkers,
+    emptierManager(std::vector<Worker> *allWorkers, int nWorkers,
                    Semaphore *commonSemQueueFull, Semaphore *commonSemQueueEmpty,
                    std::vector<intint> *commonQueue,/* Node *separator,*/
                    int graphSize); //commonQueue must have size equal to graphSize

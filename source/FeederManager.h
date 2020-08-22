@@ -10,15 +10,13 @@
 #include "Graph.h"
 #include "Worker.h"
 
-#define queueSize 1
-
 struct intint {
     int father;
     int son;
 };
 
 class feederManager {
-    vector<Worker> *workers;
+    std::vector<Worker> *workers;
     Semaphore *commonSemQueueFull;
     Semaphore *commonSemQueueEmpty;
     int queueExtractPosition = 0;
@@ -30,7 +28,7 @@ class feederManager {
     int nodeRead = 0;
 
 public:
-    feederManager(vector<Worker> *allWorkers, int nWorkers,
+    feederManager(std::vector<Worker> *allWorkers, int nWorkers,
                   Semaphore *commonSemQueueFull, Semaphore *commonSemQueueEmpty,
                   std::vector<intint> *commonQueue,/* Node *separator,*/Graph *g); //commonQueue must have size equal to graphSize
     void feedLoop();

@@ -4,6 +4,8 @@
 
 #include "FeederManager.h"
 
+using namespace std;
+
 feederManager::feederManager(vector<Worker> *allWorkers, int nWorkers,
                              Semaphore *commonSemQueueFull, Semaphore *commonSemQueueEmpty,
                              std::vector<intint> *commonQueue, Graph *g) {
@@ -28,15 +30,15 @@ void feederManager::feedLoop() {
         commonSemQueueFull->wait();
         next = commonQueue->at(queueExtractPosition);
         commonSemQueueEmpty->signal();
-        queueExtractPosition = (queueExtractPosition + 1) % (graphSize*queueSize);
+        queueExtractPosition = (queueExtractPosition + 1) % (graphSize);
         if (next.son == -1) {
             break;
         }
         toPush = &g->nodes.at(next.son);
         toPush->father = next.father;
-        workers->at(currentWorker).askManagerToFeed->wait();
+        workers->at(currentWorker).askManagerToFeed.wait();
         workers->at(currentWorker).next = *toPush;
-        workers->at(currentWorker).managerHasFed->signal();
+        workers->at(currentWorker).managerHasFed.signal();
         currentWorker = (currentWorker + 1) % nWorkers;
         nodeRead++;
     }
@@ -45,23 +47,23 @@ void feederManager::feedLoop() {
         commonSemQueueFull->wait();
         next = commonQueue->at(queueExtractPosition);
         commonSemQueueEmpty->signal();
-        queueExtractPosition = (queueExtractPosition + 1) % (graphSize*queueSize);
+        queueExtractPosition = (queueExtractPosition + 1) % (graphSize);
         if (next.son == -1) {
             continue;
         }
         toPush = &g->nodes.at(next.son);
         toPush->father = next.father;
-        workers->at(currentWorker).askManagerToFeed->wait();
+        workers->at(currentWorker).askManagerToFeed.wait();
         workers->at(currentWorker).next = *toPush;
-        workers->at(currentWorker).managerHasFed->signal();
+        workers->at(currentWorker).managerHasFed.signal();
         currentWorker = (currentWorker + 1) % nWorkers;
         g->nodes.at(next.father).trueAdj.push_back(next.son);
         nodeRead++;
         //condizione di stop
     }
     for (int i = 0; i < nWorkers; i++) {
-        workers->at((currentWorker + i) % nWorkers).askManagerToFeed->wait();
+        workers->at((currentWorker + i) % nWorkers).askManagerToFeed.wait();
         workers->at((currentWorker + i) % nWorkers).next = terminator;
-        workers->at((currentWorker + i) % nWorkers).managerHasFed->signal();
+        workers->at((currentWorker + i) % nWorkers).managerHasFed.signal();
     }
 }

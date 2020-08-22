@@ -17,6 +17,7 @@ class Semaphore {
 public:
     void wait();
     void signal();
+    void resize(int count, int maxCount) { this->count = count; this->maxCount = maxCount; };
     Semaphore(int count, int maxCount); //maxCount is the max value the semaphore can assume (binary semaphore if maxCount = 1)
     Semaphore(int count); //maxCount = INT_MAX
     Semaphore(); //count=0 maxCount=INT_MAX
