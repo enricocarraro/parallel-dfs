@@ -36,8 +36,14 @@ int main(int argc, const char * argv[]) {
         auto end = std::chrono::steady_clock::now();
         std::chrono::duration<double> elapsed_seconds = end-start;
         std::cout << "DT elapsed time: " << elapsed_seconds.count() << "s\n";
+        //gp.printNodesStatus();
+        auto sstart = std::chrono::steady_clock::now();
+        gp.computeSubGraphSize();
+        auto send = std::chrono::steady_clock::now();
+        std::chrono::duration<double> selapsed_seconds = send-sstart;
+        std::cout << "subgraph size elapsed time: " << selapsed_seconds.count() << "s\n";
         gp.printNodesStatus();
-        gp.printGraph();
+        //gp.printGraph();
     }
     
     if((fp = fopen(graname.c_str(), "r")) == NULL) {

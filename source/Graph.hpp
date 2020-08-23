@@ -29,13 +29,13 @@ using namespace std;
 
 struct Node
 {
-    unsigned id, inc_visited_count = 0;
-    int parent = -1, start = -1, end = -1, subTreeSize= -1;
+    unsigned id, inc_visited_count = 0, adj_visited_count = 0, subgraph_size;
+    int parent = -1, start = -1, end = -1;
     vector<unsigned > adj;
-    unordered_map<unsigned, bool> inc;
+    unordered_map<unsigned, bool> inc_visited, adj_visited;
     /*vector<unsigned> inc;
     vector<bool> inc_visited;
-     */
+*/ 
     bool no_path = true;
     bool visited = false;
     vector<unsigned> path;
@@ -45,6 +45,7 @@ struct Node
 class Graph
 {
     unsigned nNodes, pre, post;
+    bool init_tw_done = false;
     vector<mutex> muxes;
     vector<Node> nodes;
     vector<ThreadWorker> parent_workers;
@@ -52,16 +53,19 @@ class Graph
     vector<Semaphore> worker_semaphores;
     unordered_set<unsigned> roots;
     unordered_set<unsigned> leafs;
-    SafeQueue<unsigned> P, processParentQ;
+    SafeQueue<unsigned> P, C;
     SafeQueue<std::pair<unsigned, unsigned>>processChildQ;
     void init();
     void build(FILE * fp);
     void build_addEdges(unsigned u, vector<unsigned>& adj, unsigned adj_size);
     void buildDT_processParent(const unsigned p, unsigned worker_id);
     void buildDT_processChild(unsigned i, unsigned p);
-    
+    void subGraphSize_computePrefixSum(unsigned p);
+    void subGraphSize_processChild(unsigned i, unsigned worker_id);
+    void subGraphSize_processParent(unsigned p, unsigned i);
     void sequentialDFS_r(unsigned p);
     unsigned int hash(unsigned int x);
+    void initThreadWorkers();
 public:
     Graph(FILE * fp);
     Graph(unsigned nodes);
