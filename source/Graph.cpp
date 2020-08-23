@@ -75,9 +75,9 @@ void Graph::build(FILE * fp) {
             buf[i++] = v;
             token = strtok(NULL, " ");
         }
-        if(i > 0 && i < 10000) {
-            this->addEdges_build(u, buf, i);
-        }
+
+        this->addEdges_build(u, buf, i);
+
         
     }
     
