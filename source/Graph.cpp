@@ -48,7 +48,7 @@ void Graph::build(FILE * fp) {
     unsigned max_line_size = (log10(nNodes) + 2) * (nNodes + 1) + 3;
     char str[max_line_size];
     char dontcare[3];
-    unsigned* buf = new unsigned(nNodes);
+    vector<unsigned> buf(nNodes);
     
     while(fscanf(fp, "%[^#]s", str) != EOF) {
         fscanf(fp, "%s", dontcare);
@@ -69,15 +69,14 @@ void Graph::build(FILE * fp) {
 #endif
             sscanf(token, "%d", &v);
             
-            if(roots.find(v) != roots.end())
-                roots.erase(v);
+            roots.erase(v);
             
             buf[i++] = v;
             token = strtok(NULL, " ");
         }
-
-        this->addEdges_build(u, buf, i);
-
+        
+        this->addEdges_build(u, buf.data(), i);
+        
         
     }
     
