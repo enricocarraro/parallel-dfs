@@ -5,6 +5,7 @@ using namespace std;
 
 void Graph::init() {
     roots.reserve(nNodes);
+    leafs.reserve(nNodes);
     nodes.resize(nNodes);
     if(roots.size() > 0)
         return;
@@ -70,7 +71,8 @@ void Graph::build(FILE * fp) {
         }
         
         this->build_addEdges(u, buf, i);
-        
+        if(i == 0)
+            leafs.insert(u);
     }
     
 }
@@ -113,6 +115,12 @@ void Graph::printGraph()
     for ( const auto& x: roots )
         cout << x << " ";
     cout << endl;
+    
+    cout << "Leafs (" << leafs.size() << "): " << endl;
+    for ( const auto& x: leafs )
+        cout << x << " ";
+    cout << endl;
+    
 }
 
 void Graph::printNodesStatus()
@@ -283,7 +291,26 @@ void Graph::sequentialDFS_r(unsigned p) {
     nodes[p].end = post++;
 }
 
-void Graph::computeSubGraphSize(){}
+void Graph::computeSubGraphSize() {
+    queue<unsigned> Q;
+    if(leafs.size() <= 0) {
+        cout << "Error: no roots" << endl;
+        return;
+    }
+    
+    for(auto& worker: parent_workers) {
+        auto t = std::thread(&ThreadWorker::processTasks, &worker);
+        t.detach();
+    }
+    for(auto& worker: child_workers) {
+        auto t = std::thread(&ThreadWorker::processTasks, &worker);
+        t.detach();
+    }
+    for (const auto& x: leafs) Q.push(x);
+    
+    while(Q.size() > 0) {
+    }
+}
 void Graph::computePrePostOrder(){}
 
 unsigned int Graph::hash(unsigned int x) {

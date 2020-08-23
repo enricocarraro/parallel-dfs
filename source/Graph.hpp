@@ -51,6 +51,7 @@ class Graph
     vector<ThreadWorker> child_workers;
     vector<Semaphore> worker_semaphores;
     unordered_set<unsigned> roots;
+    unordered_set<unsigned> leafs;
     SafeQueue<unsigned> P, processParentQ;
     SafeQueue<std::pair<unsigned, unsigned>>processChildQ;
     void init();

@@ -28,6 +28,7 @@ int main(int argc, const char * argv[]) {
         fclose(fp);
         gp.sortVectors();
         auto iend = std::chrono::steady_clock::now();
+        //gp.printGraph();
         std::chrono::duration<double> ielapsed_seconds = iend - istart;
         std::cout << "Init elapsed time: " << ielapsed_seconds.count() << "s\n";
         auto start = std::chrono::steady_clock::now();
@@ -35,7 +36,8 @@ int main(int argc, const char * argv[]) {
         auto end = std::chrono::steady_clock::now();
         std::chrono::duration<double> elapsed_seconds = end-start;
         std::cout << "DT elapsed time: " << elapsed_seconds.count() << "s\n";
-       // gp.printNodesStatus();
+        gp.printNodesStatus();
+        gp.printGraph();
     }
     
     if((fp = fopen(graname.c_str(), "r")) == NULL) {
