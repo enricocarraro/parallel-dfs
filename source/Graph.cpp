@@ -173,9 +173,9 @@ void Graph::addEdge(unsigned u, unsigned v)
 
 void Graph::initThreadWorkers() {
     if(!init_tw_done) {
-        vector<ThreadWorker> to_swapp(std::thread::hardware_concurrency());
+        vector<ThreadWorker> to_swapp(std::thread::hardware_concurrency()/4 + 1);
         parent_workers.swap(to_swapp);
-        vector<ThreadWorker> to_swapc(std::thread::hardware_concurrency());
+        vector<ThreadWorker> to_swapc(std::thread::hardware_concurrency()*3/4 + 1);
         child_workers.swap(to_swapc);
         vector<Semaphore> to_swap_sem(std::thread::hardware_concurrency());
         worker_semaphores.swap(to_swap_sem);
@@ -307,6 +307,11 @@ void Graph::buildDT() {
 
 
 void Graph::buildDT_processParent(const unsigned p, unsigned worker_id) {
+// This last part transforms the graph into a DT
+    parent_workers[hash(nodes[p].parent) %  parent_workers.size()].addTask([this, p] () -> void {
+            this->nodes[nodes[p].parent].push_back(p);
+        });
+
     for(int i = 0; i < nodes[p].adj.size(); i++) {
         unsigned node = nodes[p].adj[i];
         child_workers[hash(node) %  child_workers.size()].addTask([this, node, p, worker_id] () -> void {
@@ -318,15 +323,7 @@ void Graph::buildDT_processParent(const unsigned p, unsigned worker_id) {
     for(int i = 0; i < nodes[p].adj.size(); i++)
         this->worker_semaphores[worker_id].wait();
     
-// This last part transforms the graph into a DT
-    vector<unsigned> children_subset_dt;
-    for(int i = 0; i < nodes[p].adj.size(); i++) {
-        if(nodes[nodes[p].adj[i]].parent == p) {
-            children_subset_dt.push_back(nodes[p].adj[i]);
-            nodes[p].adj_visited.emplace(nodes[p].adj[i], false);
-        }
-    }
-    nodes[p].adj = children_subset_dt;
+    nodes[p].adj = vector<unsigned>();
     
 }
 
