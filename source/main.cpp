@@ -33,10 +33,11 @@ int main(int argc, const char * argv[]) {
     auto istart = std::chrono::steady_clock::now();
     Graph g(fp);
     fclose(fp);
-    g.sortVectors();
+   
     auto iend = std::chrono::steady_clock::now();
     std::chrono::duration<double> ielapsed_seconds = iend - istart;
     std::cout << "Init elapsed time: " << ielapsed_seconds.count() << "s\n";
+    g.sortVectors();
     g.printGraph();
     return 0;
 }

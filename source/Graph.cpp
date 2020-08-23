@@ -54,23 +54,26 @@ void Graph::build(FILE * fp) {
     std::vector<std::vector<unsigned> > buf(tasks, vector<unsigned>(nNodes));
     unsigned t = 0;
     std::vector<std::future<void> > async_tasks;
-    while(fscanf(fp, "%[^#]s", str[t]) != EOF) {
 
-        
+    str_mux[t].lock();
+    while(fscanf(fp, "%[^#]s", str[t]) != EOF) {
         fscanf(fp, "%s", dontcare);
+        str_mux[t].unlock();
         async_tasks.push_back(async(std::launch::async, [this, t, &str, &buf, &mux, &str_mux]() {
-            char *token;
-            int i = 0;
             
+
+            char *token;
+            char *save = nullptr;
+            int i = 0;
             unsigned u, v;
-            unique_lock<mutex> lock(str_mux[t]);
             /* get the first token */
-            token = strtok(str[t], " ");
+            str_mux[t].lock();
+            token = strtok_r(str[t], " ", &save);
 #if GRAPH_DEBUG
             printf( " %s\n", token );
 #endif
             sscanf(token, "%d", &u);
-            token = strtok(NULL, " ");
+            token = strtok_r(NULL, " ", &save);
             /* walk through other tokens */
             while(token != NULL){
 #if GRAPH_DEBUG
@@ -78,18 +81,17 @@ void Graph::build(FILE * fp) {
 #endif
                 sscanf(token, "%d", &v);
                 mux.lock();
-                if(roots.find(v) != roots.end())
-                    roots.erase(v);
-                
+                roots.erase(v);
                 mux.unlock();
                 buf[t][i++] = v;
-                token = strtok(NULL, " ");
+                token = strtok_r(NULL, " ", &save);
             }
-            
             this->addEdges_build(u, buf[t].data(), i);
+            str_mux[t].unlock();
         }));
         
         t = (t + 1) % tasks;
+        str_mux[t].lock();
     }
 
     for(auto& t: async_tasks)
