@@ -237,9 +237,11 @@ void Graph::subGraphSize_processChild(unsigned i, unsigned worker_id) {
     }
 }
 void Graph::subGraphSize_processParent(unsigned p, unsigned i) {
+#if GRAPH_DEBUG
     if(nodes[p].adj_visited.find(i) == nodes[p].adj_visited.end() || nodes[p].adj_visited[i]) {
         throw string("Error, impossible, father must be in inc list and must visit child only once.");
     }
+#endif
     
     if(!nodes[p].adj_visited[i]) {
         nodes[p].adj_visited[i] = true;
@@ -346,10 +348,11 @@ void Graph::buildDT_processChild(unsigned child, unsigned p) {
         nodes[child].path.push_back(p);
         nodes[child].parent = p;
     }
-    
+#if GRAPH_DEBUG
     if(nodes[child].inc_visited.find(p) == nodes[child].inc_visited.end() || nodes[child].inc_visited[p]) {
         throw string("Error, impossible, father must be in inc list and must visit child only once.");
     }
+#endif
     
     if(!nodes[child].inc_visited[p]) {
         nodes[child].inc_visited[p] = true;
