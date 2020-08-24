@@ -15,20 +15,22 @@ class emptierManager {
     vector<Worker> *workers;
     Semaphore *commonSemQueueFull;
     Semaphore *commonSemQueueEmpty;
-    int queueInsertPosition = 0;
     std::vector<struct intint> *commonQueue;
     int nWorkers;
     //Node *separator;
     int graphSize;
+    Graph *g;
     std::vector<bool> graph;
-    int nodeRead = 0;
+    vector<bool> roots;
 
 public:
     emptierManager(vector<Worker> *allWorkers, int nWorkers,
                    Semaphore *commonSemQueueFull, Semaphore *commonSemQueueEmpty,
                    std::vector<intint> *commonQueue,/* Node *separator,*/
-                   int graphSize); //commonQueue must have size equal to graphSize
-    void pushLoop(std::vector<bool> roots);
+                    Graph *g); //commonQueue must have size equal to graphSize
+    void pushLoop();
+    void subGraphSize();
+    void labels();
 };
 
 #endif //SDP_PIPELINERESOLUTION_EMPTIERMANAGER_H

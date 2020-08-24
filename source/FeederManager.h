@@ -10,30 +10,30 @@
 #include "Graph.h"
 #include "Worker.h"
 
-#define queueSize 1
 
 struct intint {
     int father;
-    int son;
+    int child;
 };
 
 class feederManager {
     vector<Worker> *workers;
     Semaphore *commonSemQueueFull;
     Semaphore *commonSemQueueEmpty;
-    int queueExtractPosition = 0;
     std::vector<struct intint> *commonQueue;
     int nWorkers;
-    Node *separator;
+    //Node *separator;
     int graphSize;
     Graph *g;
-    int nodeRead = 0;
+    Node terminator;
 
 public:
     feederManager(vector<Worker> *allWorkers, int nWorkers,
                   Semaphore *commonSemQueueFull, Semaphore *commonSemQueueEmpty,
                   std::vector<intint> *commonQueue,/* Node *separator,*/Graph *g); //commonQueue must have size equal to graphSize
     void feedLoop();
+    void subGraphSize();
+    void labels();
 };
 
 #endif //SDP_PIPELINERESOLUTION_FEEDERMANAGER_H

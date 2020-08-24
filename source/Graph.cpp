@@ -10,9 +10,11 @@ Graph::Graph(FILE *fp) {
     fscanf(fp, "%d", &nNodes);
     nodes.resize(nNodes);
     bits.resize(nNodes);
+    leaves.resize(nNodes);
     for (int i = 0; i < nNodes; i++) {
         nodes[i].id = i;
         bits.at(i) = false;
+        leaves.at(i) = true;
     }
     this->build(fp);
 
@@ -40,6 +42,25 @@ void Graph::printTrueGraph() {
         for (auto x : nodes[v].trueAdj)
             cout << "-> " << x;
         printf("\n");
+    }
+}
+
+void Graph::printTrueGraphSize() {
+    for (int v = 0; v < nNodes; ++v) {
+        cout << "\n Adjacency list of vertex " << v << "\n head ";
+        for (auto x : nodes[v].trueAdj)
+            cout << "-> " << x;
+        printf("\nSub-graph size: %d\n", nodes[v].subTreeSize);
+    }
+}
+
+void Graph::printTrueLabels() {
+    for (int v = 0; v < nNodes; ++v) {
+        cout << "\n Adjacency list of vertex " << v << "\n head ";
+        for (auto x : nodes[v].trueAdj)
+            cout << "-> " << x;
+        printf("\nSub-graph size: %d", nodes[v].subTreeSize);
+        printf("\nSub-graph size: %d -> %d\n", nodes[v].start, nodes[v].end);
     }
 }
 

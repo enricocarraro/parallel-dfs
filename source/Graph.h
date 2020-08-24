@@ -22,9 +22,10 @@ struct Node {
     int father = -1;
     int start = -1;
     int end = -1;
-    int subTreeSize = -1;
+    int subTreeSize = 1;
     vector<int> adj;
     vector<int> trueAdj;
+    int exitingArcs = 0;
 };
 
 class Graph {
@@ -38,12 +39,15 @@ public:
     void build_addEdges(unsigned u, vector<unsigned>& adj, unsigned adj_size);
     void printGraph();
     void printTrueGraph();
+    void printTrueGraphSize();
+    void printTrueLabels();
     void sortVectors();
     void build(FILE *fp);
     std::vector<bool> returnRoots();
     int size() {
         return nNodes;
     }
+    vector<bool> leaves;
 };
 
 #endif //SDP_PIPELINERESOLUTION_GRAPH_H

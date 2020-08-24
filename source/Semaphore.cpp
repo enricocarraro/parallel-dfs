@@ -8,14 +8,17 @@
 //constructor
 Semaphore::Semaphore(int count, int maxCount) {
     this->count = count;
+    this->initialCount = count;
     this->maxCount = maxCount;
 }
 Semaphore::Semaphore(int count) {
     this->count = count;
+    this->initialCount = count;
     maxCount = INT_MAX;
 }
 Semaphore::Semaphore() {
     this->count = 0;
+    this->initialCount = 0;
     maxCount = INT_MAX;
 }
 
@@ -38,3 +41,6 @@ void Semaphore::signal() {
     cv.notify_one();
 }
 
+void Semaphore::reset() {
+    count = initialCount;
+}
