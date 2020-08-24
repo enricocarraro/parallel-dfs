@@ -38,6 +38,7 @@ struct Node
 */ 
     bool no_path = true;
     bool visited = false;
+    bool dt_adj = false;
     vector<unsigned> path;
     
 };

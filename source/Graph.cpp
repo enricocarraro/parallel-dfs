@@ -70,8 +70,7 @@ void Graph::build(FILE * fp) {
         }
         
         this->build_addEdges(u, buf, i);
-        if(i == 0)
-            leafs.insert(u);
+        if(i == 0) leafs.insert(u);
     }
     
 }
@@ -237,6 +236,11 @@ void Graph::subGraphSize_processChild(unsigned i, unsigned worker_id) {
     }
 }
 void Graph::subGraphSize_processParent(unsigned p, unsigned i) {
+    if(nodes[p].adj_visited.size() < nodes[p].adj.size()) {
+        sort(nodes[p].adj.begin(), nodes[p].adj.end(), std::less<int>());
+        for(auto& c: nodes[p].adj)
+            nodes[p].adj_visited.emplace(c, false);
+    }
 #if GRAPH_DEBUG
     if(nodes[p].adj_visited.find(i) == nodes[p].adj_visited.end() || nodes[p].adj_visited[i]) {
         throw string("Error, impossible, father must be in inc list and must visit child only once.");
@@ -308,10 +312,15 @@ void Graph::buildDT() {
 
 void Graph::buildDT_processParent(const unsigned p, unsigned worker_id) {
 // This last part transforms the graph into a DT
-    parent_workers[hash(nodes[p].parent) %  parent_workers.size()].addTask([this, p] () -> void {
-            this->nodes[nodes[p].parent].push_back(p);
-        });
-
+    if(nodes[p].parent >= 0) {
+        child_workers[hash(nodes[p].parent) %  child_workers.size()].addTask([this, p] () -> void {
+            if(!nodes[nodes[p].parent].dt_adj) {
+                nodes[nodes[p].parent].adj = vector<unsigned>(1);
+                nodes[nodes[p].parent].dt_adj = true;
+            }
+            this->nodes[nodes[p].parent].adj.push_back(p);
+            });
+    }
     for(int i = 0; i < nodes[p].adj.size(); i++) {
         unsigned node = nodes[p].adj[i];
         child_workers[hash(node) %  child_workers.size()].addTask([this, node, p, worker_id] () -> void {
@@ -322,9 +331,6 @@ void Graph::buildDT_processParent(const unsigned p, unsigned worker_id) {
     
     for(int i = 0; i < nodes[p].adj.size(); i++)
         this->worker_semaphores[worker_id].wait();
-    
-    nodes[p].adj = vector<unsigned>();
-    
 }
 
 void Graph::buildDT_processChild(unsigned child, unsigned p) {
@@ -392,3 +398,4 @@ unsigned int Graph::hash(unsigned int x) {
     x = (x >> 16) ^ x;
     return x;
 }
+
