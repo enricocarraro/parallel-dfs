@@ -12,7 +12,7 @@
 #include "Worker.h"
 
 class emptierManager {
-    vector<Worker> *workers;
+    std::vector<Worker> *workers;
     Semaphore *commonSemQueueFull;
     Semaphore *commonSemQueueEmpty;
     std::vector<struct intint> *commonQueue;
@@ -21,10 +21,10 @@ class emptierManager {
     int graphSize;
     Graph *g;
     std::vector<bool> graph;
-    vector<bool> roots;
+    std::vector<bool> roots;
 
 public:
-    emptierManager(vector<Worker> *allWorkers, int nWorkers,
+    emptierManager(std::vector<Worker> *allWorkers, int nWorkers,
                    Semaphore *commonSemQueueFull, Semaphore *commonSemQueueEmpty,
                    std::vector<intint> *commonQueue,/* Node *separator,*/
                     Graph *g); //commonQueue must have size equal to graphSize

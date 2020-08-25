@@ -4,6 +4,8 @@
 
 #include "EmptierManager.h"
 
+using namespace std;
+
 emptierManager::emptierManager(vector<Worker> *allWorkers, int nWorkers,
                                Semaphore *commonSemQueueFull, Semaphore *commonSemQueueEmpty,
                                std::vector<intint> *commonQueue, Graph *g) {
@@ -42,6 +44,9 @@ void emptierManager::pushLoop() //node containing all other root nodes as neighb
                 graph.at(toPush.child) = true;
                 nodeRead++;
             }
+            else if(toPush.child != toPush.father) {
+                g->cancelledEdges->push_back(toPush);
+            }
         }
     }
     toPush.child = -1;
@@ -68,6 +73,9 @@ void emptierManager::pushLoop() //node containing all other root nodes as neighb
                 queueInsertPosition = (queueInsertPosition + 1) % (graphSize);
                 graph.at(toPush.child) = true;
                 nodeRead++;
+            }
+            else if(toPush.child != toPush.father) {
+                g->cancelledEdges->push_back(toPush);
             }
         }
         toPush.child = -1;

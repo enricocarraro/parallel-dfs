@@ -4,6 +4,8 @@
 
 #include "FeederManager.h"
 
+using namespace std;
+
 feederManager::feederManager(vector<Worker> *allWorkers, int nWorkers,
                              Semaphore *commonSemQueueFull, Semaphore *commonSemQueueEmpty,
                              std::vector<intint> *commonQueue, Graph *g) {
@@ -24,6 +26,8 @@ void feederManager::feedLoop() {
     Node *toPush;
     int currentWorker = 0;
     intint next;
+    vector<bool> visitedFathers = vector<bool> (graphSize, false);
+
     while (true) // starting nodes (with no parent)
     {
         commonSemQueueFull->wait();
@@ -49,25 +53,36 @@ void feederManager::feedLoop() {
         commonSemQueueEmpty->signal();
         queueExtractPosition = (queueExtractPosition + 1) % (graphSize);
         if (next.child == -1) {
-            g->nodes.at(next.father).exitingArcs = g->nodes.at(next.father).trueAdj.size();
+            g->nodes.at(next.father).exitingArcs = g->nodes.at(next.father).trueAdj->size();
             continue;
         }
         toPush = &g->nodes.at(next.child);
         toPush->father = next.father;   //set the father of the node
         g->leaves.at(next.father) = false;  //fathers with one or more sons are not leaves
+        visitedFathers.at(next.father) = true;
         workers->at(currentWorker).askManagerToFeed->wait();
         workers->at(currentWorker).next = toPush;
         workers->at(currentWorker).managerHasFed->signal();
         currentWorker = (currentWorker + 1) % nWorkers;
-        g->nodes.at(next.father).trueAdj.push_back(next.child);   //might be replaced with a sized vector and then resized
+        g->nodes.at(next.father).trueAdj->push_back(next.child);   //might be replaced with a sized vector and then resized
         nodeRead++;
 
     }
-    g->nodes.at(next.father).exitingArcs = g->nodes.at(next.father).trueAdj.size();
+    g->nodes.at(next.father).exitingArcs = g->nodes.at(next.father).trueAdj->size();
     for (int i = 0; i < nWorkers; i++) {
         workers->at((currentWorker + i) % nWorkers).askManagerToFeed->wait();
         workers->at((currentWorker + i) % nWorkers).next = &terminator;
         workers->at((currentWorker + i) % nWorkers).managerHasFed->signal();
+    }
+    for(int i=0; i<graphSize; i++) {
+        if(!visitedFathers.at(i)) {
+            for(auto y : *g->nodes.at(i).adj) {
+                intint cancelled;
+                cancelled.father = i;
+                cancelled.child = y;
+                g->cancelledEdges->push_back(cancelled);
+            }
+        }
     }
 }
 
@@ -121,6 +136,9 @@ void feederManager::labels() {
 
         toPush = &g->nodes.at(next.father);
         toPush->start = next.child;
+        g->st_father->at(toPush->id).fathers = new vector<int> (1, toPush->father);
+        g->st_father->at(toPush->id).start = toPush->start;
+
 
         workers->at(currentWorker).askManagerToFeed->wait();
         workers->at(currentWorker).next = toPush;

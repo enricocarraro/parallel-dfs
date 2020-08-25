@@ -9,6 +9,7 @@
 #include "Timer.cpp"
 #include "Worker.h"
 #include "Semaphore.h"
+#include "recalST.h"
 
 using namespace std;
 
@@ -130,18 +131,27 @@ void start(int nWorkers, Graph *g) {
     tLabelsEManager.join();
     tLabelsFManager.join();
 
+    recalST rST;
+    rST.init(g);
+    rST.work();
 
 }
+
+#define QUICK_RUN 0
 
 int main(int argc, const char *argv[]) {
     FILE *fp;
 
     // 1 parameter of format .gra is required.
+#if QUICK_RUN
+    string graname("/home/lire/CLionProjects/sdp_pipelineReSolution/v100000e100.gra");
+#else
     if (argc != 2) {
         cout << "Error: Missing parameter" << endl;
         return -1;
     }
     string graname(argv[1]);
+#endif
 
     if ((fp = fopen(graname.c_str(), "r")) == NULL) {
         cout << "Error: File doesn't exist." << endl;

@@ -8,6 +8,9 @@
     //this->id = id;
 }*/
 
+
+using namespace std;
+
 void Worker::initialize (int id, int graphSize, int nWorkers) {
     this->id = id;
     this->graphSize = graphSize/nWorkers;
@@ -29,7 +32,7 @@ void Worker::work() {
     n = next;
     askManagerToFeed->signal();
     while (n->id != -1) {
-        toPush.adj = n->adj;
+        toPush.adj = *n->adj;
         toPush.father = n->id;
         //cout << "Working on " << n.id << "\n";
         neighbours.at(positionIntoGraphVector) = toPush;
@@ -45,8 +48,8 @@ void Worker::subGraphSize() {
     Node *n;
     int positionIntoGraphVector = 0;
     intCouple toPush;
-    managerHasFed->wait();
 
+    managerHasFed->wait();
     n = next;
     askManagerToFeed->signal();
     while (n->id != -1) {
@@ -75,7 +78,7 @@ void Worker::labels() {
 
     while (n->id != -1) {
         n->end = n->start + n->subTreeSize - 1;
-        toPush.adj = n->trueAdj;
+        toPush.adj = *n->trueAdj;
         toPush.father = n->start;
         //cout << "Working on " << n.id << "\n";
         neighbours.at(positionIntoGraphVector) = toPush;
