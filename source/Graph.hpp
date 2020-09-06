@@ -29,16 +29,24 @@ using namespace std;
 
 struct Node
 {
-    unsigned id, inc_visited_count = 0, adj_visited_count = 0, subgraph_size;
-    int parent = -1, start = -1, end = -1;
+    unsigned id,
+    inc_count = 0,
+    inc_visited_count = 0,
+    adj_visited_count = 0,
+    subgraph_size = 1,
+    pre = 0,
+    post = 0;
+
+    int parent = -1;
     vector<unsigned > adj;
-    unordered_map<unsigned, bool> inc_visited, adj_visited;
+    vector<unsigned > dt_adj;
+    //unordered_map<unsigned, bool> inc_visited, adj_visited;
     /*vector<unsigned> inc;
     vector<bool> inc_visited;
-*/ 
+     */
+    bool subgraph_size_parent_visited = false;
     bool no_path = true;
     bool visited = false;
-    bool dt_adj = false;
     vector<unsigned> path;
     
 };
