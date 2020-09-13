@@ -9,12 +9,12 @@
 #include "ThreadWorker.hpp"
 
 void ThreadWorker::processTasks() {
-    while(true) {
-        auto m = queue.pop();
-        m();
-    }
+        while(true) {
+                auto m = queue.pop();
+                m();
+        }
 }
 
 void ThreadWorker::addTask(const std::function<void()>& task) {
-    queue.push(task);
+        queue.push(task);
 }

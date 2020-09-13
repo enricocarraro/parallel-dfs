@@ -142,6 +142,33 @@ PathBasedThreadWorkers/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/PathBasedThreadWorkers.dir/build.make CMakeFiles/PathBasedThreadWorkers.dir/build
 .PHONY : PathBasedThreadWorkers/fast
 
+FastSemaphore.o: FastSemaphore.cpp.o
+
+.PHONY : FastSemaphore.o
+
+# target to build an object file
+FastSemaphore.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/PathBasedThreadWorkers.dir/build.make CMakeFiles/PathBasedThreadWorkers.dir/FastSemaphore.cpp.o
+.PHONY : FastSemaphore.cpp.o
+
+FastSemaphore.i: FastSemaphore.cpp.i
+
+.PHONY : FastSemaphore.i
+
+# target to preprocess a source file
+FastSemaphore.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/PathBasedThreadWorkers.dir/build.make CMakeFiles/PathBasedThreadWorkers.dir/FastSemaphore.cpp.i
+.PHONY : FastSemaphore.cpp.i
+
+FastSemaphore.s: FastSemaphore.cpp.s
+
+.PHONY : FastSemaphore.s
+
+# target to generate assembly for a file
+FastSemaphore.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/PathBasedThreadWorkers.dir/build.make CMakeFiles/PathBasedThreadWorkers.dir/FastSemaphore.cpp.s
+.PHONY : FastSemaphore.cpp.s
+
 Graph.o: Graph.cpp.o
 
 .PHONY : Graph.o
@@ -313,6 +340,9 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... PathBasedThreadWorkers"
+	@echo "... FastSemaphore.o"
+	@echo "... FastSemaphore.i"
+	@echo "... FastSemaphore.s"
 	@echo "... Graph.o"
 	@echo "... Graph.i"
 	@echo "... Graph.s"
