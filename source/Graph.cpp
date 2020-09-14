@@ -337,13 +337,17 @@ void Graph::buildDT_processChild(unsigned int child, unsigned int p) {
                                 break;
                         }
                 } else {
-                        select_new_path = child < nodes[child].path[i];
+                        // path pruning
+                        if(nodes[p].adj.size() > 1)
+                                select_new_path = child < nodes[child].path[i];
                 }
         }
     
         if (select_new_path || nodes[child].no_path) {
                 nodes[child].path = vector < unsigned int > (nodes[p].path);
-                nodes[child].path.push_back(child);
+                // path pruning
+                if(nodes[p].adj.size() > 1)
+                        nodes[child].path.push_back(child);
                 nodes[child].no_path = false;
                 nodes[child].parent = p;
         }
