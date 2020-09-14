@@ -13,6 +13,19 @@
 
 using namespace std;
 
+void preGraphSizeWorker(Worker *worker) {
+    //cout << "Starting worker " << worker->getId() << "\n";
+    worker->preGraphSize();
+}
+
+void preGraphSizeEManager(emptierManager eManager) {
+    eManager.preGraphSize();
+}
+
+void preGraphSizeFManager(feederManager fManager) {
+    fManager.preGraphSize();
+}
+
 void startWorker(Worker *worker) {
     //cout << "Starting worker " << worker->getId() << "\n";
     worker->work();
@@ -59,17 +72,41 @@ void start(int nWorkers, Graph *g) {
 
     vector<Worker> allWorkers(nWorkers);
     for (int i = 0; i < nWorkers; i++) {
-        allWorkers.at(i).initialize(i, g->size(), nWorkers);
+        allWorkers.at(i).initialize(i, g, nWorkers);
     }
-    Semaphore commonSemQueueFull = Semaphore(0, g->size());
-    Semaphore commonSemQueueEmpty = Semaphore(g->size(),
-                                                   g->size());
-    std::vector<intint> commonQueue = std::vector<intint>(
-            g->size());
+    Semaphore commonSemQueueFull (0, g->nNodes);
+    Semaphore commonSemQueueEmpty (g->nNodes, g->nNodes);
+    std::vector<intintint> commonQueue (g->nNodes);
     emptierManager eManager(&allWorkers, nWorkers, &commonSemQueueFull,
                             &commonSemQueueEmpty, &commonQueue, g);
     feederManager fManager(&allWorkers, nWorkers, &commonSemQueueFull,
                            &commonSemQueueEmpty, &commonQueue, g);
+
+
+    //pre phase
+
+    vector<thread> tPreGraphSizeWorkers(nWorkers);
+    for (int i = 0; i < nWorkers; i++) {
+        tPreGraphSizeWorkers[i] = thread(preGraphSizeWorker, &allWorkers.at(i));
+    }
+    thread tPreGraphSizeEManager(preGraphSizeEManager, eManager);
+    thread tPreGraphSizeFManager(preGraphSizeFManager, fManager);
+
+    for (int i = 0; i < nWorkers; i++) {
+        tPreGraphSizeWorkers[i].join();
+    }
+    tPreGraphSizeEManager.join();
+    tPreGraphSizeFManager.join();
+
+
+    for (int i = 0; i < nWorkers; i++) {
+        allWorkers.at(i).resetSemaphores();
+    }
+    commonSemQueueEmpty.reset();
+    commonSemQueueFull.reset();
+
+
+    //first phase
 
     vector<thread> tWorkers(nWorkers);
     for (int i = 0; i < nWorkers; i++) {
@@ -92,6 +129,8 @@ void start(int nWorkers, Graph *g) {
     commonSemQueueEmpty.reset();
     commonSemQueueFull.reset();
 
+    //resize of cancelledEdges
+    //g->cancelledEdges->resize(g->posIntoCancelledEdges);
 
     //second phase
 
@@ -137,15 +176,33 @@ void start(int nWorkers, Graph *g) {
 
 }
 
-#define QUICK_RUN 0
+#define QUICK_RUN 1
+#define FILE_N 4
 
 int main(int argc, const char *argv[]) {
     FILE *fp;
 
-    // 1 parameter of format .gra is required.
 #if QUICK_RUN
-    string graname("/home/lire/CLionProjects/sdp_pipelineReSolution/v100000e100.gra");
+    string graname;
+    switch (FILE_N) {
+        case 0:
+            graname = string("/home/lire/CLionProjects/sdp_pipelineReSolution/v4e2.gra");
+            break;
+        case 1:
+            graname = string("/home/lire/CLionProjects/sdp_pipelineReSolution/v10e3.gra");
+            break;
+        case 2:
+            graname = string("/home/lire/CLionProjects/sdp_pipelineReSolution/v10e3v2.gra");
+            break;
+        case 3:
+            graname = string("/home/lire/CLionProjects/sdp_pipelineReSolution/v5000e50.gra");
+            break;
+        case 4:
+            graname = string("/home/lire/CLionProjects/sdp_pipelineReSolution/v100000e100.gra");
+            break;
+    }
 #else
+    // 1 parameter of format .gra is required.
     if (argc != 2) {
         cout << "Error: Missing parameter" << endl;
         return -1;
@@ -175,7 +232,8 @@ int main(int argc, const char *argv[]) {
 
     //g.printTrueGraph();
     //g.printTrueGraphSize();
-    //g.printTrueLabels();      //prints everything
+    //g.printTrueLabels();
+    //g.printTrueLabelsPreWeights();      //prints everything
 
     return 0;
 

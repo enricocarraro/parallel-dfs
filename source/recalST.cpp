@@ -15,6 +15,20 @@ void recalST::work() {
     vector<intint> *ce = g->cancelledEdges;
     vector<intVet> *st = g->st_father;
     vector<bool> *modified = g->modified;
+
+    //attenzione, forse inutile
+    /*
+    for(int i = 0; auto x : g->leaves) {
+        if(x) {
+            for (int j=0; j<g->nodes.at(i).adjSize; j++) {
+                int father = g->nodes.at(i).adj->at(j), child = i;
+                iterFather(father, child);
+            }
+        }
+        i++;
+    }
+     */
+
     for(int i=ce->size()-1; i>=0; i--) {
         int father = ce->at(i).father, child = ce->at(i).child;
 

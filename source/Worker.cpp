@@ -11,10 +11,12 @@
 
 using namespace std;
 
-void Worker::initialize (int id, int graphSize, int nWorkers) {
+void Worker::initialize (int id, Graph *g, int nWorkers) {
     this->id = id;
-    this->graphSize = graphSize/nWorkers;
-    neighbours.resize((graphSize/nWorkers)+1);
+    this->g = g;
+    this->graphSize = g->nNodes/nWorkers + 1;
+    neighbours.resize((graphSize));
+    neighboursWeights.resize((graphSize));
 }
 
 void Worker::resetSemaphores() {
@@ -24,18 +26,46 @@ void Worker::resetSemaphores() {
     managerHasFed->reset();
 }
 
-void Worker::work() {
+void Worker::preGraphSize() {
     Node *n;
     int positionIntoGraphVector = 0;
     intCouple toPush;
+
+    managerHasFed->wait();
+    n = next;
+    askManagerToFeed->signal();
+    while (n->id != -1) {
+        toPush.adj = vector<int> (1, n->descendantSize);
+        toPush.father = n->id;
+        //cout << "Working on " << n.id << "\n";
+        neighbours.at(positionIntoGraphVector) = toPush;
+        askManagerToEmpty->signal();
+        positionIntoGraphVector = (positionIntoGraphVector+1)%graphSize;
+        managerHasFed->wait();
+        n = next;
+        askManagerToFeed->signal();
+    }
+}
+
+void Worker::work() {
+    Node *n;
+    int positionIntoGraphVector = 0, adjSize, weight;
+    intVetVet toPush;
     managerHasFed->wait();
     n = next;
     askManagerToFeed->signal();
     while (n->id != -1) {
         toPush.adj = *n->adj;
+        adjSize = toPush.adj.size();
+        toPush.adjWeights = new std::vector<int> (adjSize);
         toPush.father = n->id;
+        weight = 0;
+        for(int i=0; i<adjSize; i++) {
+            toPush.adjWeights->at(i) = 1 + weight + g->nodes.at(toPush.father).fatherWeight;
+            //toPush.adjWeights->at(i) = 1 + weight + g->nodesWeights.at(toPush.father);
+        }
         //cout << "Working on " << n.id << "\n";
-        neighbours.at(positionIntoGraphVector) = toPush;
+        neighboursWeights.at(positionIntoGraphVector) = toPush;
         positionIntoGraphVector = (positionIntoGraphVector+1)%graphSize;
         askManagerToEmpty->signal();
         managerHasFed->wait();

@@ -21,6 +21,11 @@ struct intCouple {
     int father;
     std::vector<int> adj;
 };
+struct intVetVet {
+    int father;
+    std::vector<int> adj;
+    std::vector<int> *adjWeights;
+};
 
 #define workerSwitchSemToken 1
 class Worker {
@@ -37,16 +42,19 @@ public:
     //Node *separator;
     int getId () { return id; };
 
+    Graph *g;
     int graphSize;
     std::vector<intCouple> neighbours;
+    std::vector<intVetVet> neighboursWeights;
     Node *next;
 
     //explicit Worker(int id/*, Node *separator*/);
     //Worker();
     void setId(int id) { this->id = id; };
-    void initialize(int id, int size, int nWorkers);
+    void initialize(int id, Graph *g, int nWorkers);
     void work();
     void subGraphSize();
+    void preGraphSize();
     void resetSemaphores();
     void labels();
 };

@@ -10,6 +10,7 @@
 #include "Graph.h"
 #include "Worker.h"
 
+/*
 #ifndef INTINT
 #define INTINT
 struct intint {
@@ -17,12 +18,19 @@ struct intint {
     int child;
 };
 #endif
+ */
+
+struct intintint {
+    int father;
+    int child;
+    int weight;
+};
 
 class feederManager {
     std::vector<Worker> *workers;
     Semaphore *commonSemQueueFull;
     Semaphore *commonSemQueueEmpty;
-    std::vector<struct intint> *commonQueue;
+    std::vector<struct intintint> *commonQueue;
     int nWorkers;
     //Node *separator;
     int graphSize;
@@ -32,9 +40,10 @@ class feederManager {
 public:
     feederManager(std::vector<Worker> *allWorkers, int nWorkers,
                   Semaphore *commonSemQueueFull, Semaphore *commonSemQueueEmpty,
-                  std::vector<intint> *commonQueue,/* Node *separator,*/Graph *g); //commonQueue must have size equal to graphSize
+                  std::vector<intintint> *commonQueue,/* Node *separator,*/Graph *g); //commonQueue must have size equal to graphSize
     void feedLoop();
     void subGraphSize();
+    void preGraphSize();
     void labels();
 };
 
