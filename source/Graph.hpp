@@ -22,6 +22,7 @@
 #include <chrono>
 #include <random>
 #include <mutex>
+#include <climits>
 
 #define GRAPH_DEBUG 1
 
@@ -31,25 +32,24 @@ using namespace std;
 struct Node
 {
         unsigned int id,
-                inc_count = 0,
                 inc_visited_count = 0,
                 adj_visited_count = 0,
                 prefix_subgraph_size = 0,
                 subgraph_size = 1,
                 pre = 0,
-                post = 0;
+                post = 0,
+                depth = 0;
 
         int parent = -1;
+        unsigned long int cost = ULONG_MAX;
         vector<unsigned int > adj;
-        vector<unsigned int > dt_adj;
+    
+        vector<unsigned int > inc;
         //unordered_map<unsigned int, bool> inc_visited, adj_visited;
         /*vector<unsigned int> inc;
           vector<bool> inc_visited;
         */
-        bool subgraph_size_parent_visited = false;
-        bool no_path = true;
         bool visited = false;
-        vector<unsigned int> path;
     
 };
 
@@ -72,13 +72,13 @@ class Graph
         void init();
         void build(FILE * fp);
         void build_addEdges(unsigned int u, vector<unsigned int>& adj, unsigned int adj_size);
-        void buildDT_processParent(const unsigned int p, unsigned int worker_id);
-        void buildDT_processChild(unsigned int i, unsigned int p);
-        void subDTSize_computePrefixSum(unsigned int p);
+        void subGraphSize_computePrefixSum(unsigned int p);
+        void subGraphSize_processChild(unsigned int i, unsigned int worker_id);
+        void subGraphSize_processParent(unsigned int p, unsigned int i);
         void subDTSize_processChild(unsigned int i, unsigned int worker_id);
         void subDTSize_processParent(unsigned int p, unsigned int i);
-        void computePrePost_processParent(const unsigned int p, unsigned int depth, unsigned int worker_id);
-        void computePrePost_processChild(unsigned int child, unsigned int pre, unsigned int post);
+        void computeParentSSSP_processParent(unsigned int p, unsigned int worker_id);
+        void computeParentSSSP_processChild(unsigned int p, unsigned int i);
         void sequentialDFS_r(unsigned int p);
         unsigned int hash(unsigned int x);
         void initThreadWorkers();
@@ -90,7 +90,8 @@ public:
         void printNodesStatus();
         void sortVectors();
         void sequentialDFS();
-        void buildDT();
+        void computeParentSSSP();
+        void computeSubGraphSize();
         void computeSubDTSize();
         void computePrePostOrder();
 };
