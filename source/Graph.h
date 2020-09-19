@@ -19,6 +19,7 @@
 #define GRAPH_PUSHBACK 0
 #define GRAPH_DOUBLE_READ 0
 #define GRAPH_REREAD_GRAPH 1
+#define USE_BOOL 0
 
 #ifndef INTINT
 #define INTINT
@@ -47,9 +48,14 @@ struct Node {
     int exitingArcs = 0;
     std::vector<int> *ancestors;
     int ancSize = 0;
-    int descendantSize = 1;
+    unsigned long int descendantSize = 1;
 #if GRAPH_DOUBLE_READ | GRAPH_REREAD_GRAPH
     int ancNumber = 0;
+#endif
+#if !USE_BOOL
+    bool root = true;
+    bool leaf = true;
+    bool preleaf = true;
 #endif
 };
 
@@ -61,7 +67,6 @@ public:
     //vettore pesi
     //std::vector<int> nodesWeights;
 
-    std::vector<bool> roots;
     int nNodes;
     std::vector<Node> nodes;
     explicit Graph(FILE *fp);
@@ -80,6 +85,10 @@ public:
     std::vector<intint> *cancelledEdges;
     int posIntoCancelledEdges = 0;
 
+    //dimensione sovrastimata del vettore per calcolare il preorder
+    unsigned long int preorderVetSize = 0;
+    std::vector<int> preorder;
+
 
 #if GRAPH_DOUBLE_READ | GRAPH_REREAD_GRAPH
     void reBuild(FILE *fp);
@@ -88,9 +97,21 @@ public:
     void addAncestor(unsigned u, std::vector<unsigned>& adj, unsigned adj_size);
 #endif
 
-    std::vector<bool> returnRoots();
+    //std::vector<bool> returnRoots();
+#if USE_BOOL
+    std::vector<bool> roots;
     std::vector<bool> leaves;
     std::vector<bool> preLeaves;
+#else
+    //int preLeavesSize;
+    int preLeavesPos = 0;
+    int rootsSize = 0;
+    int rootsPos = 0;
+    //std::vector<int> leaves; //not sure if this helps
+    std::vector<bool> leaves; //keeping this, for now
+    std::vector<int> preLeaves;
+    std::vector<int> roots;
+#endif
     std::vector<intVet> *st_father;
     std::vector<bool> *modified;
 };

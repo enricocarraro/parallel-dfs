@@ -23,7 +23,7 @@ struct intint {
 struct intintint {
     int father;
     int child;
-    int weight;
+    unsigned long int weight;
 };
 
 class feederManager {

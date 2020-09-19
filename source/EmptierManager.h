@@ -21,7 +21,12 @@ class emptierManager {
     int graphSize;
     Graph *g;
     //std::vector<bool> graph;
+#if USE_BOOL
     std::vector<bool> *roots;
+#else
+    std::vector<int> *roots;
+    std::vector<int> *preLeaves;
+#endif
 
 public:
     emptierManager(std::vector<Worker> *allWorkers, int nWorkers,

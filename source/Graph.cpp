@@ -13,12 +13,18 @@ Graph::Graph(FILE *fp) {
         exit (-1);
     }
 #endif
-    fscanf(fp, "%d", &nNodes);
+    fscanf(fp, "%d\n", &nNodes);
     nodes.resize(nNodes);
     //nodesWeights.resize(nNodes, INT32_MAX);
+#if USE_BOOL
     roots.resize(nNodes, true);
     leaves.resize(nNodes, true);
     preLeaves.resize(nNodes, true);
+#else
+    leaves.resize(nNodes, true); //keeping this for now
+    preLeaves.resize(nNodes);
+    rootsSize = nNodes;
+#endif
     //cancelledEdges = new vector<intint>;
     st_father = new vector<intVet> (nNodes);
     modified = new vector<bool> (nNodes, false);
@@ -31,6 +37,10 @@ Graph::Graph(FILE *fp) {
 #endif
     }
     this->build(fp);
+#if !USE_BOOL
+    preLeaves.resize(preLeavesPos);
+    roots.resize(rootsSize);
+#endif
 #if GRAPH_DOUBLE_READ
     //too slow, it takes about 20% more time
     rewind(fp);
@@ -44,6 +54,11 @@ Graph::Graph(FILE *fp) {
     //30-40% faster than GRAPH_PUSHBACK
     for (int i = 0; i < nNodes; i++) {
         nodes[i].ancestors = new vector<int> (nodes[i].ancSize);
+#if !USE_BOOL
+        if(nodes[i].root) { //MUST change into if(nodes[i].root)
+            roots.at(rootsPos++) = i;
+        }
+#endif
     }
     this->reBuild(fp);
 #endif
@@ -101,7 +116,7 @@ void Graph::printTrueLabelsPreWeights() {
         cout << "\n Adjacency list of vertex " << v << "\n head ";
         for (auto x : *nodes[v].trueAdj)
             cout << "-> " << x;
-        printf("\nPre-weight val: %d", nodes[v].descendantSize);
+        printf("\nPre-weight val: %ld", nodes[v].descendantSize);
         printf("\nSub-graph size: %d", nodes[v].subTreeSize);
         printf("\nStart-end time: %d -> %d\n", nodes[v].start, nodes[v].end);
     }
@@ -115,18 +130,34 @@ void Graph::sortVectors() {
 
 void Graph::addEdge(int u, int v) {
     nodes[u].adj->push_back(v);
+#if USE_BOOL
     roots.at(v) = false;
+#else
+    if(nodes[v].root) {
+        nodes[v].root = false;
+        rootsSize--;
+    }
+#endif
 }
 
 void Graph::build_addEdges(unsigned u, vector<unsigned>& adj, unsigned adj_size) {
     maxCancelled += adj_size;
     if (adj_size > 0) {
         if (nodes[u].adjSize == 0) {
+#if USE_BOOL
             preLeaves.at(u) = false;
+#endif
             nodes[u].adj->resize(adj_size);
             for (int i = 0; i < adj_size; i++) {
                 nodes[u].adj->at(i) = adj[i];
+#if USE_BOOL
                 roots.at(adj[i]) = false;
+#else
+                if(nodes.at(adj[i]).root) {
+                    nodes.at(adj[i]).root = false;
+                    rootsSize--;
+                }
+#endif
                 //nodes[adj[i]].ancestors->at(nodes[adj[i]].ancSize++) = u;
 #if GRAPH_PUSHBACK
                 nodes[adj[i]].ancestors->push_back(u);
@@ -139,7 +170,11 @@ void Graph::build_addEdges(unsigned u, vector<unsigned>& adj, unsigned adj_size)
             nodes[u].adj->insert(nodes[u].adj->end(), &adj[0], &adj[adj_size]);
             nodes[u].adjSize += adj_size;
             for (int i = 0; i < adj_size; i++) {
+#if USE_BOOL
                 roots.at(adj[i]) = false;
+#else
+                nodes[adj[i]].root = false;
+#endif
 #if GRAPH_PUSHBACK
                 nodes[adj[i]].ancestors->push_back(u);
 #endif
@@ -147,6 +182,11 @@ void Graph::build_addEdges(unsigned u, vector<unsigned>& adj, unsigned adj_size)
             }
         }
     }
+#if !USE_BOOL
+    else {
+        preLeaves.at(preLeavesPos++) = u;
+    }
+#endif
 }
 
 #if GRAPH_DOUBLE_READ
@@ -213,7 +253,7 @@ void Graph::build(FILE * fp) {
     vector<unsigned> buf = vector<unsigned> (nNodes + 1);
 
     while(fscanf(fp, "%[^#]s", str) != EOF) {
-        fscanf(fp, "%s", dontcare);
+        fscanf(fp, "%s\n", dontcare);
         char *token;
         unsigned i = 0;
 
@@ -241,6 +281,8 @@ void Graph::build(FILE * fp) {
 
 }
 
+/*
 std::vector<bool> Graph::returnRoots() {
     return roots;
 }
+ */

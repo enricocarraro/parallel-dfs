@@ -35,11 +35,16 @@ void feederManager::preGraphSize()
         commonSemQueueEmpty->signal();
         queueExtractPosition = (queueExtractPosition + 1) % (graphSize);
 
-        for(int i=0; i<g->nodes.at(next.father).ancSize; i++) {
+        int ancSize = g->nodes.at(next.father).ancSize;
+        for(int i=0; i<ancSize; i++) {
             nextFather = g->nodes.at(next.father).ancestors->at(i);
             if (nextFather >= 0) {
                 visitedChilds.at(nextFather)++;
-                g->nodes.at(nextFather).descendantSize += (next.child);
+                unsigned long int test = g->nodes.at(nextFather).descendantSize;
+                g->nodes.at(nextFather).descendantSize += (next.weight);
+                if(test>g->nodes.at(nextFather).descendantSize) {
+                    printf("Carry");
+                }
                 if (g->nodes.at(nextFather).adjSize == visitedChilds.at(nextFather)) {
                     workers->at(currentWorker).askManagerToFeed->wait();
                     workers->at(currentWorker).next = &g->nodes.at(nextFather);
@@ -47,6 +52,9 @@ void feederManager::preGraphSize()
                     currentWorker = (currentWorker + 1) % nWorkers;
                 }
             }
+        }
+        if (ancSize == 0) {
+            g->preorderVetSize += next.weight;
         }
         nodeRead++;
     }
@@ -63,6 +71,7 @@ void feederManager::feedLoop() {
     Node *toPush;
     int currentWorker = 0;
     intintint next;
+    intint cancelled;
     vector<int> visitedFathers (graphSize, 0);
 
     while (true) // starting nodes (with no parent)
@@ -85,6 +94,9 @@ void feederManager::feedLoop() {
         workers->at(currentWorker).managerHasFed->signal();
         currentWorker = (currentWorker + 1) % nWorkers;
         nodeRead++;
+
+        //fill preorder vector
+        //g->preorder.at(next.weight) = next.child;
     }
     while (nodeRead < graphSize) //nodes with parents
     {
@@ -102,7 +114,18 @@ void feederManager::feedLoop() {
         toPush = &g->nodes.at(next.child);
         //if (g->nodesWeights.at(next.child) > next.weight) {
             //g->nodesWeights.at(next.child) = next.weight;
-        if (toPush->fatherWeight > next.weight) {
+
+        if (toPush->fatherWeight <= next.weight) {
+            cancelled.father = next.father;
+            cancelled.child = next.child;
+            g->cancelledEdges->at(g->posIntoCancelledEdges++) = cancelled;
+        }
+        else {
+            if(toPush->father != -1) {
+                cancelled.father = toPush->father;
+                cancelled.child = next.child;
+                g->cancelledEdges->at(g->posIntoCancelledEdges++) = cancelled;
+            }
             toPush->father = next.father;   //set the father of the node
             toPush->fatherWeight = next.weight;
         }
@@ -129,10 +152,9 @@ void feederManager::feedLoop() {
         g->nodes.at(i).exitingArcs = g->nodes.at(i).trueAdj->size();
         if(visitedFathers.at(i) != g->nodes.at(i).ancSize) {
             for(auto y : *g->nodes.at(i).adj) {
-                intint cancelled;
                 cancelled.father = i;
                 cancelled.child = y;
-                g->cancelledEdges->at(g->posIntoCancelledEdges) = cancelled;
+                g->cancelledEdges->at(g->posIntoCancelledEdges++) = cancelled;
             }
         }
     }

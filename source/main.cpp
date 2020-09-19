@@ -84,6 +84,7 @@ void start(int nWorkers, Graph *g) {
 
 
     //pre phase
+    auto istart = std::chrono::steady_clock::now();
 
     vector<thread> tPreGraphSizeWorkers(nWorkers);
     for (int i = 0; i < nWorkers; i++) {
@@ -105,8 +106,15 @@ void start(int nWorkers, Graph *g) {
     commonSemQueueEmpty.reset();
     commonSemQueueFull.reset();
 
+    auto iend = std::chrono::steady_clock::now();
+    std::chrono::duration<double> ielapsed_seconds = iend - istart;
+    std::cout << "Init elapsed time: " << ielapsed_seconds.count() << "s\n";
+
+    //resise preorder vector for faster insertion
+    //g->preorder.resize(g->preorderVetSize, -1); //too big
 
     //first phase
+    auto start = std::chrono::steady_clock::now();
 
     vector<thread> tWorkers(nWorkers);
     for (int i = 0; i < nWorkers; i++) {
@@ -130,9 +138,16 @@ void start(int nWorkers, Graph *g) {
     commonSemQueueFull.reset();
 
     //resize of cancelledEdges
-    //g->cancelledEdges->resize(g->posIntoCancelledEdges);
+    g->cancelledEdges->resize(g->posIntoCancelledEdges);
+
+    auto end = std::chrono::steady_clock::now();
+    std::chrono::duration<double> elapsed_seconds = end-start;
+    std::cout << "DT elapsed time: " << elapsed_seconds.count() << "s\n";
+
+    //
 
     //second phase
+    start = std::chrono::steady_clock::now();
 
     vector<thread> tGraphSizeWorkers(nWorkers);
     for (int i = 0; i < nWorkers; i++) {
@@ -154,8 +169,12 @@ void start(int nWorkers, Graph *g) {
     commonSemQueueEmpty.reset();
     commonSemQueueFull.reset();
 
+    end = std::chrono::steady_clock::now();
+    elapsed_seconds = end-start;
+    std::cout << "SubGraph size elapsed time: " << elapsed_seconds.count() << "s\n";
 
     //third phase
+    start = std::chrono::steady_clock::now();
 
     vector<thread> tLabelsWorkers(nWorkers);
     for (int i = 0; i < nWorkers; i++) {
@@ -170,14 +189,27 @@ void start(int nWorkers, Graph *g) {
     tLabelsEManager.join();
     tLabelsFManager.join();
 
+    end = std::chrono::steady_clock::now();
+    elapsed_seconds = end-start;
+    std::cout << "Start-end elapsed time: " << elapsed_seconds.count() << "s\n";
+
+
+
+    start = std::chrono::steady_clock::now();
+
     recalST rST;
     rST.init(g);
     rST.work();
 
+
+    end = std::chrono::steady_clock::now();
+    elapsed_seconds = end-start;
+    std::cout << "Labels elapsed time: " << elapsed_seconds.count() << "s\n";
+
 }
 
-#define QUICK_RUN 1
-#define FILE_N 4
+#define QUICK_RUN 0
+#define FILE_N 1
 
 int main(int argc, const char *argv[]) {
     FILE *fp;
@@ -233,7 +265,9 @@ int main(int argc, const char *argv[]) {
     //g.printTrueGraph();
     //g.printTrueGraphSize();
     //g.printTrueLabels();
-    //g.printTrueLabelsPreWeights();      //prints everything
+#if FILE_N == 0 || FILE_N == 1
+    g.printTrueLabelsPreWeights();      //prints everything
+#endif
 
     return 0;
 

@@ -21,6 +21,9 @@ emptierManager::emptierManager(vector<Worker> *allWorkers, int nWorkers,
         graph.at(i) = false;
     }*/
     roots = &g->roots;
+#if !USE_BOOL
+    preLeaves = &g->preLeaves;
+#endif
 }
 
 void emptierManager::preGraphSize()
@@ -31,6 +34,7 @@ void emptierManager::preGraphSize()
     //std::vector<int> weights(graphSize, 1);
 
     intintint toPush;
+#if USE_BOOL
     for(int i=0; i<graphSize; i++) {
         if(g->preLeaves.at(i) == true) {
             toPush.father = i;      // the node itself
@@ -42,12 +46,23 @@ void emptierManager::preGraphSize()
             nodeRead++;
         }
     }
+#else
+    for(int i=0; i<preLeaves->size(); i++) {
+            toPush.father = preLeaves->at(i);      // the node itself
+            toPush.weight = 1;       // # of descendants
+            commonSemQueueEmpty->wait();
+            commonQueue->at(queueInsertPosition) = toPush;
+            commonSemQueueFull->signal();
+            queueInsertPosition = (queueInsertPosition + 1) % (graphSize);
+            nodeRead++;
+    }
+#endif
 
     int i = 0;
     while(nodeRead<graphSize) {
         workers->at(i).askManagerToEmpty->wait();
-        toPush.father = workers->at(i).neighbours.at(positionsIntoWorkQueues[i]).father;
-        toPush.child = workers->at(i).neighbours.at(positionsIntoWorkQueues[i]).adj.at(0);
+        toPush.father = workers->at(i).neighboursWeights.at(positionsIntoWorkQueues[i]).father; //node itself
+        toPush.weight = workers->at(i).neighboursWeights.at(positionsIntoWorkQueues[i]).adjWeights->at(0); //weight
         positionsIntoWorkQueues[i] = (positionsIntoWorkQueues[i]+1)%workers->at(i).graphSize;
 
         commonSemQueueEmpty->wait();
@@ -66,7 +81,8 @@ void emptierManager::pushLoop()
     std::vector<int> positionsIntoWorkQueues(nWorkers, 0);
     intint toPush;
     intintint toPushWeight;
-    std::vector<int> *adj, *adjW;
+    std::vector<int> *adj;
+    std::vector<unsigned long int> *adjW;
     toPush.father = toPushWeight.father = -1;
     int nodeRead = 0;
     std::vector<int> graph (graphSize, 0);
@@ -74,6 +90,7 @@ void emptierManager::pushLoop()
     int weight = 0;
 
     //adj = &node.adj;
+#if USE_BOOL
     for (int i = 0; i < graphSize; i++) {
         if (roots->at(i)) {     //"node" containing all other root nodes as neighbours
             //if (!graph.at(i)/* && toPush.child != toPush.father*/) {
@@ -96,6 +113,21 @@ void emptierManager::pushLoop()
             }*/
         }
     }
+#else
+    for(int i=0; i<roots->size(); i++) {    //"node" containing all other root nodes as neighbours
+        toPushWeight.child = roots->at(i);
+        toPushWeight.weight = weight;
+        commonSemQueueEmpty->wait();
+        commonQueue->at(queueInsertPosition) = toPushWeight;
+        commonSemQueueFull->signal();
+
+        queueInsertPosition = (queueInsertPosition + 1) % (graphSize);
+
+        graph.at(toPushWeight.child)++;
+        weight += g->nodes.at(toPushWeight.child).descendantSize;
+        nodeRead++;
+    }
+#endif
     toPushWeight.child = -1;
     commonSemQueueEmpty->wait();
     commonQueue->at(queueInsertPosition) = toPushWeight;
@@ -117,10 +149,10 @@ void emptierManager::pushLoop()
             //    cout << "Padre " << toPush.father << " figlio " << x << " potrebbe essere un problema\n";
             //if (graph.at(toPushWeight.child) != g->nodes.at(toPushWeight.child).ancSize) {
                 //toPushWeight.weight = 1 + weight + g->nodes.at(toPushWeight.father).fatherWeight;
-                toPushWeight.weight = adjW->at(j);
+                toPushWeight.weight = adjW->at(j); //ERROR
 
                 commonSemQueueEmpty->wait();
-                commonQueue->at(queueInsertPosition) = toPushWeight;
+                commonQueue->at(queueInsertPosition) = toPushWeight; //ERROR 2, con padre 0 ha peso 1, invece  che 3
                 commonSemQueueFull->signal();
 
                 queueInsertPosition = (queueInsertPosition + 1) % (graphSize);
@@ -195,7 +227,7 @@ void emptierManager::labels() {
     int nodeRead = 0;
     std::vector<int> *adj;
 
-
+#if USE_BOOL
     for(int i=0; i<graphSize; i++) {
         if(roots->at(i)) {
             toPush.father = i;      // the node itself
@@ -210,6 +242,22 @@ void emptierManager::labels() {
             nodeRead++;
         }
     }
+#else
+    for(int i=0; i<roots->size(); i++) {
+        toPush.father = roots->at(i);      // the node itself
+        toPush.child = time;    // starting instant
+
+        commonSemQueueEmpty->wait();
+        commonQueue->at(queueInsertPosition) = toPush;
+        commonSemQueueFull->signal();
+        queueInsertPosition = (queueInsertPosition + 1) % (graphSize);
+
+        time += (g->nodes.at(toPush.father).subTreeSize);
+        nodeRead++;
+    }
+#endif
+
+
     int i = 0;
     while(nodeRead<graphSize) {
         workers->at(i).askManagerToEmpty->wait();

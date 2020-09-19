@@ -29,16 +29,16 @@ void Worker::resetSemaphores() {
 void Worker::preGraphSize() {
     Node *n;
     int positionIntoGraphVector = 0;
-    intCouple toPush;
+    intVetVet toPush;
 
     managerHasFed->wait();
     n = next;
     askManagerToFeed->signal();
     while (n->id != -1) {
-        toPush.adj = vector<int> (1, n->descendantSize);
+        toPush.adjWeights = new vector<unsigned long int> (1, n->descendantSize);
         toPush.father = n->id;
         //cout << "Working on " << n.id << "\n";
-        neighbours.at(positionIntoGraphVector) = toPush;
+        neighboursWeights.at(positionIntoGraphVector) = toPush;
         askManagerToEmpty->signal();
         positionIntoGraphVector = (positionIntoGraphVector+1)%graphSize;
         managerHasFed->wait();
@@ -57,12 +57,12 @@ void Worker::work() {
     while (n->id != -1) {
         toPush.adj = *n->adj;
         adjSize = toPush.adj.size();
-        toPush.adjWeights = new std::vector<int> (adjSize);
+        toPush.adjWeights = new std::vector<unsigned long int> (adjSize);
         toPush.father = n->id;
         weight = 0;
         for(int i=0; i<adjSize; i++) {
             toPush.adjWeights->at(i) = 1 + weight + g->nodes.at(toPush.father).fatherWeight;
-            //toPush.adjWeights->at(i) = 1 + weight + g->nodesWeights.at(toPush.father);
+            weight += g->nodes.at(toPush.adj.at(i)).descendantSize;
         }
         //cout << "Working on " << n.id << "\n";
         neighboursWeights.at(positionIntoGraphVector) = toPush;
