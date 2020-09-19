@@ -180,22 +180,20 @@ void Graph::initThreadWorkers() {
 }
 void Graph::computeSubDTSize() {
         FastSemaphore sem;
-        queue < unsigned int > Q;
         initThreadWorkers();
     
         if (leafs.size() <= 0) {
                 cout << "Error: no leafs" << endl;
                 return;
         }
-        for (const auto & x: leafs) Q.push(x);
+    
+        vector < unsigned int > Q (leafs.begin(), leafs.end());
     
         while (Q.size() > 0) {
         
                 size_t level_nodes = 0;
-                while (Q.size() > 0) {
-                        unsigned int node = Q.front();
-                        Q.pop();
-            
+                for(const auto& node: Q) {
+                
                         int parent = nodes[node].parent;
                         if (parent >= 0) {
                                 level_nodes++;
@@ -210,10 +208,9 @@ void Graph::computeSubDTSize() {
                 for (unsigned int i = 0; i < level_nodes; i++)
                         sem.wait();
         
-                level_nodes = C.size();
-                while (C.size() > 0) {
-                        unsigned int node = C.pop();
-                        Q.push(node);
+                Q = C.move_underlying_queue();
+                C = SafeQueue < unsigned int > ();
+                for(const auto& node: Q) {
                         unsigned int worker_id = hash(node) % parent_workers.size();
                         parent_workers[worker_id].addTask([this, node, & sem, worker_id]() -> void {
                                                                   this -> subDTSize_computePrefixSum(node);
@@ -221,7 +218,7 @@ void Graph::computeSubDTSize() {
                                                           });
                 }
         
-                for (unsigned int i = 0; i < level_nodes; i++)
+                for (unsigned int i = 0; i < Q.size(); i++)
                         sem.wait();
         
         }
@@ -241,7 +238,6 @@ void Graph::subDTSize_computePrefixSum(unsigned int p) {
 void Graph::buildDT() {
         FastSemaphore sem;
         initThreadWorkers();
-        queue < unsigned int > Q;
     
         if (nodes[nNodes].adj.size() <= 0 || nNodes <= 0 ) {
                 throw "Error: no roots";
@@ -260,14 +256,10 @@ void Graph::buildDT() {
         for(unsigned int i = 0; i < nodes[nNodes].adj.size(); i++)
                 sem.wait();
     
-        Q.push(nNodes);
+        vector < unsigned int > Q = {nNodes};
         
-        while (Q.size() > 0) {
-                size_t level_nodes = Q.size();
-    
-                while (Q.size() > 0) {
-                        unsigned int node = Q.front();
-                        Q.pop();
+            while (Q.size() > 0) {
+            for(const auto& node: Q) {
                         unsigned int worker_id = hash(node) % parent_workers.size();
                         parent_workers[worker_id].addTask([this, node, & sem, worker_id]() -> void {
                                                                   this -> buildDT_processParent(node, worker_id);
@@ -275,7 +267,7 @@ void Graph::buildDT() {
                                                           });
                 }
         
-                for (unsigned int i = 0; i < level_nodes; i++)
+                for (unsigned int i = 0; i < Q.size(); i++)
                         sem.wait();
         
                 Q = P.move_underlying_queue();
@@ -384,21 +376,16 @@ void Graph::sequentialDFS_r(unsigned int p) {
 void Graph::computePrePostOrder() {
         FastSemaphore sem;
         initThreadWorkers();
-        queue < unsigned int > Q;
         if (nodes[nNodes].adj.size() <= 0 || nNodes <= 0) {
                 throw "Error: no roots";
         }
     
-        Q.push(nNodes);
-    
+        vector < unsigned int > Q = {nNodes};
+        
         int depth = 0;
     
         while (Q.size() > 0) {
-        
-                size_t level_nodes = Q.size();
-                while (Q.size() > 0) {
-                        unsigned int node = Q.front();
-                        Q.pop();
+            for(const auto& node: Q) {
                         unsigned int worker_id = hash(node) % parent_workers.size();
                         parent_workers[worker_id].addTask([this, node, depth, & sem, worker_id]() -> void {
                                                                   this -> computePrePost_processParent(node, depth, worker_id);
@@ -407,7 +394,7 @@ void Graph::computePrePostOrder() {
             
                 }
         
-                for (unsigned int i = 0; i < level_nodes; i++)
+            for (unsigned int i = 0; i < Q.size(); i++)
                         sem.wait();
         
                 Q = P.move_underlying_queue();

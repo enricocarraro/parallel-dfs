@@ -1,7 +1,7 @@
 #ifndef SafeQueue_hpp
 #define SafeQueue_hpp
 
-#include <queue>
+#include <vector>
 #include <mutex>
 #include <condition_variable>
 
@@ -9,8 +9,7 @@
 template <typename T>
 class SafeQueue
 {
-
-    std::queue<T> q;
+    std::vector<T> q;
     mutable std::mutex m;
     std::condition_variable c;
 public:
@@ -22,7 +21,7 @@ public:
 // Get the "front"-element.
 // If the queue is empty, wait till a element is avaiable.
     T pop(void);
-    std::queue<T> move_underlying_queue();
+    std::vector<T> move_underlying_queue();
 };
 
 /*
