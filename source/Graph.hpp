@@ -41,7 +41,7 @@ struct Node
                 depth = 0;
 
         int parent = -1;
-        unsigned long int cost = ULONG_MAX;
+        long long int cost = LLONG_MAX;
         vector<unsigned int > adj;
     
         vector<unsigned int > inc;
@@ -68,7 +68,6 @@ class Graph
         vector < unsigned int > roots_sorted;
         unordered_set<unsigned int> leafs;
         SafeQueue<unsigned int> P, C;
-        SafeQueue<std::pair<unsigned int, unsigned int>>processChildQ;
         void init();
         void build(FILE * fp);
         void build_addEdges(unsigned int u, vector<unsigned int>& adj, unsigned int adj_size);

@@ -7,6 +7,10 @@ bool compareNodeCost(const Node& lhs, const Node& rhs) {
     return lhs.cost < rhs.cost;
 }
 
+bool compareNodeId(const Node& lhs, const Node& rhs) {
+    return lhs.id < rhs.id;
+}
+
 void Graph::init() {
     roots.reserve(nNodes);
     leafs.reserve(nNodes);
@@ -116,8 +120,8 @@ void Graph::printNodesStatus() {
     for (int v = 0; v < nodes.size(); ++v) {
         
         //cout << v << ": parent = " << nodes[v].parent << endl;
-        cout << nodes[v].id << ": sub graph size = " << nodes[v].subgraph_size << " depth: " << nodes[v].depth << " cost: " << nodes[v].cost << " pre: " << nodes[v].pre << " post: " << nodes[v].post << endl;
-        //cout << v << ":\tparent=" << (nodes[v].parent == nNodes ? -1 : nodes[v].parent) << "\tpre=" << nodes[v].pre << "\tpost=" << nodes[v].post << endl;
+        //cout << nodes[v].id << ": sub graph size = " << nodes[v].subgraph_size << " depth: " << nodes[v].depth << " cost: " << nodes[v].cost << " pre: " << nodes[v].pre << " post: " << nodes[v].post << endl;
+        cout << nodes[v].id << ":\tparent=" << (nodes[v].parent == nNodes ? -1 : nodes[v].parent) << "\tpre=" << nodes[v].pre << "\tpost=" << nodes[v].post << endl;
         /*cout << "\n Adjacency list of vertex " << v << endl;
          
          for (auto x : nodes[v].adj)
@@ -193,7 +197,7 @@ void Graph::initThreadWorkers() {
 }
 void Graph::computeSubGraphSize() {
     FastSemaphore sem;
-    queue < unsigned int > Q;
+    
     initThreadWorkers();
     
     if (nodes[nNodes].adj.size() <= 0 || nNodes <= 0 ) {
@@ -216,14 +220,12 @@ void Graph::computeSubGraphSize() {
         throw "Error: no leafs";
     }
     
-    for (const auto & x: leafs) Q.push(x);
+    vector < unsigned int > Q (leafs.begin(), leafs.end());
     
     while (Q.size() > 0) {
         
         size_t level_nodes = Q.size();
-        while (Q.size() > 0) {
-            unsigned int node = Q.front();
-            Q.pop();
+        for(const auto& node: Q) {
             
             unsigned int worker_id = hash(node) % child_workers.size();
             child_workers[worker_id].addTask([this, node, &sem, worker_id]() -> void {
@@ -236,10 +238,9 @@ void Graph::computeSubGraphSize() {
         for (unsigned int i = 0; i < level_nodes; i++)
             sem.wait();
         
-        level_nodes = C.size();
-        while (C.size() > 0) {
-            unsigned int node = C.pop();
-            Q.push(node);
+        Q = C.move_underlying_queue();
+        C = SafeQueue < unsigned int > ();
+        for(const auto& node: Q) {
             unsigned int worker_id = hash(node) % parent_workers.size();
             parent_workers[worker_id].addTask([this, node, & sem, worker_id]() -> void {
                 this -> subGraphSize_computePrefixSum(node);
@@ -247,7 +248,7 @@ void Graph::computeSubGraphSize() {
             });
         }
         
-        for (unsigned int i = 0; i < level_nodes; i++)
+        for (unsigned int i = 0; i < Q.size(); i++)
             sem.wait();
         
     }
@@ -256,18 +257,13 @@ void Graph::computeSubGraphSize() {
 
 void Graph::subGraphSize_processChild(unsigned i, unsigned worker_id) {
     for(const auto& parent: nodes[i].inc) {
-        parent_workers[hash(parent) % parent_workers.size()].addTask([this, parent, i, worker_id] () -> void {
-            this->subGraphSize_processParent(parent, i);
+        parent_workers[hash(parent) % parent_workers.size()].addTask([this, parent, worker_id] () -> void {
+            if (nodes[parent].adj.size() == ++nodes[parent].adj_visited_count) C.push(parent);
             this->worker_semaphores[worker_id].signal();
         });
         
         this->worker_semaphores[worker_id].wait();
     }
-}
-
-void Graph::subGraphSize_processParent(unsigned int p, unsigned int i) {
-    if (nodes[p].adj.size() == ++nodes[p].adj_visited_count)
-        C.push(p);
 }
 
 void Graph::subGraphSize_computePrefixSum(unsigned int p) {
@@ -277,28 +273,26 @@ void Graph::subGraphSize_computePrefixSum(unsigned int p) {
 
 void Graph::computeSubDTSize() {
     FastSemaphore sem;
-    queue < unsigned int > Q;
+    
     initThreadWorkers();
     
     if (leafs.size() <= 0) {
         cout << "Error: no leafs" << endl;
         return;
     }
-    for (const auto & x: leafs) Q.push(x);
+    
+    vector < unsigned int > Q (leafs.begin(), leafs.end());
     
     while (Q.size() > 0) {
         
         size_t level_nodes = 0;
-        while (Q.size() > 0) {
-            unsigned int node = Q.front();
-            Q.pop();
-            
+        for(const auto& node: Q) {
             int parent = nodes[node].parent;
             if (parent >= 0) {
                 level_nodes++;
                 unsigned int worker_id = hash(parent) % parent_workers.size();
-                parent_workers[worker_id].addTask([this, parent, node, & sem, worker_id]() -> void {
-                    this -> subDTSize_processParent(parent, node);
+                parent_workers[worker_id].addTask([this, parent, & sem, worker_id]() -> void {
+                    if (nodes[parent].adj.size() == ++nodes[parent].adj_visited_count) C.push(parent);
                     sem.signal();
                 });
             }
@@ -307,10 +301,9 @@ void Graph::computeSubDTSize() {
         for (unsigned int i = 0; i < level_nodes; i++)
             sem.wait();
         
-        level_nodes = C.size();
-        while (C.size() > 0) {
-            unsigned int node = C.pop();
-            Q.push(node);
+        Q = C.move_underlying_queue();
+        C = SafeQueue < unsigned int > ();
+        for(const auto& node: Q) {
             unsigned int worker_id = hash(node) % parent_workers.size();
             parent_workers[worker_id].addTask([this, node, & sem, worker_id]() -> void {
                 this -> subGraphSize_computePrefixSum(node);
@@ -318,37 +311,23 @@ void Graph::computeSubDTSize() {
             });
         }
         
-        for (unsigned int i = 0; i < level_nodes; i++)
+        for (unsigned int i = 0; i < Q.size(); i++)
             sem.wait();
         
     }
 }
 
-void Graph::subDTSize_processParent(unsigned int p, unsigned int i) {
-    if (nodes[p].adj.size() == ++nodes[p].adj_visited_count)
-        C.push(p);
-}
-
-
-
 void Graph::computeParentSSSP() {
     FastSemaphore sem;
     initThreadWorkers();
-    queue < unsigned int > Q;
+    vector < unsigned int > Q = {nNodes};
     
     nodes[nNodes].cost = 0;
-    
-    Q.push(nNodes);
     
     int level = 0;
     
     while (Q.size() > 0) {
-        size_t level_nodes = Q.size();
-        
-        
-        while (Q.size() > 0) {
-            unsigned int node = Q.front();
-            Q.pop();
+        for(const auto& node: Q) {
             
             unsigned int worker_id = hash(node) % parent_workers.size();
             parent_workers[worker_id].addTask([this, node, &sem, level, worker_id]() -> void {
@@ -358,7 +337,7 @@ void Graph::computeParentSSSP() {
             });
         }
         
-        for (unsigned int i = 0; i < level_nodes; i++)
+        for (unsigned int i = 0; i < Q.size(); i++)
             sem.wait();
         
         level++;
@@ -389,7 +368,7 @@ void Graph::computeParentSSSP_processParent(const unsigned int p, unsigned int w
 
 void Graph::computeParentSSSP_processChild(unsigned int child, unsigned int p) {
     // this for loop could be optimized to break if partial alpha is larger than current cost
-    unsigned int prefix = 1;
+    long long int prefix = 1;
     /*if(child == 2)
      cout << "here";
      if(child == 4)
@@ -408,7 +387,7 @@ void Graph::computeParentSSSP_processChild(unsigned int child, unsigned int p) {
         throw "Impossible, only child with parents can reach this function";
     }
 #endif
-    unsigned long int alpha = nodes[p].cost + prefix;
+    long long int alpha = nodes[p].cost + prefix;
     if(nodes[child].inc.size() == 1 || alpha < nodes[child].cost) {
         nodes[child].cost = alpha;
         nodes[child].parent = p;
@@ -447,14 +426,14 @@ void Graph::sequentialDFS_r(unsigned int p) {
 void Graph::computePrePostOrder() {
     FastSemaphore sem;
     initThreadWorkers();
-    sort(nodes.begin(), nodes.end(), compareNodeCost);
+    
     
     for(unsigned int i = 0; i < nodes.size(); i++) {
         unsigned int worker_id = hash(i) % child_workers.size();
         child_workers[worker_id].addTask([this, i, &sem]() -> void {
-            nodes[i].pre = i - 1;
+            nodes[i].subgraph_size = 1;
             nodes[i].adj_visited_count = 0;
-            nodes[i].adj = {};
+            nodes[i].adj = vector<unsigned int> ();
             sem.signal();
         });
     }
@@ -479,9 +458,13 @@ void Graph::computePrePostOrder() {
     
     computeSubDTSize();
     
+    sort(nodes.begin(), nodes.end(), compareNodeCost);
+    
+    
     for(unsigned int i = 0; i < nodes.size(); i++) {
         unsigned int worker_id = hash(i) % parent_workers.size();
         parent_workers[worker_id].addTask([this, i, &sem]() -> void {
+            nodes[i].pre = i - 1;
             nodes[i].post = i - nodes[i].depth + nodes[i].subgraph_size - 1;
             sem.signal();
         });
@@ -490,6 +473,7 @@ void Graph::computePrePostOrder() {
     for(unsigned int i = 0; i < nodes.size(); i++)
         sem.wait();
     
+    sort(nodes.begin(), nodes.end(), compareNodeId);
 }
 
 unsigned int Graph::hash(unsigned int x) {

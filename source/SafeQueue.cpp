@@ -13,12 +13,12 @@ template <typename T>
 void SafeQueue<T>::push(T t)
 {
     std::lock_guard<std::mutex> lock(m);
-    q.push(t);
+    q.push_back(t);
     c.notify_one();
 }
 
 template <typename T>
-std::queue<T> SafeQueue<T>::move_underlying_queue() {
+std::vector<T> SafeQueue<T>::move_underlying_queue() {
     return q;
 }
 
@@ -43,8 +43,8 @@ T SafeQueue<T>::pop() {
         // release lock as long as the wait and reaquire it afterwards.
         c.wait(lock);
     }
-    T val = q.front();
-    q.pop();
+    T val = q.back();
+    q.pop_back();
     return val;
 }
  

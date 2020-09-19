@@ -36,7 +36,7 @@ int main(int argc, const char * argv[]) {
         auto send = std::chrono::steady_clock::now();
         std::chrono::duration<double> selapsed_seconds = send-sstart;
         std::cout << "subgraph size elapsed time: " << selapsed_seconds.count() << "s\n";
-        auto pstart = std::chrono::steady_clock::now();
+        auto pstart = std::chrono::steady_clock::   now();
         gp.computeParentSSSP();
         auto psend = std::chrono::steady_clock::now();
         std::chrono::duration<double> pselapsed_seconds = psend-pstart;
@@ -46,7 +46,6 @@ int main(int argc, const char * argv[]) {
         auto ppend = std::chrono::steady_clock::now();
         std::chrono::duration<double> ppelapsed_seconds = ppend - ppstart;
         std::cout << "pre post elapsed time: " << ppelapsed_seconds.count() << "s\n";
-        gp.printGraph();
         gp.printNodesStatus();
         
     }
