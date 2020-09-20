@@ -13,6 +13,10 @@
 
 using namespace std;
 
+#define CALC_LABELS 0
+#define QUICK_RUN 0
+#define FILE_N 1
+
 void preGraphSizeWorker(Worker *worker) {
     //cout << "Starting worker " << worker->getId() << "\n";
     worker->preGraphSize();
@@ -194,7 +198,7 @@ void start(int nWorkers, Graph *g) {
     std::cout << "Start-end elapsed time: " << elapsed_seconds.count() << "s\n";
 
 
-
+#if CALC_LABELS
     start = std::chrono::steady_clock::now();
 
     recalST rST;
@@ -205,11 +209,12 @@ void start(int nWorkers, Graph *g) {
     end = std::chrono::steady_clock::now();
     elapsed_seconds = end-start;
     std::cout << "Labels elapsed time: " << elapsed_seconds.count() << "s\n";
+#endif
+    
 
 }
 
-#define QUICK_RUN 0
-#define FILE_N 1
+
 
 int main(int argc, const char *argv[]) {
     FILE *fp;
