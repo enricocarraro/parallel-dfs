@@ -23,10 +23,14 @@
 #include <random>
 #include <mutex>
 #include <climits>
+#include <boost/multiprecision/cpp_int.hpp>
+
+using namespace boost::multiprecision;
+using namespace std;
 
 #define GRAPH_DEBUG 1
 
-using namespace std;
+
 
 
 struct Node
@@ -35,13 +39,12 @@ struct Node
                 inc_visited_count = 0,
                 adj_visited_count = 0,
                 prefix_subgraph_size = 0,
-                subgraph_size = 1,
                 pre = 0,
-                post = 0,
                 depth = 0;
 
         int parent = -1;
-        long long int cost = LLONG_MAX;
+        uint1024_t cost = std::numeric_limits<uint1024_t>::max(), subgraph_size = 1,
+        post = 0;
         vector<unsigned int > adj;
     
         vector<unsigned int > inc;

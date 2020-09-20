@@ -368,15 +368,13 @@ void Graph::computeParentSSSP_processParent(const unsigned int p, unsigned int w
 
 void Graph::computeParentSSSP_processChild(unsigned int child, unsigned int p) {
     // this for loop could be optimized to break if partial alpha is larger than current cost
-    long long int prefix = 1;
+    uint1024_t prefix = 1;
     /*if(child == 2)
      cout << "here";
      if(child == 4)
      cout << "here";
      */
     if(p >= 0) {
-        
-        
         for(unsigned int i = 0; i < nodes[p].adj.size() && nodes[p].adj[i] < child; i++) {
             unsigned int brother = nodes[p].adj[i];
             prefix += 1 + nodes[brother].subgraph_size;
@@ -387,7 +385,7 @@ void Graph::computeParentSSSP_processChild(unsigned int child, unsigned int p) {
         throw "Impossible, only child with parents can reach this function";
     }
 #endif
-    long long int alpha = nodes[p].cost + prefix;
+    uint1024_t alpha = nodes[p].cost + prefix;
     if(nodes[child].inc.size() == 1 || alpha < nodes[child].cost) {
         nodes[child].cost = alpha;
         nodes[child].parent = p;
@@ -465,7 +463,7 @@ void Graph::computePrePostOrder() {
         unsigned int worker_id = hash(i) % parent_workers.size();
         parent_workers[worker_id].addTask([this, i, &sem]() -> void {
             nodes[i].pre = i - 1;
-            nodes[i].post = i - nodes[i].depth + nodes[i].subgraph_size - 1;
+            nodes[i].post = (uint1024_t (i - nodes[i].depth - 1)) + nodes[i].subgraph_size;
             sem.signal();
         });
     }
