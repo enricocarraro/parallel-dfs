@@ -40,11 +40,11 @@ void feederManager::preGraphSize()
             nextFather = g->nodes.at(next.father).ancestors->at(i);
             if (nextFather >= 0) {
                 visitedChilds.at(nextFather)++;
-                unsigned long int test = g->nodes.at(nextFather).descendantSize;
+                //unsigned long int test = g->nodes.at(nextFather).descendantSize;
                 g->nodes.at(nextFather).descendantSize += (next.weight);
-                if(test>g->nodes.at(nextFather).descendantSize) {
+                /*if(test>g->nodes.at(nextFather).descendantSize) {
                     printf("Carry");
-                }
+                }*/
                 if (g->nodes.at(nextFather).adjSize == visitedChilds.at(nextFather)) {
                     workers->at(currentWorker).askManagerToFeed->wait();
                     workers->at(currentWorker).next = &g->nodes.at(nextFather);

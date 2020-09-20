@@ -108,7 +108,7 @@ void start(int nWorkers, Graph *g) {
 
     auto iend = std::chrono::steady_clock::now();
     std::chrono::duration<double> ielapsed_seconds = iend - istart;
-    std::cout << "Init elapsed time: " << ielapsed_seconds.count() << "s\n";
+    std::cout << "Pre-subsize elapsed time: " << ielapsed_seconds.count() << "s\n";
 
     //resise preorder vector for faster insertion
     //g->preorder.resize(g->preorderVetSize, -1); //too big
@@ -268,6 +268,8 @@ int main(int argc, const char *argv[]) {
 #if FILE_N == 0 || FILE_N == 1
     g.printTrueLabelsPreWeights();      //prints everything
 #endif
+
+    //std::cout << g.var << std::endl;
 
     return 0;
 

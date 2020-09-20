@@ -23,7 +23,7 @@ struct intint {
 struct intintint {
     int father;
     int child;
-    unsigned long int weight;
+    boost::multiprecision::uint1024_t weight;
 };
 
 class feederManager {

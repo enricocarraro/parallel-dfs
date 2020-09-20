@@ -24,7 +24,7 @@ struct intCouple {
 struct intVetVet {
     int father;
     std::vector<int> adj;
-    std::vector<unsigned long int> *adjWeights;
+    std::vector<boost::multiprecision::uint1024_t> *adjWeights;
 };
 
 #define workerSwitchSemToken 1

@@ -64,6 +64,8 @@ Graph::Graph(FILE *fp) {
 #endif
 
     cancelledEdges = new vector<intint> (maxCancelled);
+    //var = 128;
+    //var += nNodes;
 
 }
 
@@ -116,7 +118,7 @@ void Graph::printTrueLabelsPreWeights() {
         cout << "\n Adjacency list of vertex " << v << "\n head ";
         for (auto x : *nodes[v].trueAdj)
             cout << "-> " << x;
-        printf("\nPre-weight val: %ld", nodes[v].descendantSize);
+        cout <<"\nPre-weight val: " << nodes[v].descendantSize;
         printf("\nSub-graph size: %d", nodes[v].subTreeSize);
         printf("\nStart-end time: %d -> %d\n", nodes[v].start, nodes[v].end);
     }

@@ -9,6 +9,7 @@
 }*/
 
 
+using namespace boost::multiprecision;
 using namespace std;
 
 void Worker::initialize (int id, Graph *g, int nWorkers) {
@@ -35,7 +36,7 @@ void Worker::preGraphSize() {
     n = next;
     askManagerToFeed->signal();
     while (n->id != -1) {
-        toPush.adjWeights = new vector<unsigned long int> (1, n->descendantSize);
+        toPush.adjWeights = new vector<uint1024_t> (1, n->descendantSize);
         toPush.father = n->id;
         //cout << "Working on " << n.id << "\n";
         neighboursWeights.at(positionIntoGraphVector) = toPush;
@@ -49,7 +50,8 @@ void Worker::preGraphSize() {
 
 void Worker::work() {
     Node *n;
-    int positionIntoGraphVector = 0, adjSize, weight;
+    int positionIntoGraphVector = 0, adjSize;
+    uint1024_t weight;
     intVetVet toPush;
     managerHasFed->wait();
     n = next;
@@ -57,7 +59,7 @@ void Worker::work() {
     while (n->id != -1) {
         toPush.adj = *n->adj;
         adjSize = toPush.adj.size();
-        toPush.adjWeights = new std::vector<unsigned long int> (adjSize);
+        toPush.adjWeights = new std::vector<uint1024_t > (adjSize);
         toPush.father = n->id;
         weight = 0;
         for(int i=0; i<adjSize; i++) {

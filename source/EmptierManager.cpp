@@ -4,6 +4,7 @@
 
 #include "EmptierManager.h"
 
+using namespace boost::multiprecision;
 using namespace std;
 
 emptierManager::emptierManager(vector<Worker> *allWorkers, int nWorkers,
@@ -82,12 +83,12 @@ void emptierManager::pushLoop()
     intint toPush;
     intintint toPushWeight;
     std::vector<int> *adj;
-    std::vector<unsigned long int> *adjW;
+    std::vector<uint1024_t> *adjW;
     toPush.father = toPushWeight.father = -1;
     int nodeRead = 0;
     std::vector<int> graph (graphSize, 0);
 
-    int weight = 0;
+    uint1024_t weight = 0;
 
     //adj = &node.adj;
 #if USE_BOOL

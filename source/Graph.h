@@ -12,6 +12,7 @@
 #include <algorithm>
 #include <fstream>
 #include <cmath>
+#include <boost/multiprecision/cpp_int.hpp>
 
 #define GRAPH_DEBUG 0
 
@@ -37,7 +38,8 @@ struct intVet {
 struct Node {
     int id;
     int father = -1;
-    int fatherWeight = INT32_MAX;
+    //unsigned long int fatherWeight = UINT64_MAX;
+    boost::multiprecision::uint1024_t fatherWeight = std::numeric_limits<boost::multiprecision::uint1024_t>::max(), descendantSize = 1;
     //int newFatherWeight;
     int start = -1;
     int end = -1;
@@ -48,7 +50,7 @@ struct Node {
     int exitingArcs = 0;
     std::vector<int> *ancestors;
     int ancSize = 0;
-    unsigned long int descendantSize = 1;
+    //unsigned long int descendantSize = 1;
 #if GRAPH_DOUBLE_READ | GRAPH_REREAD_GRAPH
     int ancNumber = 0;
 #endif
@@ -67,6 +69,7 @@ public:
     //vettore pesi
     //std::vector<int> nodesWeights;
 
+    //__int128_t var;
     int nNodes;
     std::vector<Node> nodes;
     explicit Graph(FILE *fp);
@@ -86,7 +89,7 @@ public:
     int posIntoCancelledEdges = 0;
 
     //dimensione sovrastimata del vettore per calcolare il preorder
-    unsigned long int preorderVetSize = 0;
+    boost::multiprecision::uint1024_t preorderVetSize = 0;
     std::vector<int> preorder;
 
 
