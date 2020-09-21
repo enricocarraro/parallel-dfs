@@ -18,11 +18,20 @@
  };*/
 
 struct intCouple {
+    int start;
+    std::vector<int> *fathers;
+};
+struct intVetVet {
     int father;
     std::vector<int> adj;
+    std::vector<boost::multiprecision::uint1024_t> *adjWeights;
+};
+struct boostIntVect {
+    boost::multiprecision::uint1024_t prefix;
+    std::vector<int> *childs;
 };
 
-#define workerSwitchSemToken 1
+
 class Worker {
 
     int id;
@@ -37,18 +46,24 @@ public:
     //Node *separator;
     int getId () { return id; };
 
+    Graph *g;
     int graphSize;
-    std::vector<intCouple> neighbours;
+    std::vector<intCouple> nextStart;
+    std::vector<intVetVet> neighboursWeights;
+    std::vector<boostIntVect> nextWeights;
     Node *next;
 
     //explicit Worker(int id/*, Node *separator*/);
     //Worker();
     void setId(int id) { this->id = id; };
-    void initialize(int id, int size, int nWorkers);
+    void initialize(int id, Graph *g, int nWorkers);
     void work();
     void subGraphSize();
+    void preGraphSize();
     void resetSemaphores();
     void labels();
+    void weightsAndPrefixes();
+    void startEndTimes();
 };
 
 #endif //SDP_PIPELINERESOLUTION_WORKER_H

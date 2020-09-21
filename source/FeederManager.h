@@ -10,17 +10,27 @@
 #include "Graph.h"
 #include "Worker.h"
 
-
+/*
+#ifndef INTINT
+#define INTINT
 struct intint {
     int father;
     int child;
 };
+#endif
+ */
+
+struct intintint {
+    int start;
+    int child;
+    boost::multiprecision::uint1024_t prefix;
+};
 
 class feederManager {
-    vector<Worker> *workers;
+    std::vector<Worker> *workers;
     Semaphore *commonSemQueueFull;
     Semaphore *commonSemQueueEmpty;
-    std::vector<struct intint> *commonQueue;
+    std::vector<struct intintint> *commonQueue;
     int nWorkers;
     //Node *separator;
     int graphSize;
@@ -28,12 +38,20 @@ class feederManager {
     Node terminator;
 
 public:
-    feederManager(vector<Worker> *allWorkers, int nWorkers,
+    feederManager(std::vector<Worker> *allWorkers, int nWorkers,
                   Semaphore *commonSemQueueFull, Semaphore *commonSemQueueEmpty,
-                  std::vector<intint> *commonQueue,/* Node *separator,*/Graph *g); //commonQueue must have size equal to graphSize
+                  std::vector<intintint> *commonQueue,/* Node *separator,*/Graph *g); //commonQueue must have size equal to graphSize
+#if !QUICK_TIME_CALC
     void feedLoop();
     void subGraphSize();
     void labels();
+#else
+    //new implementation
+    void weightsAndPrefixes();
+    void startEndTimes();
+#endif
+    void preGraphSize();
+
 };
 
 #endif //SDP_PIPELINERESOLUTION_FEEDERMANAGER_H

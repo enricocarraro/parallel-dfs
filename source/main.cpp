@@ -2,6 +2,8 @@
 #include <stdio.h>
 #include <thread>
 #include <vector>
+#include <algorithm>
+#include <numeric>
 
 #include "EmptierManager.h"
 #include "FeederManager.h"
@@ -9,34 +11,55 @@
 #include "Timer.cpp"
 #include "Worker.h"
 #include "Semaphore.h"
+#include "recalST.h"
 
 using namespace std;
 
+#define QUICK_RUN 0
+#define FILE_N 5
+
+void preGraphSizeWorker(Worker *worker) {
+    //cout << "Starting worker " << worker->getId() << "\n";
+    worker->preGraphSize();
+}
+
+void preGraphSizeEManager(emptierManager eManager) {
+    eManager.preGraphSize();
+}
+
+void preGraphSizeFManager(feederManager fManager) {
+    fManager.preGraphSize();
+}
+
+//weight+prefix
 void startWorker(Worker *worker) {
     //cout << "Starting worker " << worker->getId() << "\n";
-    worker->work();
+    worker->weightsAndPrefixes();
 }
 
 void startEManager(emptierManager eManager) {
-    eManager.pushLoop();
+    eManager.weightsAndPrefixes();
 }
 
 void startFManager(feederManager fManager) {
-    fManager.feedLoop();
+    fManager.weightsAndPrefixes();
 }
 
-void startGraphSizeWorker(Worker *worker) {
+//start end
+void startEndWorker(Worker *worker) {
     //cout << "Starting worker " << worker->getId() << "\n";
-    worker->subGraphSize();
+    worker->startEndTimes();
 }
 
-void startGraphSizeEManager(emptierManager eManager) {
-    eManager.subGraphSize();
+void startEndEManager(emptierManager eManager) {
+    eManager.startEndTimes();
 }
 
-void startGraphSizeFManager(feederManager fManager) {
-    fManager.subGraphSize();
+void startEndFManager(feederManager fManager) {
+    fManager.startEndTimes();
 }
+
+/*
 
 void startLabelsWorker(Worker *worker) {
     //cout << "Starting worker " << worker->getId() << "\n";
@@ -50,6 +73,24 @@ void startLabelsEManager(emptierManager eManager) {
 void startLabelsFManager(feederManager fManager) {
     fManager.labels();
 }
+*/
+
+template <typename T>
+vector<size_t> sort_indexes(const vector<T> &v) {
+
+    // initialize original index locations
+    vector<size_t> idx(v.size());
+    iota(idx.begin(), idx.end(), 0);
+
+    // sort indexes based on comparing values in v
+    // using std::stable_sort instead of std::sort
+    // to avoid unnecessary index re-orderings
+    // when v contains elements of equal values
+    stable_sort(idx.begin(), idx.end(),
+                [&v](size_t i1, size_t i2) {return v[i1] < v[i2];});
+
+    return idx;
+}
 
 void start(int nWorkers, Graph *g) {
     //emptierManager(Worker** allWorkers, int nWorkers, Semaphore* commonSemQueueFull, Semaphore* commonSemQueueEmpty, std::vector<intint> commonQueue, Node *separator, int graphSize);
@@ -58,17 +99,52 @@ void start(int nWorkers, Graph *g) {
 
     vector<Worker> allWorkers(nWorkers);
     for (int i = 0; i < nWorkers; i++) {
-        allWorkers.at(i).initialize(i, g->size(), nWorkers);
+        allWorkers.at(i).initialize(i, g, nWorkers);
     }
-    Semaphore commonSemQueueFull = Semaphore(0, g->size());
-    Semaphore commonSemQueueEmpty = Semaphore(g->size(),
-                                                   g->size());
-    std::vector<intint> commonQueue = std::vector<intint>(
-            g->size());
+    Semaphore commonSemQueueFull (0, g->nNodes);
+    Semaphore commonSemQueueEmpty (g->nNodes, g->nNodes);
+    std::vector<intintint> commonQueue (g->nNodes);
     emptierManager eManager(&allWorkers, nWorkers, &commonSemQueueFull,
                             &commonSemQueueEmpty, &commonQueue, g);
     feederManager fManager(&allWorkers, nWorkers, &commonSemQueueFull,
                            &commonSemQueueEmpty, &commonQueue, g);
+
+
+    //pre phase
+    auto istart = std::chrono::steady_clock::now();
+
+    vector<thread> tPreGraphSizeWorkers(nWorkers);
+    for (int i = 0; i < nWorkers; i++) {
+        tPreGraphSizeWorkers[i] = thread(preGraphSizeWorker, &allWorkers.at(i));
+    }
+    thread tPreGraphSizeEManager(preGraphSizeEManager, eManager);
+    thread tPreGraphSizeFManager(preGraphSizeFManager, fManager);
+
+    for (int i = 0; i < nWorkers; i++) {
+        tPreGraphSizeWorkers[i].join();
+    }
+    tPreGraphSizeEManager.join();
+    tPreGraphSizeFManager.join();
+
+
+    for (int i = 0; i < nWorkers; i++) {
+        allWorkers.at(i).resetSemaphores();
+    }
+    commonSemQueueEmpty.reset();
+    commonSemQueueFull.reset();
+
+    auto iend = std::chrono::steady_clock::now();
+    std::chrono::duration<double> ielapsed_seconds = iend - istart;
+    std::cout << "Pre-subsize elapsed time: " << ielapsed_seconds.count() << "s\n";
+
+    //resise preorder vector for faster insertion
+    //g->preorder.resize(g->preorderVetSize, -1); //too big
+
+
+
+    //first phase
+    auto start = std::chrono::steady_clock::now();
+
 
     vector<thread> tWorkers(nWorkers);
     for (int i = 0; i < nWorkers; i++) {
@@ -92,56 +168,88 @@ void start(int nWorkers, Graph *g) {
     commonSemQueueFull.reset();
 
 
+    auto end = std::chrono::steady_clock::now();
+    std::chrono::duration<double> elapsed_seconds = end-start;
+    std::cout << "Weights elapsed time: " << elapsed_seconds.count() << "s\n";
+
+
+
     //second phase
+    start = std::chrono::steady_clock::now();
 
-    vector<thread> tGraphSizeWorkers(nWorkers);
-    for (int i = 0; i < nWorkers; i++) {
-        tGraphSizeWorkers[i] = thread(startGraphSizeWorker, &allWorkers.at(i));
+    vector<size_t> tmp = sort_indexes (g->nodes);
+    for (int i=0; auto x : tmp) {
+        g->nodes.at( static_cast<int> (x) ).end = ++i;
     }
-    thread tGraphSizeEManager(startGraphSizeEManager, eManager);
-    thread tGraphSizeFManager(startGraphSizeFManager, fManager);
 
-    for (int i = 0; i < nWorkers; i++) {
-        tGraphSizeWorkers[i].join();
-    }
-    tGraphSizeEManager.join();
-    tGraphSizeFManager.join();
+    end = std::chrono::steady_clock::now();
+    elapsed_seconds = end-start;
+    std::cout << "End elapsed time: " << elapsed_seconds.count() << "s\n";
 
 
-    for (int i = 0; i < nWorkers; i++) {
-        allWorkers.at(i).resetSemaphores();
-    }
-    commonSemQueueEmpty.reset();
-    commonSemQueueFull.reset();
 
 
     //third phase
+    start = std::chrono::steady_clock::now();
 
-    vector<thread> tLabelsWorkers(nWorkers);
+    vector<thread> seWorkers(nWorkers);
     for (int i = 0; i < nWorkers; i++) {
-        tLabelsWorkers[i] = thread(startLabelsWorker, &allWorkers.at(i));
+        seWorkers[i] = thread(startEndWorker, &allWorkers.at(i));
     }
-    thread tLabelsEManager(startLabelsEManager, eManager);
-    thread tLabelsFManager(startLabelsFManager, fManager);
+    thread seEManager(startEndEManager, eManager);
+    thread seFManager(startEndFManager, fManager);
+    //std::thread first (foo);
 
     for (int i = 0; i < nWorkers; i++) {
-        tLabelsWorkers[i].join();
+        seWorkers[i].join();
     }
-    tLabelsEManager.join();
-    tLabelsFManager.join();
+    seEManager.join();
+    seFManager.join();
+
+    end = std::chrono::steady_clock::now();
+    elapsed_seconds = end-start;
+    std::cout << "Labels elapsed time: " << elapsed_seconds.count() << "s\n";
+/*
+*/
 
 
 }
 
+
+
 int main(int argc, const char *argv[]) {
     FILE *fp;
 
+#if QUICK_RUN
+    string graname;
+    switch (FILE_N) {
+        case 0:
+            graname = string("/home/lire/CLionProjects/sdp_pipelineReSolution/v4e2.gra");
+            break;
+        case 1:
+            graname = string("/home/lire/CLionProjects/sdp_pipelineReSolution/v10e3.gra");
+            break;
+        case 2:
+            graname = string("/home/lire/CLionProjects/sdp_pipelineReSolution/v10e3v2.gra");
+            break;
+        case 3:
+            graname = string("/home/lire/CLionProjects/sdp_pipelineReSolution/v10e3v3.gra");
+            break;
+        case 4:
+            graname = string("/home/lire/CLionProjects/sdp_pipelineReSolution/v5000e50.gra");
+            break;
+        case 5:
+            graname = string("/home/lire/CLionProjects/sdp_pipelineReSolution/v100000e100.gra");
+            break;
+    }
+#else
     // 1 parameter of format .gra is required.
     if (argc != 2) {
         cout << "Error: Missing parameter" << endl;
         return -1;
     }
     string graname(argv[1]);
+#endif
 
     if ((fp = fopen(graname.c_str(), "r")) == NULL) {
         cout << "Error: File doesn't exist." << endl;
@@ -165,7 +273,12 @@ int main(int argc, const char *argv[]) {
 
     //g.printTrueGraph();
     //g.printTrueGraphSize();
-    //g.printTrueLabels();      //prints everything
+    //g.printTrueLabels();
+#if FILE_N <= 3
+    g.printTrueLabelsPreWeights();      //prints everything
+#endif
+
+    //std::cout << g.var << std::endl;
 
     return 0;
 
