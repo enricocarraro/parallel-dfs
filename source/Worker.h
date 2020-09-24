@@ -44,7 +44,7 @@ public:
     //Semaphore *queueExclusion = new Semaphore(1, 1);
 
     //Node *separator;
-    int getId () { return id; };
+    int getId() { return id; };
 
     Graph *g;
     int graphSize;
@@ -56,13 +56,21 @@ public:
     //explicit Worker(int id/*, Node *separator*/);
     //Worker();
     void setId(int id) { this->id = id; };
+
     void initialize(int id, Graph *g, int nWorkers);
+
     void work();
+
     void subGraphSize();
+
     void preGraphSize();
+
     void resetSemaphores();
+
     void labels();
+
     void weightsAndPrefixes();
+
     void startEndTimes();
 };
 

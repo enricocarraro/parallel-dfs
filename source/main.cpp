@@ -8,10 +8,8 @@
 #include "EmptierManager.h"
 #include "FeederManager.h"
 #include "Graph.h"
-#include "Timer.cpp"
 #include "Worker.h"
 #include "Semaphore.h"
-#include "recalST.h"
 
 using namespace std;
 
@@ -59,23 +57,7 @@ void startEndFManager(feederManager fManager) {
     fManager.startEndTimes();
 }
 
-/*
-
-void startLabelsWorker(Worker *worker) {
-    //cout << "Starting worker " << worker->getId() << "\n";
-    worker->labels();
-}
-
-void startLabelsEManager(emptierManager eManager) {
-    eManager.labels();
-}
-
-void startLabelsFManager(feederManager fManager) {
-    fManager.labels();
-}
-*/
-
-template <typename T>
+template<typename T>
 vector<size_t> sort_indexes(const vector<T> &v) {
 
     // initialize original index locations
@@ -87,23 +69,21 @@ vector<size_t> sort_indexes(const vector<T> &v) {
     // to avoid unnecessary index re-orderings
     // when v contains elements of equal values
     stable_sort(idx.begin(), idx.end(),
-                [&v](size_t i1, size_t i2) {return v[i1] < v[i2];});
+                [&v](size_t i1, size_t i2) { return v[i1] < v[i2]; });
 
     return idx;
 }
 
 void start(int nWorkers, Graph *g) {
-    //emptierManager(Worker** allWorkers, int nWorkers, Semaphore* commonSemQueueFull, Semaphore* commonSemQueueEmpty, std::vector<intint> commonQueue, Node *separator, int graphSize);
-    //feederManager::feederManager(Worker** allWorkers, int nWorkers, Semaphore* commonSemQueueFull, Semaphore* commonSemQueueEmpty, std::vector<intint> commonQueue, Node *separator, int graphSize, std::vector<Node> *allNodes)
-    //Worker::Worker(int id)
+
 
     vector<Worker> allWorkers(nWorkers);
     for (int i = 0; i < nWorkers; i++) {
         allWorkers.at(i).initialize(i, g, nWorkers);
     }
-    Semaphore commonSemQueueFull (0, g->nNodes);
-    Semaphore commonSemQueueEmpty (g->nNodes, g->nNodes);
-    std::vector<intintint> commonQueue (g->nNodes);
+    Semaphore commonSemQueueFull(0, g->nNodes);
+    Semaphore commonSemQueueEmpty(g->nNodes, g->nNodes);
+    std::vector<intintint> commonQueue(g->nNodes);
     emptierManager eManager(&allWorkers, nWorkers, &commonSemQueueFull,
                             &commonSemQueueEmpty, &commonQueue, g);
     feederManager fManager(&allWorkers, nWorkers, &commonSemQueueFull,
@@ -137,8 +117,6 @@ void start(int nWorkers, Graph *g) {
     std::chrono::duration<double> ielapsed_seconds = iend - istart;
     std::cout << "Pre-subsize elapsed time: " << ielapsed_seconds.count() << "s\n";
 
-    //resise preorder vector for faster insertion
-    //g->preorder.resize(g->preorderVetSize, -1); //too big
 
 
 
@@ -169,7 +147,7 @@ void start(int nWorkers, Graph *g) {
 
 
     auto end = std::chrono::steady_clock::now();
-    std::chrono::duration<double> elapsed_seconds = end-start;
+    std::chrono::duration<double> elapsed_seconds = end - start;
     std::cout << "Weights elapsed time: " << elapsed_seconds.count() << "s\n";
 
 
@@ -177,13 +155,13 @@ void start(int nWorkers, Graph *g) {
     //second phase
     start = std::chrono::steady_clock::now();
 
-    vector<size_t> tmp = sort_indexes (g->nodes);
-    for (int i=0; auto x : tmp) {
-        g->nodes.at( static_cast<int> (x) ).end = ++i;
+    vector<size_t> tmp = sort_indexes(g->nodes);
+    for (int i = 0; auto x : tmp) {
+        g->nodes.at(static_cast<int> (x)).end = ++i;
     }
 
     end = std::chrono::steady_clock::now();
-    elapsed_seconds = end-start;
+    elapsed_seconds = end - start;
     std::cout << "End elapsed time: " << elapsed_seconds.count() << "s\n";
 
 
@@ -207,14 +185,13 @@ void start(int nWorkers, Graph *g) {
     seFManager.join();
 
     end = std::chrono::steady_clock::now();
-    elapsed_seconds = end-start;
+    elapsed_seconds = end - start;
     std::cout << "Labels elapsed time: " << elapsed_seconds.count() << "s\n";
 /*
 */
 
 
 }
-
 
 
 int main(int argc, const char *argv[]) {
@@ -255,25 +232,25 @@ int main(int argc, const char *argv[]) {
         cout << "Error: File doesn't exist." << endl;
         return -1;
     }
-
-    Timer t;
-    t.start();
+    auto timeStart = std::chrono::steady_clock::now();
 
     Graph g(fp);
     fclose(fp);
 
     g.sortVectors();
-    t.stop();
-    t.printElapsed();
 
-    t.start();
+    auto timeEnd = std::chrono::steady_clock::now();
+    std::chrono::duration<double> elapsed_seconds = timeEnd - timeStart;
+    std::cout << "Graph creation elapsed time: " << elapsed_seconds.count() << "s\n";
+
+    timeStart = std::chrono::steady_clock::now();
+
     start(2, &g);
-    t.stop();
-    t.printElapsed();
 
-    //g.printTrueGraph();
-    //g.printTrueGraphSize();
-    //g.printTrueLabels();
+    timeEnd = std::chrono::steady_clock::now();
+    elapsed_seconds = timeEnd - timeStart;
+    std::cout << "All calculations elapsed time: " << elapsed_seconds.count() << "s\n";
+
 #if FILE_N <= 3
     g.printTrueLabelsPreWeights();      //prints everything
 #endif

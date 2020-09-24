@@ -63,8 +63,7 @@ struct Node {
     //bool preleaf = true;
 #endif
 
-    bool operator < (const Node& n) const
-    {
+    bool operator<(const Node &n) const {
         return (nodeWeight < n.nodeWeight);
     }
 };
@@ -85,16 +84,27 @@ public:
     int nNodes;
     int nEdges = 0;
     std::vector<Node> nodes;
+
     explicit Graph(FILE *fp);
+
     explicit Graph(int nodes);
+
     void addEdge(int u, int v);
-    void build_addEdges(unsigned u, std::vector<unsigned>& adj, unsigned adj_size);
+
+    void build_addEdges(unsigned u, std::vector<unsigned> &adj, unsigned adj_size);
+
     void printGraph();
+
     void printTrueGraph();
+
     void printTrueGraphSize();
+
     void printTrueLabels();
+
     void printTrueLabelsPreWeights();
+
     void sortVectors();
+
     void build(FILE *fp);
 
     //ottimizzazione salvataggio archi cancellati
@@ -107,7 +117,9 @@ public:
 
 
 #if GRAPH_DOUBLE_READ | GRAPH_REREAD_GRAPH
+
     void reBuild(FILE *fp);
+
 #endif
 #if GRAPH_DOUBLE_READ
     void addAncestor(unsigned u, std::vector<unsigned>& adj, unsigned adj_size);

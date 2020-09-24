@@ -11,11 +11,13 @@ Semaphore::Semaphore(int count, int maxCount) {
     this->initialCount = count;
     this->maxCount = maxCount;
 }
+
 Semaphore::Semaphore(int count) {
     this->count = count;
     this->initialCount = count;
     maxCount = INT_MAX;
 }
+
 Semaphore::Semaphore() {
     this->count = 0;
     this->initialCount = 0;

@@ -8,9 +8,9 @@ using namespace std;
 
 Graph::Graph(FILE *fp) {
 #if GRAPH_OPT
-    if(GRAPH_DOUBLE_READ + GRAPH_PUSHBACK + GRAPH_REREAD_GRAPH + 1 == 0) {
+    if (GRAPH_DOUBLE_READ + GRAPH_PUSHBACK + GRAPH_REREAD_GRAPH + 1 == 0) {
         printf("Error, one option must be selected\n");
-        exit (-1);
+        exit(-1);
     }
 #endif
     fscanf(fp, "%d\n", &nNodes);
@@ -50,9 +50,9 @@ Graph::Graph(FILE *fp) {
 #if GRAPH_REREAD_GRAPH
     //30-40% faster than GRAPH_PUSHBACK
     for (int i = 0; i < nNodes; i++) {
-        nodes[i].ancestors = new vector<int> (nodes[i].ancSize);
+        nodes[i].ancestors = new vector<int>(nodes[i].ancSize);
 #if !USE_BOOL
-        if(nodes[i].root) { //MUST change into if(nodes[i].root)
+        if (nodes[i].root) { //MUST change into if(nodes[i].root)
             roots.at(rootsPos++) = i;
         }
 #endif
@@ -115,7 +115,7 @@ void Graph::printTrueLabelsPreWeights() {
         cout << "\n Adjacency list of vertex " << v << "\n head ";
         //for (auto x : *nodes[v].trueAdj)
         //    cout << "-> " << x;
-        cout <<"\nPre-weight val: " << nodes[v].nodeWeight;
+        cout << "\nPre-weight val: " << nodes[v].nodeWeight;
 #if !QUICK_TIME_CALC
         cout << "\nWeights+pref: " << nodes[v].fatherWeight;
 #endif
@@ -135,14 +135,14 @@ void Graph::addEdge(int u, int v) {
 #if USE_BOOL
     roots.at(v) = false;
 #else
-    if(nodes[v].root) {
+    if (nodes[v].root) {
         nodes[v].root = false;
         rootsSize--;
     }
 #endif
 }
 
-void Graph::build_addEdges(unsigned u, vector<unsigned>& adj, unsigned adj_size) {
+void Graph::build_addEdges(unsigned u, vector<unsigned> &adj, unsigned adj_size) {
     nEdges += adj_size;
     if (adj_size > 0) {
         if (nodes[u].adjSize == 0) {
@@ -155,7 +155,7 @@ void Graph::build_addEdges(unsigned u, vector<unsigned>& adj, unsigned adj_size)
 #if USE_BOOL
                 roots.at(adj[i]) = false;
 #else
-                if(nodes.at(adj[i]).root) {
+                if (nodes.at(adj[i]).root) {
                     nodes.at(adj[i]).root = false;
                     rootsSize--;
                 }
@@ -235,7 +235,7 @@ void Graph::reBuild(FILE * fp) {
 
 #if GRAPH_REREAD_GRAPH
 
-void Graph::reBuild(FILE * fp) {
+void Graph::reBuild(FILE *fp) {
 
     for (int i = 0; i < nNodes; i++) {
         for (int j = 0; j < nodes[i].adjSize; j++) {
@@ -247,14 +247,14 @@ void Graph::reBuild(FILE * fp) {
 
 #endif
 
-void Graph::build(FILE * fp) {
+void Graph::build(FILE *fp) {
     unsigned u, v;
     unsigned max_line_size = (log10(nNodes) + 2) * (nNodes + 1) + 3;
     char str[max_line_size];
     char dontcare[3];
-    vector<unsigned> buf = vector<unsigned> (nNodes + 1);
+    vector<unsigned> buf = vector<unsigned>(nNodes + 1);
 
-    while(fscanf(fp, "%[^#]s", str) != EOF) {
+    while (fscanf(fp, "%[^#]s", str) != EOF) {
         fscanf(fp, "%s\n", dontcare);
         char *token;
         unsigned i = 0;
@@ -267,7 +267,7 @@ void Graph::build(FILE * fp) {
         sscanf(token, "%d", &u);
         token = strtok(NULL, " ");
         /* walk through other tokens */
-        while(token != NULL){
+        while (token != NULL) {
 #if GRAPH_DEBUG
             printf( " %s\n", token );
 #endif
