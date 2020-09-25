@@ -3,7 +3,7 @@
 
 //run main
 #define QUICK_RUN 0
-#define FILE_N 5
+#define FILE_N 2
 
 //opt quickSemaphores
 #define USE_QUICK_SEM 1
