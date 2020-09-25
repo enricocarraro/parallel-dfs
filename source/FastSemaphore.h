@@ -18,8 +18,9 @@ public:
 
 private:
     std::atomic<int> m_count;
-    Semaphore m_semaphore;
     int count;
+    std::mutex mux;
+    std::condition_variable cv;
 };
 
 #endif //SDP_PIPELINERESOLUTION_FASTSEMAPHORE_H
