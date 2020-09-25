@@ -43,7 +43,7 @@ void startFManager(feederManager fManager) {
     fManager.weightsAndPrefixes();
 }
 
-//start end
+//father end
 void startEndWorker(Worker *worker) {
     //cout << "Starting worker " << worker->getId() << "\n";
     worker->startEndTimes();

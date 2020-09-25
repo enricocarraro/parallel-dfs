@@ -116,9 +116,6 @@ void Graph::printTrueLabelsPreWeights() {
         //for (auto x : *nodes[v].trueAdj)
         //    cout << "-> " << x;
         cout << "\nPre-weight val: " << nodes[v].nodeWeight;
-#if !QUICK_TIME_CALC
-        cout << "\nWeights+pref: " << nodes[v].fatherWeight;
-#endif
         printf("\nSub-graph size: %d", nodes[v].subTreeSize);
         printf("\nStart-end time: %d -> %d\n", nodes[v].start, nodes[v].end);
     }

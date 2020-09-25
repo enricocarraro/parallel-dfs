@@ -21,19 +21,27 @@
  struct Node n;
  };*/
 
+#if !LIMITED_SPACE
 struct intCouple {
-    int start;
-    std::vector<int> *fathers;
+    int father;
+    std::vector<int> *adj;
 };
 struct intVetVet {
     int father;
-    std::vector<int> adj;
+    std::vector<int> *adj;
     std::vector<boost::multiprecision::uint1024_t> *adjWeights;
 };
 struct boostIntVect {
-    boost::multiprecision::uint1024_t prefix;
-    std::vector<int> *childs;
+    boost::multiprecision::uint1024_t father;
+    std::vector<int> *adj;
 };
+#else
+struct boostIntVectBoostVect {
+    boost::multiprecision::uint1024_t father;
+    std::vector<int> *adj;
+    std::vector<boost::multiprecision::uint1024_t> *adjWeights;
+};
+#endif
 
 
 class Worker {
@@ -56,9 +64,13 @@ public:
 
     Graph *g;
     int graphSize;
+#if !LIMITED_SPACE
     std::vector<intCouple> nextStart;
     std::vector<intVetVet> neighboursWeights;
     std::vector<boostIntVect> nextWeights;
+#else
+    std::vector<boostIntVectBoostVect> results;
+#endif
     Node *next;
 
 

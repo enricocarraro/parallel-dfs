@@ -14,16 +14,7 @@
 #include <cmath>
 #include <boost/multiprecision/cpp_int.hpp>
 
-#define GRAPH_DEBUG 0
-
-#define QUICK_TIME_CALC 1
-#define CALC_LABELS 1
-
-#define GRAPH_OPT 1
-#define GRAPH_PUSHBACK 0
-#define GRAPH_DOUBLE_READ 0
-#define GRAPH_REREAD_GRAPH 1
-#define USE_BOOL 0
+#include "OPTIONS.h"
 
 #ifndef INTINT
 #define INTINT

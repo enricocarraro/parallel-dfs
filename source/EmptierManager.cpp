@@ -49,8 +49,8 @@ void emptierManager::preGraphSize() {
     i = 0;
     while (nodeRead < graphSize) {
         workers->at(i).askManagerToEmpty->wait();
-        toPush.start = workers->at(i).neighboursWeights.at(positionsIntoWorkQueues[i]).father; //node itself
-        toPush.prefix = workers->at(i).neighboursWeights.at(positionsIntoWorkQueues[i]).adjWeights->at(0); //weight
+        toPush.start = static_cast<int> ( workers->at(i).results.at(positionsIntoWorkQueues[i]).father ); //node itself
+        toPush.prefix = workers->at(i).results.at(positionsIntoWorkQueues[i]).adjWeights->at(0); //weight
         positionsIntoWorkQueues[i] = (positionsIntoWorkQueues[i] + 1) % workers->at(i).graphSize;
 
         commonSemQueueEmpty->wait();
@@ -72,7 +72,7 @@ void emptierManager::weightsAndPrefixes() {
 
     uint1024_t prefix = 0;
     std::vector<int> *childs;
-    boostIntVect *next;
+    boostIntVectBoostVect *next;
 
     int i, j;
 
@@ -94,9 +94,9 @@ void emptierManager::weightsAndPrefixes() {
 
         workers->at(i).askManagerToEmpty->wait();
 
-        next = &workers->at(i).nextWeights.at(positionsIntoWorkQueues[i]++);
-        childs = next->childs;
-        prefix = next->prefix;
+        next = &workers->at(i).results.at(positionsIntoWorkQueues[i]++);
+        childs = next->adj;
+        prefix = next->father;
         for (j = 0; j < childs->size(); j++) {    //"node" containing all other root nodes as neighbours
             toPushWeight.child = childs->at(j);
             toPushWeight.prefix = prefix;
@@ -122,7 +122,7 @@ void emptierManager::startEndTimes() {
     int readNodes = 0;
 
     std::vector<int> *fathers;
-    intCouple *next;
+    boostIntVectBoostVect *next;
 
     int i, j;
 
@@ -143,9 +143,9 @@ void emptierManager::startEndTimes() {
 
         workers->at(i).askManagerToEmpty->wait();
 
-        next = &workers->at(i).nextStart.at(positionsIntoWorkQueues[i]++);
-        toPushWeight.start = next->start;
-        fathers = next->fathers;
+        next = &workers->at(i).results.at(positionsIntoWorkQueues[i]++);
+        toPushWeight.start = static_cast<int> ( next->father );
+        fathers = next->adj;
         for (j = 0; j < fathers->size(); j++) {    //"node" containing all other root nodes as neighbours
             toPushWeight.child = fathers->at(j);
             commonSemQueueEmpty->wait();

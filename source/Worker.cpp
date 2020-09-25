@@ -13,9 +13,13 @@ void Worker::initialize(int id, Graph *g, int nWorkers) {
     this->id = id;
     this->g = g;
     this->graphSize = g->nNodes / nWorkers + 1;
+#if !LIMITED_SPACE
     nextStart.resize(graphSize);
     neighboursWeights.resize(graphSize);
     nextWeights.resize(graphSize);
+#else
+    results.resize(graphSize);
+#endif
 }
 
 void Worker::resetSemaphores() {
@@ -27,7 +31,7 @@ void Worker::resetSemaphores() {
 void Worker::preGraphSize() {
     Node *n;
     int positionIntoGraphVector = 0;
-    intVetVet toPush;
+    boostIntVectBoostVect toPush;
 
     managerHasFed->wait();
     n = next;
@@ -35,7 +39,7 @@ void Worker::preGraphSize() {
     while (n->id != -1) {
         toPush.adjWeights = new vector<uint1024_t>(1, n->nodeWeight);
         toPush.father = n->id;
-        neighboursWeights.at(positionIntoGraphVector) = toPush;
+        results.at(positionIntoGraphVector) = toPush;
         askManagerToEmpty->signal();
         positionIntoGraphVector = (positionIntoGraphVector + 1) % graphSize;
         managerHasFed->wait();
@@ -48,7 +52,7 @@ void Worker::weightsAndPrefixes() {
     Node *n;
     int positionIntoGraphVector = 0;
     uint1024_t weight;
-    boostIntVect toPush;
+    boostIntVectBoostVect toPush;
 
     managerHasFed->wait();
     n = next;
@@ -58,10 +62,10 @@ void Worker::weightsAndPrefixes() {
 
         n->nodeWeight += n->prefix;
 
-        toPush.childs = n->adj;
-        toPush.prefix = n->prefix;
+        toPush.adj = n->adj;
+        toPush.father = n->prefix;
 
-        nextWeights.at(positionIntoGraphVector) = toPush;
+        results.at(positionIntoGraphVector) = toPush;
         positionIntoGraphVector = (positionIntoGraphVector + 1) % graphSize;
         askManagerToEmpty->signal();
 
@@ -75,7 +79,7 @@ void Worker::startEndTimes() {
     Node *n;
     int positionIntoGraphVector = 0;
     uint1024_t weight;
-    intCouple toPush;
+    boostIntVectBoostVect toPush;
 
     managerHasFed->wait();
     n = next;
@@ -83,10 +87,10 @@ void Worker::startEndTimes() {
 
     while (n->id != -1) {
 
-        toPush.fathers = n->ancestors;
-        toPush.start = n->start;
+        toPush.adj = n->ancestors;
+        toPush.father = n->start;
 
-        nextStart.at(positionIntoGraphVector) = toPush;
+        results.at(positionIntoGraphVector) = toPush;
         positionIntoGraphVector = (positionIntoGraphVector + 1) % graphSize;
         askManagerToEmpty->signal();
 
