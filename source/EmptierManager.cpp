@@ -7,9 +7,15 @@
 using namespace boost::multiprecision;
 using namespace std;
 
+#if !USE_QUICK_SEM
 emptierManager::emptierManager(vector<Worker> *allWorkers, int nWorkers,
                                Semaphore *commonSemQueueFull, Semaphore *commonSemQueueEmpty,
                                std::vector<intintint> *commonQueue, Graph *g) {
+#else
+    emptierManager::emptierManager(vector<Worker> *allWorkers, int nWorkers,
+                               FastSemaphore *commonSemQueueFull, FastSemaphore *commonSemQueueEmpty,
+                               std::vector<intintint> *commonQueue, Graph *g) {
+#endif
     this->workers = allWorkers;
     this->commonSemQueueFull = commonSemQueueFull;
     this->commonSemQueueEmpty = commonSemQueueEmpty;

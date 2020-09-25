@@ -10,6 +10,10 @@
 
 #include "Graph.h"
 #include "Semaphore.h"
+#include "OPTIONS.h"
+#if USE_QUICK_SEM
+#include "FastSemaphore.h"
+#endif
 
 /*struct NodeWrapper
  {
@@ -37,11 +41,15 @@ class Worker {
     int id;
 
 public:
-
+#if !USE_QUICK_SEM
     Semaphore *askManagerToEmpty = new Semaphore();
     Semaphore *askManagerToFeed = new Semaphore(1, 1);
     Semaphore *managerHasFed = new Semaphore(0, 1);
-    //Semaphore *queueExclusion = new Semaphore(1, 1);
+#else
+    FastSemaphore *askManagerToEmpty = new FastSemaphore();
+    FastSemaphore *askManagerToFeed = new FastSemaphore(1);
+    FastSemaphore *managerHasFed = new FastSemaphore();
+#endif
 
     //Node *separator;
     int getId() { return id; };
@@ -53,21 +61,12 @@ public:
     std::vector<boostIntVect> nextWeights;
     Node *next;
 
-    //explicit Worker(int id/*, Node *separator*/);
-    //Worker();
-    void setId(int id) { this->id = id; };
 
     void initialize(int id, Graph *g, int nWorkers);
-
-    void work();
-
-    void subGraphSize();
 
     void preGraphSize();
 
     void resetSemaphores();
-
-    void labels();
 
     void weightsAndPrefixes();
 

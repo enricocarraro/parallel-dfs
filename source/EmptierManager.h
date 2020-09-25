@@ -11,10 +11,17 @@
 #include "FeederManager.h"
 #include "Worker.h"
 
+#include "OPTIONS.h"
+
 class emptierManager {
     std::vector<Worker> *workers;
+#if !USE_QUICK_SEM
     Semaphore *commonSemQueueFull;
     Semaphore *commonSemQueueEmpty;
+#else
+    FastSemaphore *commonSemQueueFull;
+    FastSemaphore *commonSemQueueEmpty;
+#endif
     std::vector<struct intintint> *commonQueue;
     int nWorkers;
     int graphSize;
@@ -24,10 +31,17 @@ class emptierManager {
 
 
 public:
+#if !USE_QUICK_SEM
     emptierManager(std::vector<Worker> *allWorkers, int nWorkers,
                    Semaphore *commonSemQueueFull, Semaphore *commonSemQueueEmpty,
                    std::vector<intintint> *commonQueue,/* Node *separator,*/
                    Graph *g); //commonQueue must have size equal to graphSize
+#else
+    emptierManager(std::vector<Worker> *allWorkers, int nWorkers,
+                   FastSemaphore *commonSemQueueFull, FastSemaphore *commonSemQueueEmpty,
+                   std::vector<intintint> *commonQueue,/* Node *separator,*/
+                   Graph *g); //commonQueue must have size equal to graphSize
+#endif
 
 
     void weightsAndPrefixes();

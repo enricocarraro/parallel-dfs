@@ -19,7 +19,6 @@ void Worker::initialize(int id, Graph *g, int nWorkers) {
 }
 
 void Worker::resetSemaphores() {
-
     askManagerToEmpty->reset();
     askManagerToFeed->reset();
     managerHasFed->reset();

@@ -1,0 +1,12 @@
+#ifndef SDP_PIPELINERESOLUTION_OPTIONS_H
+#define SDP_PIPELINERESOLUTION_OPTIONS_H
+
+//run main
+#define QUICK_RUN 0
+#define FILE_N 5
+
+//opt quickSemaphores
+#define USE_QUICK_SEM 1
+
+
+#endif //SDP_PIPELINERESOLUTION_OPTIONS_H

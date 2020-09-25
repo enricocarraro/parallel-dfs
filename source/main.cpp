@@ -10,11 +10,11 @@
 #include "Graph.h"
 #include "Worker.h"
 #include "Semaphore.h"
+#include "FastSemaphore.h"
+
+#include "OPTIONS.h"
 
 using namespace std;
-
-#define QUICK_RUN 0
-#define FILE_N 5
 
 void preGraphSizeWorker(Worker *worker) {
     //cout << "Starting worker " << worker->getId() << "\n";
@@ -81,8 +81,14 @@ void start(int nWorkers, Graph *g) {
     for (int i = 0; i < nWorkers; i++) {
         allWorkers.at(i).initialize(i, g, nWorkers);
     }
+#if !USE_QUICK_SEM
     Semaphore commonSemQueueFull(0, g->nNodes);
     Semaphore commonSemQueueEmpty(g->nNodes, g->nNodes);
+#else
+    FastSemaphore commonSemQueueFull(0);
+    FastSemaphore commonSemQueueEmpty(g->nNodes);
+#endif
+
     std::vector<intintint> commonQueue(g->nNodes);
     emptierManager eManager(&allWorkers, nWorkers, &commonSemQueueFull,
                             &commonSemQueueEmpty, &commonQueue, g);

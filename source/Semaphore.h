@@ -7,6 +7,7 @@
 
 #include <mutex>
 #include <condition_variable>
+#include "OPTIONS.h"
 
 class Semaphore {
     std::mutex mux;
