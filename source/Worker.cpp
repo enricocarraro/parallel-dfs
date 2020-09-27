@@ -19,6 +19,11 @@ void Worker::initialize(int id, Graph *g, int nWorkers) {
     nextWeights.resize(graphSize);
 #else
     results.resize(graphSize);
+#if USE_QUICK_SEM
+    managerHasEmptied = new FastSemaphore (graphSize);
+#else
+    managerHasEmptied = new Semaphore (graphSize, graphSize);
+#endif
 #endif
 }
 
@@ -26,6 +31,7 @@ void Worker::resetSemaphores() {
     askManagerToEmpty->reset();
     askManagerToFeed->reset();
     managerHasFed->reset();
+    managerHasEmptied->reset();
 }
 
 void Worker::preGraphSize() {
@@ -39,9 +45,12 @@ void Worker::preGraphSize() {
     while (n->id != -1) {
         toPush.adjWeights = new vector<uint1024_t>(1, n->nodeWeight);
         toPush.father = n->id;
+        managerHasEmptied->wait();
         results.at(positionIntoGraphVector) = toPush;
         askManagerToEmpty->signal();
+
         positionIntoGraphVector = (positionIntoGraphVector + 1) % graphSize;
+
         managerHasFed->wait();
         n = next;
         askManagerToFeed->signal();
@@ -65,9 +74,11 @@ void Worker::weightsAndPrefixes() {
         toPush.adj = n->adj;
         toPush.father = n->prefix;
 
+        managerHasEmptied->wait();
         results.at(positionIntoGraphVector) = toPush;
-        positionIntoGraphVector = (positionIntoGraphVector + 1) % graphSize;
         askManagerToEmpty->signal();
+
+        positionIntoGraphVector = (positionIntoGraphVector + 1) % graphSize;
 
         managerHasFed->wait();
         n = next;
@@ -90,9 +101,11 @@ void Worker::startEndTimes() {
         toPush.adj = n->ancestors;
         toPush.father = n->start;
 
+        managerHasEmptied->wait();
         results.at(positionIntoGraphVector) = toPush;
-        positionIntoGraphVector = (positionIntoGraphVector + 1) % graphSize;
         askManagerToEmpty->signal();
+
+        positionIntoGraphVector = (positionIntoGraphVector + 1) % graphSize;
 
         managerHasFed->wait();
         n = next;

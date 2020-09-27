@@ -51,10 +51,12 @@ class Worker {
 public:
 #if !USE_QUICK_SEM
     Semaphore *askManagerToEmpty = new Semaphore();
+    Semaphore *managerHasEmptied;
     Semaphore *askManagerToFeed = new Semaphore(1, 1);
     Semaphore *managerHasFed = new Semaphore(0, 1);
 #else
     FastSemaphore *askManagerToEmpty = new FastSemaphore();
+    FastSemaphore *managerHasEmptied;
     FastSemaphore *askManagerToFeed = new FastSemaphore(1);
     FastSemaphore *managerHasFed = new FastSemaphore();
 #endif
