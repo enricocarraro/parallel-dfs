@@ -6,7 +6,7 @@
 #define FILE_N 5
 
 //opt quickSemaphores
-#define USE_QUICK_SEM 0
+#define USE_QUICK_SEM 1
 
 //Graph options
 #define GRAPH_DEBUG 0
