@@ -5,14 +5,17 @@
 #include <algorithm>
 #include <numeric>
 
+#include "OPTIONS.h"
+
 #include "EmptierManager.h"
 #include "FeederManager.h"
 #include "Graph.h"
 #include "Worker.h"
+#if !USE_QUICK_SEM
 #include "Semaphore.h"
+#else
 #include "FastSemaphore.h"
-
-#include "OPTIONS.h"
+#endif
 
 using namespace std;
 

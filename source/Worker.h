@@ -9,10 +9,11 @@
 #include <vector>
 
 #include "Graph.h"
-#include "Semaphore.h"
 #include "OPTIONS.h"
 #if USE_QUICK_SEM
 #include "FastSemaphore.h"
+#else
+#include "Semaphore.h"
 #endif
 
 /*struct NodeWrapper
