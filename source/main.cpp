@@ -228,13 +228,26 @@ int main(int argc, const char *argv[]) {
             graname = string("/home/lire/CLionProjects/sdp_pipelineReSolution/v100000e100.gra");
             break;
     }
+#if PRINT_RESULT
+    string outname;
+    outname = string("/home/lire/CLionProjects/Results/out.txt");
+#endif
 #else
+#if !PRINT_RESULT
     // 1 parameter of format .gra is required.
     if (argc != 2) {
         cout << "Error: Missing parameter" << endl;
         return -1;
     }
     string graname(argv[1]);
+#else
+    // 1 parameter of format .gra is required.
+    if (argc != 3) {
+        cout << "Usage: " << argv[0] << " input_file output_file" << endl;
+        return -1;
+    }
+    string graname(argv[1]);
+#endif
 #endif
 
     if ((fp = fopen(graname.c_str(), "r")) == NULL) {
@@ -262,6 +275,21 @@ int main(int argc, const char *argv[]) {
 
 #if FILE_N <= 3
     g.printTrueLabelsPreWeights();      //prints everything
+#endif
+
+#if PRINT_RESULT
+
+    if ((fp = fopen(outname.c_str(), "w")) == NULL) {
+        cout << "Error: File doesn't exist." << endl;
+        return -1;
+    }
+
+    for(int i=0; i<g.nNodes; i++) {
+        fprintf(fp, "%d %d %d\n", i, g.nodes.at(i).start, g.nodes.at(i).end);
+    }
+
+    fclose(fp);
+
 #endif
 
     //std::cout << g.var << std::endl;
