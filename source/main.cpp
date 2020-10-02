@@ -247,6 +247,7 @@ int main(int argc, const char *argv[]) {
         return -1;
     }
     string graname(argv[1]);
+    string outname(argv[2]);
 #endif
 #endif
 
