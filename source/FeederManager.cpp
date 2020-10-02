@@ -64,6 +64,9 @@ void feederManager::preGraphSize() {
         workers->at((currentWorker + i) % nWorkers).next = &terminator;
         workers->at((currentWorker + i) % nWorkers).managerHasFed->signal();
     }
+    for (int i = 0; i < nWorkers; i++) {
+        workers->at((currentWorker + i) % nWorkers).askManagerToFeed->wait();
+    }
 }
 
 void feederManager::weightsAndPrefixes() {
@@ -103,6 +106,9 @@ void feederManager::weightsAndPrefixes() {
         workers->at((currentWorker + i) % nWorkers).next = &terminator;
         workers->at((currentWorker + i) % nWorkers).managerHasFed->signal();
     }
+    for (int i = 0; i < nWorkers; i++) {
+        workers->at((currentWorker + i) % nWorkers).askManagerToFeed->wait();
+    }
 }
 
 void feederManager::startEndTimes() {
@@ -141,5 +147,8 @@ void feederManager::startEndTimes() {
         workers->at((currentWorker + i) % nWorkers).askManagerToFeed->wait();
         workers->at((currentWorker + i) % nWorkers).next = &terminator;
         workers->at((currentWorker + i) % nWorkers).managerHasFed->signal();
+    }
+    for (int i = 0; i < nWorkers; i++) {
+        workers->at((currentWorker + i) % nWorkers).askManagerToFeed->wait();
     }
 }
