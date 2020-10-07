@@ -8,7 +8,7 @@
 
 //opt quickSemaphores
 #define USE_QUICK_SEM 1
-#define SEM_INDEPENDENT 1
+#define SEM_INDEPENDENT 0
 
 //Graph options
 #define GRAPH_DEBUG 0
