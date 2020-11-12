@@ -2,7 +2,7 @@
 #define SDP_PIPELINERESOLUTION_OPTIONS_H
 
 //run main
-#define QUICK_RUN 1
+#define QUICK_RUN 0
 #define FILE_N 5
 #define PRINT_RESULT 1
 
