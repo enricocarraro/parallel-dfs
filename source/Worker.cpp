@@ -10,36 +10,10 @@ using namespace boost::multiprecision;
 using namespace std;
 
 void Worker::initialize(int id, int nWorkers, sharedData *sd) {
-    this->id = id;
+    //this->id = id;
     this->g = sd->g;
     this->graphSize = g->nNodes;
-#if !LIMITED_SPACE
-    nextStart.resize(graphSize);
-    neighboursWeights.resize(graphSize);
-    nextWeights.resize(graphSize);
-#else
-    results.resize(graphSize);
-#if USE_QUICK_SEM
-    managerHasEmptied = new FastSemaphore (graphSize);
-#else
-    managerHasEmptied = new Semaphore (graphSize, graphSize);
-#endif
-#endif
     this->sd = sd;
-}
-
-void Worker::reset() {
-    askManagerToEmpty->reset();
-    askManagerToFeed->reset();
-    managerHasFed->reset();
-    managerHasEmptied->reset();
-}
-
-
-void atomicAdd (Node *n, boost::multiprecision::uint1024_t val) {
-    n->mux->lock();
-    n->nodeWeight += val;
-    n->mux->unlock();
 }
 
 
@@ -92,7 +66,7 @@ void Worker::nodeSize() {
 }
 
 void Worker::nodeWeights(bool works_on_roots) {
-    boost::multiprecision::uint1024_t time;
+    boost::multiprecision::cpp_int time;
 
     if(works_on_roots) {
         time = 0;

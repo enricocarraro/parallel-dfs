@@ -11,11 +11,19 @@
 #include "FastSemaphore.h"
 #include "BusySemaphore.h"
 
+#define OPT_ATOMIC 0
+
 class SecureQueue {
     int queueSize;
 public:
+#if OPT_ATOMIC
+    std::vector<bool> barrier = {true};
     std::atomic<int> insertPosition;
     std::atomic<int> extractPosition;
+#else
+    int insertPosition;
+    int extractPosition;
+#endif
     std::vector<int> queue;
     FastSemaphore dataReady;
     BusySemaphore bs;

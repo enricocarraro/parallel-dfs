@@ -11,12 +11,12 @@
 class BusySemaphore
 {
 public:
-    BusySemaphore() noexcept;
+    BusySemaphore();
     void signal();
     void wait();
 
 private:
-    std::atomic<bool> lock;
+    std::atomic<bool> lock = false;
 };
 
 #endif //SDP_PIPELINERESOLUTION_BUSYSEMAPHORE_H

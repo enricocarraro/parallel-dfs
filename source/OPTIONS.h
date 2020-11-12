@@ -2,7 +2,7 @@
 #define SDP_PIPELINERESOLUTION_OPTIONS_H
 
 //run main
-#define QUICK_RUN 0
+#define QUICK_RUN 1
 #define FILE_N 5
 #define PRINT_RESULT 1
 
@@ -18,8 +18,11 @@
 #define USE_BOOL 0
 
 //worker used space
-#define LIMITED_SPACE 1
 
+//debug and data gathering purposes
+#define CATCH_BIGGEST_INT 0
+#define REPEAT_TEST 0
+#define VERBOSE_TIMERS 0
 
 
 #endif //SDP_PIPELINERESOLUTION_OPTIONS_H

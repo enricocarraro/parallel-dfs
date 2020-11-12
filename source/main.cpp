@@ -33,6 +33,16 @@ void nodeTimes(Worker *worker) {
 }
 
 
+void setupTime(Graph *g) {
+    boost::multiprecision::cpp_int max = 0;
+    for(int i=0; i<g->rootsSize; i++) {
+        max = max + g->nodes.at(g->roots.at(i)).nodeWeight;
+    }
+    for(int i=0; i<g->nNodes; i++) {
+        g->nodes.at(i).time = max;
+    }
+}
+
 template<typename T>
 vector<size_t> sort_indexes(const vector<T> &v) {
 
@@ -56,7 +66,7 @@ void reset(sharedData *sd) {
     sd->nodeRead = 0;
     fill(sd->visitedNeighbours.begin(), sd->visitedNeighbours.end(), 0);
     sd->g->posIntoPreLeaves = 0;
-    sd->g->posIntoRoots = 0;
+//    sd->g->posIntoRoots = 0;
 }
 
 void start(int nWorkers, Graph *g) {
@@ -71,7 +81,9 @@ void start(int nWorkers, Graph *g) {
 
 
     //pre phase
+#if VERBOSE_TIMERS
     auto istart = std::chrono::steady_clock::now();
+#endif
 
     vector<thread> tPreGraphSizeWorkers(nWorkers);
     for (int i = 0; i < nWorkers; i++) {
@@ -84,19 +96,20 @@ void start(int nWorkers, Graph *g) {
 
     reset(&sd);
 
-    for (int i = 0; i < nWorkers; i++) {
-        allWorkers.at(i).reset();
-    }
-
+#if VERBOSE_TIMERS
     auto iend = std::chrono::steady_clock::now();
     std::chrono::duration<double> ielapsed_seconds = iend - istart;
     std::cout << "Pre-subsize elapsed time: " << ielapsed_seconds.count() << "s\n";
+#endif
 
 
 
     //first phase
+#if VERBOSE_TIMERS
     auto start = std::chrono::steady_clock::now();
+#endif
 
+    setupTime(g);
 
     vector<thread> tWorkers(nWorkers);
     tWorkers[0] = thread(nodeWeights, &allWorkers.at(0), true);
@@ -109,34 +122,43 @@ void start(int nWorkers, Graph *g) {
     }
 
     reset(&sd);
-    for (int i = 0; i < nWorkers; i++) {
-        allWorkers.at(i).reset();
-    }
 
 
+#if VERBOSE_TIMERS
     auto end = std::chrono::steady_clock::now();
     std::chrono::duration<double> elapsed_seconds = end - start;
     std::cout << "Weights elapsed time: " << elapsed_seconds.count() << "s\n";
+#endif
 
 
 
     //second phase
+#if VERBOSE_TIMERS
     start = std::chrono::steady_clock::now();
+#endif
 
     vector<size_t> tmp = sort_indexes(g->nodes);
     for (int i=0; i<tmp.size(); i++) {
         g->nodes.at(static_cast<int> (tmp.at(i))).end = i+1;
     }
 
+#if VERBOSE_TIMERS
     end = std::chrono::steady_clock::now();
     elapsed_seconds = end - start;
     std::cout << "End elapsed time: " << elapsed_seconds.count() << "s\n";
+#endif
 
+#if CATCH_BIGGEST_INT
+    int indice = static_cast<int>(tmp.at(tmp.size()-1));
+    boost::multiprecision::uint1024_t check = g->nodes.at(indice).nodeWeight;
+#endif
 
 
 
     //third phase
+#if VERBOSE_TIMERS
     start = std::chrono::steady_clock::now();
+#endif
 
     vector<thread> seWorkers(nWorkers);
     for (int i = 0; i < nWorkers; i++) {
@@ -147,9 +169,11 @@ void start(int nWorkers, Graph *g) {
         seWorkers[i].join();
     }
 
+#if VERBOSE_TIMERS
     end = std::chrono::steady_clock::now();
     elapsed_seconds = end - start;
     std::cout << "Labels elapsed time: " << elapsed_seconds.count() << "s\n";
+#endif
 
 
 
@@ -204,7 +228,10 @@ int main(int argc, const char *argv[]) {
 #endif
 #endif
 
-    //for(int i=0; i<100; i++) {
+#if REPEAT_TEST
+    for(int i=0; i<100; i++) {
+        std::cout << i << ": " << std::endl;
+#endif
 
         if ((fp = fopen(graname.c_str(), "r")) == NULL) {
             cout << "Error: File doesn't exist." << endl;
@@ -227,7 +254,7 @@ int main(int argc, const char *argv[]) {
 
         timeEnd = std::chrono::steady_clock::now();
         elapsed_seconds = timeEnd - timeStart;
-        std::cout << "All calculations elapsed time: " << elapsed_seconds.count() << "s\n";
+        std::cout << "All calculations elapsed time: " << elapsed_seconds.count() << "s\n\n";
 
 #if FILE_N <= 3
         g.printTrueLabelsPreWeights();      //prints everything
@@ -249,7 +276,9 @@ int main(int argc, const char *argv[]) {
 #endif
 
         //std::cout << g.var << std::endl;
-    //}
+#if REPEAT_TEST
+    }
+#endif
     return 0;
 
 }

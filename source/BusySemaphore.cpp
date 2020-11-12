@@ -4,7 +4,7 @@
 
 #include "BusySemaphore.h"
 
-BusySemaphore::BusySemaphore() noexcept: lock(false) {}
+BusySemaphore::BusySemaphore() = default;
 
 void BusySemaphore::signal() {
     lock.store(false);

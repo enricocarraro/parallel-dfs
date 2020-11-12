@@ -7,58 +7,35 @@
 using namespace std;
 
 Graph::Graph(FILE *fp) {
-#if GRAPH_OPT
-    if (GRAPH_DOUBLE_READ + GRAPH_PUSHBACK + GRAPH_REREAD_GRAPH + 1 == 0) {
-        printf("Error, one option must be selected\n");
-        exit(-1);
-    }
-#endif
+
     fscanf(fp, "%d\n", &nNodes);
     nodes.resize(nNodes+1);
     //nodesWeights.resize(nNodes, INT32_MAX);
-#if USE_BOOL
-    roots.resize(nNodes, true);
-    leaves.resize(nNodes, true);
-    preLeaves.resize(nNodes, true);
-#else
+
     //leaves.resize(nNodes, true); //keeping this for now
     preLeaves.resize(nNodes);
     rootsSize = nNodes;
-#endif
+
     for (int i = 0; i < nNodes; i++) {
-        nodes[i].id = i;
+        //nodes[i].id = i;
         nodes[i].adj = new vector<int>;
         //nodes[i].trueAdj = new vector<int>;
-#if GRAPH_PUSHBACK
-        nodes[i].ancestors = new vector<int>;
-#endif
     }
     this->build(fp);
-#if !USE_BOOL
     preLeaves.resize(preLeavesPos);
     roots.resize(rootsSize);
-#endif
-#if GRAPH_DOUBLE_READ
-    //too slow, it takes about 20% more time
-    rewind(fp);
-    fscanf(fp, "%d", &nNodes);
-    for (int i = 0; i < nNodes; i++) {
-        nodes[i].ancestors = new vector<int> (nodes[i].ancSize);
-    }
-    this->reBuild(fp);
-#endif
-#if GRAPH_REREAD_GRAPH
+
     //30-40% faster than GRAPH_PUSHBACK
     for (int i = 0; i < nNodes; i++) {
         nodes[i].ancestors = new vector<int>(nodes[i].ancSize);
-#if !USE_BOOL
+
         if (nodes[i].root) { //MUST change into if(nodes[i].root)
             roots.at(rootsPos++) = i;
         }
-#endif
+
     }
     this->reBuild(fp);
-#endif
+
 
     //cancelledEdges = new vector<intint> (nEdges);
     //var = 128;
@@ -69,45 +46,8 @@ Graph::Graph(FILE *fp) {
 Graph::Graph(int nNodes) :
         nNodes(nNodes) {
     nodes.resize(nNodes+1);
-    for (int i = 0; i < nNodes; i++)
-        nodes[i].id = i;
-}
-
-void Graph::printGraph() {
-    for (int v = 0; v < nNodes; ++v) {
-        cout << "\n Adjacency list of vertex " << v << "\n head ";
-        for (auto x : *nodes[v].adj)
-            cout << "-> " << x;
-        printf("\n");
-    }
-}
-
-void Graph::printTrueGraph() {
-    for (int v = 0; v < nNodes; ++v) {
-        cout << "\n Adjacency list of vertex " << v << "\n head ";
-        //for (auto x : *nodes[v].trueAdj)
-        //    cout << "-> " << x;
-        printf("\n");
-    }
-}
-
-void Graph::printTrueGraphSize() {
-    for (int v = 0; v < nNodes; ++v) {
-        cout << "\n Adjacency list of vertex " << v << "\n head ";
-        //for (auto x : *nodes[v].trueAdj)
-        //    cout << "-> " << x;
-        printf("\nSub-graph size: %d\n", nodes[v].subTreeSize);
-    }
-}
-
-void Graph::printTrueLabels() {
-    for (int v = 0; v < nNodes; ++v) {
-        cout << "\n Adjacency list of vertex " << v << "\n head ";
-        //for (auto x : *nodes[v].trueAdj)
-        //    cout << "-> " << x;
-        printf("\nSub-graph size: %d", nodes[v].subTreeSize);
-        printf("\nSub-graph size: %d -> %d\n", nodes[v].start, nodes[v].end);
-    }
+    //for (int i = 0; i < nNodes; i++)
+        //nodes[i].id = i;
 }
 
 void Graph::printTrueLabelsPreWeights() {
@@ -116,7 +56,7 @@ void Graph::printTrueLabelsPreWeights() {
         //for (auto x : *nodes[v].trueAdj)
         //    cout << "-> " << x;
         cout << "\nPre-weight val: " << nodes[v].nodeWeight;
-        printf("\nSub-graph size: %d", nodes[v].subTreeSize);
+        //printf("\nSub-graph size: %d", nodes[v].subTreeSize);
         printf("\nStart-end time: %d -> %d\n", nodes[v].start, nodes[v].end);
     }
 }
@@ -125,18 +65,6 @@ void Graph::sortVectors() {
     for (int v = 0; v < nNodes; ++v) {
         sort(nodes[v].adj->begin(), nodes[v].adj->end(), std::less<int>());
     }
-}
-
-void Graph::addEdge(int u, int v) {
-    nodes[u].adj->push_back(v);
-#if USE_BOOL
-    roots.at(v) = false;
-#else
-    if (nodes[v].root) {
-        nodes[v].root = false;
-        rootsSize--;
-    }
-#endif
 }
 
 void Graph::build_addEdges(unsigned u, vector<unsigned> &adj, unsigned adj_size) {
