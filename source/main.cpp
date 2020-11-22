@@ -33,16 +33,6 @@ void nodeTimes(Worker *worker) {
 }
 
 
-void setupTime(Graph *g) {
-    boost::multiprecision::cpp_int max = 0;
-    for(int i=0; i<g->rootsSize; i++) {
-        max = max + g->nodes.at(g->roots.at(i)).nodeWeight;
-    }
-    for(int i=0; i<g->nNodes; i++) {
-        g->nodes.at(i).time = max;
-    }
-}
-
 template<typename T>
 vector<size_t> sort_indexes(const vector<T> &v) {
 
@@ -109,7 +99,6 @@ void start(int nWorkers, Graph *g) {
     auto start = std::chrono::steady_clock::now();
 #endif
 
-    setupTime(g);
 
     vector<thread> tWorkers(nWorkers);
     tWorkers[0] = thread(nodeWeights, &allWorkers.at(0), true);
@@ -250,7 +239,7 @@ int main(int argc, const char *argv[]) {
 
         timeStart = std::chrono::steady_clock::now();
 
-        start(4, &g);
+        start(N_THREADS, &g);
 
         timeEnd = std::chrono::steady_clock::now();
         elapsed_seconds = timeEnd - timeStart;

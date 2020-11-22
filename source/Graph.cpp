@@ -70,50 +70,20 @@ void Graph::sortVectors() {
 void Graph::build_addEdges(unsigned u, vector<unsigned> &adj, unsigned adj_size) {
     nEdges += adj_size;
     if (adj_size > 0) {
-        if (nodes[u].adjSize == 0) {
-#if USE_BOOL
-            preLeaves.at(u) = false;
-#endif
-            nodes[u].adj->resize(adj_size);
-            for (int i = 0; i < adj_size; i++) {
-                nodes[u].adj->at(i) = adj[i];
-#if USE_BOOL
-                roots.at(adj[i]) = false;
-#else
-                if (nodes.at(adj[i]).root) {
-                    nodes.at(adj[i]).root = false;
-                    rootsSize--;
-                }
-#endif
-                //nodes[adj[i]].ancestors->at(nodes[adj[i]].ancSize++) = u;
-#if GRAPH_PUSHBACK
-                nodes[adj[i]].ancestors->push_back(u);
-#endif
-                nodes[adj[i]].ancSize++;
+        nodes[u].adj->resize(adj_size);
+        for (int i = 0; i < adj_size; i++) {
+            nodes[u].adj->at(i) = adj[i];
+            if (nodes.at(adj[i]).root) {
+                nodes.at(adj[i]).root = false;
+                rootsSize--;
             }
-            nodes[u].adjSize = nodes[u].adj->size();
-        } else {
-            printf("REALLY??\n");
-            nodes[u].adj->insert(nodes[u].adj->end(), &adj[0], &adj[adj_size]);
-            nodes[u].adjSize += adj_size;
-            for (int i = 0; i < adj_size; i++) {
-#if USE_BOOL
-                roots.at(adj[i]) = false;
-#else
-                nodes[adj[i]].root = false;
-#endif
-#if GRAPH_PUSHBACK
-                nodes[adj[i]].ancestors->push_back(u);
-#endif
-                nodes[adj[i]].ancSize++;
-            }
+            nodes[adj[i]].ancSize++;
         }
+        nodes[u].adjSize = nodes[u].adj->size();
     }
-#if !USE_BOOL
     else {
         preLeaves.at(preLeavesPos++) = u;
     }
-#endif
 }
 
 #if GRAPH_DOUBLE_READ

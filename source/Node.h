@@ -9,8 +9,8 @@
 #include "BusySemaphore.h"
 
 struct Node {
-    boost::multiprecision::cpp_int nodeWeight = 1;
-    boost::multiprecision::cpp_int time;
+    boost::multiprecision::uint1024_t nodeWeight = 1;
+    boost::multiprecision::uint1024_t time = std::numeric_limits<boost::multiprecision::uint1024_t>::max();
 
     int start = INT32_MAX;
     int end = -1;

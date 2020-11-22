@@ -66,7 +66,7 @@ void Worker::nodeSize() {
 }
 
 void Worker::nodeWeights(bool works_on_roots) {
-    boost::multiprecision::cpp_int time;
+    boost::multiprecision::uint1024_t time;
 
     if(works_on_roots) {
         time = 0;

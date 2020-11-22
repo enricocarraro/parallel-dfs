@@ -7,6 +7,8 @@
 SecureQueue::SecureQueue(int queueSize, int nWorker) { //maybe nThread is not usefull
     this->queueSize = queueSize + nWorker;
     this->queue.resize(this->queueSize);
+    this->control.resize(this->queueSize, false);
+    this->controlN.resize(this->queueSize, 0);
 #if OPT_ATOMIC
     this->barrier.resize(this->queueSize+1, false);
 #endif
@@ -22,11 +24,12 @@ int SecureQueue::push(int next) {
     dataReady.signal();
     barrier.at(pos+1) = true;
 #else
-    bs.wait();
     int pos = insertPosition++;
     queue.at(pos) = next;
+
+    control.at(pos) = (control.at(pos) != true);
+
     dataReady.signal();
-    bs.signal();
 #endif
     return pos;
 }
@@ -36,14 +39,20 @@ int SecureQueue::pop() {
 #if OPT_ATOMIC
     int pos = extractPosition.fetch_add(1);
 #else
-    bs.wait();
+    //bs.wait();
     int pos = extractPosition++;
-    bs.signal();
+    //bs.signal();
 #endif
+    while (control.at(pos) != ready) {}
+
     return queue.at(pos);
 }
 
 void SecureQueue::reset() {
+    for(int i=insertPosition; i<queueSize; i++) {
+        control.at(i) = (control.at(i) != true);
+    }
+    ready = ready!=true;
     insertPosition = 0;
     extractPosition = 0;
     dataReady.reset();

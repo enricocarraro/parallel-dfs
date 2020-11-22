@@ -2,9 +2,12 @@
 #define SDP_PIPELINERESOLUTION_OPTIONS_H
 
 //run main
+#define N_THREADS 4
+#define PRINT_RESULT 1
+
+//quick run
 #define QUICK_RUN 0
 #define FILE_N 5
-#define PRINT_RESULT 1
 
 //opt quickSemaphores
 #define USE_QUICK_SEM 1
