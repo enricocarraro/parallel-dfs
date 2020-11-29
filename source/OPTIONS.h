@@ -19,6 +19,7 @@
 #define GRAPH_DOUBLE_READ 0
 #define GRAPH_REREAD_GRAPH 1
 #define USE_BOOL 0
+#define EXPERIMENTAL_READ 1
 
 //worker used space
 

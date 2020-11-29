@@ -26,7 +26,7 @@ class Graph {
 public:
 
     int nNodes;
-    int nEdges = 0;
+    //int nEdges = 0;
     std::vector<Node> nodes;
 
     explicit Graph(FILE *fp);
@@ -43,7 +43,7 @@ public:
 
 
 
-    void reBuild(FILE *fp);
+    void reBuild();
 
 
     //int preLeavesSize;

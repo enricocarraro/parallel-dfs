@@ -15,19 +15,18 @@ struct Node {
     int start = INT32_MAX;
     int end = -1;
 
-    //int subTreeSize = 1;
 
-    std::vector<int> *adj;
+    std::vector<int> adj;
     int adjSize = 0;
 
-    std::vector<int> *ancestors;
+    std::vector<int> ancestors;
     int ancSize = 0;
 
 #if GRAPH_DOUBLE_READ | GRAPH_REREAD_GRAPH
     int ancNumber = 0;
 #endif
 #if !USE_BOOL
-    bool root = true;
+    //bool root = true;
 #endif
 
     bool operator<(const Node &n) const {
@@ -36,7 +35,7 @@ struct Node {
 
     BusySemaphore *bSem = new BusySemaphore;
 
-    ~Node() { delete bSem; delete adj; delete ancestors; };
+    ~Node() { delete bSem; /*delete adj; delete ancestors;*/ };
 };
 
 #endif //SDP_PARALLELSOLUTION_NODE_H

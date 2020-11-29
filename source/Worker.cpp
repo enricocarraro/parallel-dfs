@@ -9,8 +9,7 @@
 using namespace boost::multiprecision;
 using namespace std;
 
-void Worker::initialize(int id, int nWorkers, sharedData *sd) {
-    //this->id = id;
+void Worker::initialize(sharedData *sd) {
     this->g = sd->g;
     this->graphSize = g->nNodes;
     this->sd = sd;
@@ -19,18 +18,15 @@ void Worker::initialize(int id, int nWorkers, sharedData *sd) {
 
 void Worker::nodeSize() {
 
-    int leaf;
-    int preLeavesSize = g->preLeaves.size();
     Node *n;
 
     int nodeRead;
     int i = g->posIntoPreLeaves.fetch_add(1);
 
-    while(i < preLeavesSize) {
-        leaf = g->preLeaves.at(i);
-        n = &g->nodes.at(leaf);
+    while(i < g->preLeaves.size()) {
+        n = &g->nodes.at(g->preLeaves.at(i));
         for(int j=0; j<n->ancSize; j++) {
-            int ancestor = n->ancestors->at(j);
+            int ancestor = n->ancestors.at(j);
             Node *father = &g->nodes.at(ancestor);
             father->bSem->wait();
             father->nodeWeight += n->nodeWeight;
@@ -48,7 +44,7 @@ void Worker::nodeSize() {
     while (nodeRead < graphSize) {
         n = &g->nodes.at(sd->sq.pop());
         for(int j=0; j<n->ancSize; j++) {
-            int ancestor = n->ancestors->at(j);
+            int ancestor = n->ancestors.at(j);
             Node *father = &g->nodes.at(ancestor);
             father->bSem->wait();
             father->nodeWeight += n->nodeWeight;
@@ -84,7 +80,7 @@ void Worker::nodeWeights(bool works_on_roots) {
         Node *N = &sd->g->nodes.at(sd->sq.pop());
         time = N->time;
         for(int i=0; i<N->adjSize; i++) {
-            int F = N->adj->at(i);
+            int F = N->adj.at(i);
             Node *Fn = &sd->g->nodes.at(F);
             Fn->bSem->wait();
             if (time < Fn->time) {
@@ -110,22 +106,18 @@ void Worker::nodeWeights(bool works_on_roots) {
 
 void Worker::nodeTimes() {
 
-
-    int leaf;
-    int preLeavesSize = g->preLeaves.size();
     Node *n;
 
     int nodeRead;
 
     int i = g->posIntoPreLeaves.fetch_add(1);
 
-    while(i < preLeavesSize) {
-        leaf = g->preLeaves.at(i);
-        n = &g->nodes.at(leaf);
+    while(i < g->preLeaves.size()) {
+        n = &g->nodes.at(g->preLeaves.at(i));
         n->start = n->end;
         int start = n->start;
         for(int j=0; j<n->ancSize; j++) {
-            int ancestor = n->ancestors->at(j);
+            int ancestor = n->ancestors.at(j);
             Node *father = &g->nodes.at(ancestor);
             father->bSem->wait();
             if (father->start > start) {
@@ -146,7 +138,7 @@ void Worker::nodeTimes() {
         n = &g->nodes.at(sd->sq.pop());
         int start = n->start;
         for(int j=0; j<n->ancSize; j++) {
-            int ancestor = n->ancestors->at(j);
+            int ancestor = n->ancestors.at(j);
             Node *father = &g->nodes.at(ancestor);
             father->bSem->wait();
             if (father->start > start) {

@@ -35,12 +35,11 @@ public:
 
     Graph *g;
     int graphSize;
-    Node *next;
 
     sharedData *sd;
 
 
-    void initialize(int id, int nWorkers, sharedData *sd);
+    void initialize(sharedData *sd);
 
     void nodeSize();
 

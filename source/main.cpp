@@ -65,7 +65,7 @@ void start(int nWorkers, Graph *g) {
 
     vector<Worker> allWorkers(nWorkers);
     for (int i = 0; i < nWorkers; i++) {
-        allWorkers.at(i).initialize(i, nWorkers, &sd);
+        allWorkers.at(i).initialize(&sd);
     }
 
 
@@ -75,13 +75,14 @@ void start(int nWorkers, Graph *g) {
     auto istart = std::chrono::steady_clock::now();
 #endif
 
-    vector<thread> tPreGraphSizeWorkers(nWorkers);
+    vector<thread> t_workers(nWorkers);
+
     for (int i = 0; i < nWorkers; i++) {
-        tPreGraphSizeWorkers[i] = thread(nodeSize, &allWorkers.at(i));
+        t_workers[i] = thread(nodeSize, &allWorkers.at(i));
     }
 
     for (int i = 0; i < nWorkers; i++) {
-        tPreGraphSizeWorkers[i].join();
+        t_workers[i].join();
     }
 
     reset(&sd);
@@ -100,14 +101,13 @@ void start(int nWorkers, Graph *g) {
 #endif
 
 
-    vector<thread> tWorkers(nWorkers);
-    tWorkers[0] = thread(nodeWeights, &allWorkers.at(0), true);
+    t_workers[0] = thread(nodeWeights, &allWorkers.at(0), true);
     for (int i = 1; i < nWorkers; i++) {
-        tWorkers[i] = thread(nodeWeights, &allWorkers.at(i), false);
+        t_workers[i] = thread(nodeWeights, &allWorkers.at(i), false);
     }
 
     for (int i = 0; i < nWorkers; i++) {
-        tWorkers[i].join();
+        t_workers[i].join();
     }
 
     reset(&sd);
@@ -149,13 +149,12 @@ void start(int nWorkers, Graph *g) {
     start = std::chrono::steady_clock::now();
 #endif
 
-    vector<thread> seWorkers(nWorkers);
     for (int i = 0; i < nWorkers; i++) {
-        seWorkers[i] = thread(nodeTimes, &allWorkers.at(i));
+        t_workers[i] = thread(nodeTimes, &allWorkers.at(i));
     }
 
     for (int i = 0; i < nWorkers; i++) {
-        seWorkers[i].join();
+        t_workers[i].join();
     }
 
 #if VERBOSE_TIMERS
