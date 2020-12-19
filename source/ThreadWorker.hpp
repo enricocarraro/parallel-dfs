@@ -9,14 +9,15 @@
 #ifndef ThreadWorker_hpp
 #define ThreadWorker_hpp
 
-
 #include <functional>
 #include "SafeQueue.cpp"
 
-class ThreadWorker {
+class ThreadWorker
+{
         SafeQueue<std::function<void()>> queue;
+
 public:
-        void addTask(const std::function<void()>& task);
+        void addTask(const std::function<void()> &task);
         void processTasks();
 };
 

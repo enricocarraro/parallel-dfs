@@ -1,7 +1,6 @@
 #ifndef Graph_hpp
 #define Graph_hpp
 
-
 #include "SafeQueue.hpp"
 #include "ThreadWorker.hpp"
 #include "Semaphore.hpp"
@@ -30,30 +29,26 @@ using namespace std;
 
 #define GRAPH_DEBUG 1
 
-
-
-
 struct Node
 {
         unsigned int id,
-                inc_visited_count = 0,
-                adj_visited_count = 0,
-                prefix_subgraph_size = 0,
-                pre = 0,
-                depth = 0;
+            inc_visited_count = 0,
+            adj_visited_count = 0,
+            prefix_subgraph_size = 0,
+            pre = 0,
+            depth = 0;
 
         int parent = -1;
         uint1024_t cost = std::numeric_limits<uint1024_t>::max(), subgraph_size = 1,
-        post = 0;
-        vector<unsigned int > adj;
-    
-        vector<unsigned int > inc;
+                   post = 0;
+        vector<unsigned int> adj;
+
+        vector<unsigned int> inc;
         //unordered_map<unsigned int, bool> inc_visited, adj_visited;
         /*vector<unsigned int> inc;
           vector<bool> inc_visited;
         */
         bool visited = false;
-    
 };
 
 class Graph
@@ -66,14 +61,14 @@ class Graph
         vector<ThreadWorker> parent_workers;
         vector<ThreadWorker> child_workers;
         vector<FastSemaphore> worker_semaphores;
-//        vector<Semaphore> worker_semaphores;
+        //        vector<Semaphore> worker_semaphores;
         unordered_set<unsigned int> roots;
-        vector < unsigned int > roots_sorted;
+        vector<unsigned int> roots_sorted;
         unordered_set<unsigned int> leafs;
         SafeQueue<unsigned int> P, C;
         void init();
-        void build(FILE * fp);
-        void build_addEdges(unsigned int u, vector<unsigned int>& adj, unsigned int adj_size);
+        void build(FILE *fp);
+        void build_addEdges(unsigned int u, vector<unsigned int> &adj, unsigned int adj_size);
         void subGraphSize_computePrefixSum(unsigned int p);
         void subGraphSize_processChild(unsigned int i, unsigned int worker_id);
         void subGraphSize_processParent(unsigned int p, unsigned int i);
@@ -84,8 +79,9 @@ class Graph
         void sequentialDFS_r(unsigned int p);
         unsigned int hash(unsigned int x);
         void initThreadWorkers();
+
 public:
-        Graph(FILE * fp);
+        Graph(FILE *fp);
         Graph(unsigned int nodes);
         void addEdge(unsigned int u, unsigned int v);
         void printGraph();
@@ -98,6 +94,4 @@ public:
         void computePrePostOrder();
 };
 
-
 #endif /* Graph_hpp */
-
