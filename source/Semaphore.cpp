@@ -6,22 +6,27 @@
 #include <limits.h>
 
 //constructor
-Semaphore::Semaphore(int count, int maxCount) {
+Semaphore::Semaphore(int count, int maxCount)
+{
         this->count = count;
         this->maxCount = maxCount;
 }
-Semaphore::Semaphore(int count) {
+Semaphore::Semaphore(int count)
+{
         this->count = count;
         maxCount = INT_MAX;
 }
-Semaphore::Semaphore() {
+Semaphore::Semaphore()
+{
         this->count = 0;
         maxCount = INT_MAX;
 }
 
-void Semaphore::wait() {
+void Semaphore::wait()
+{
         std::unique_lock<std::mutex> lock(mux);
-        while (count == 0) {
+        while (count == 0)
+        {
                 //cout << "thread " << id << "is waiting"
                 cv.wait(lock);
                 //cout << "thread " << id << "has finished waiting"
@@ -29,9 +34,11 @@ void Semaphore::wait() {
         count--;
 }
 
-void Semaphore::signal() {
+void Semaphore::signal()
+{
         std::unique_lock<std::mutex> lock(mux);
-        if (count < maxCount) {
+        if (count < maxCount)
+        {
                 count++;
         }
         //cout << "thread " << id << "is signaling"

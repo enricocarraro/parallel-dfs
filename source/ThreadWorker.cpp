@@ -8,13 +8,16 @@
 
 #include "ThreadWorker.hpp"
 
-void ThreadWorker::processTasks() {
-        while(true) {
+void ThreadWorker::processTasks()
+{
+        while (true)
+        {
                 auto m = queue.pop();
                 m();
         }
 }
 
-void ThreadWorker::addTask(const std::function<void()>& task) {
+void ThreadWorker::addTask(const std::function<void()> &task)
+{
         queue.push(task);
 }

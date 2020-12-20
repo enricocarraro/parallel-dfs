@@ -8,11 +8,7 @@
 
 #include "FastSemaphore.hpp"
 
-
-//FastSemaphore::FastSemaphore(int count) noexcept
- //       : m_count(count), m_semaphore(0) {}
-
-FastSemaphore::FastSemaphore() noexcept: m_count(0), m_semaphore(0) {}
+FastSemaphore::FastSemaphore() noexcept : m_count(0), m_semaphore(0) {}
 
 void FastSemaphore::signal()
 {

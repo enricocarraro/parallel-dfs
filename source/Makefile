@@ -67,10 +67,10 @@ RM = /usr/local/Cellar/cmake/3.18.2/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = "/Users/enrico/MEGA/IV Anno/II - System and Device Programming/Project/ParallelDFS/parallel-dfs/source"
+CMAKE_SOURCE_DIR = "/Users/enrico/Google Drive/Drive Sync/IV Anno/II - System and Device Programming/Project/ParallelDFS/parallel-dfs/source"
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = "/Users/enrico/MEGA/IV Anno/II - System and Device Programming/Project/ParallelDFS/parallel-dfs/source"
+CMAKE_BINARY_DIR = "/Users/enrico/Google Drive/Drive Sync/IV Anno/II - System and Device Programming/Project/ParallelDFS/parallel-dfs/source"
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -99,9 +99,9 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start "/Users/enrico/MEGA/IV Anno/II - System and Device Programming/Project/ParallelDFS/parallel-dfs/source/CMakeFiles" "/Users/enrico/MEGA/IV Anno/II - System and Device Programming/Project/ParallelDFS/parallel-dfs/source//CMakeFiles/progress.marks"
+	$(CMAKE_COMMAND) -E cmake_progress_start "/Users/enrico/Google Drive/Drive Sync/IV Anno/II - System and Device Programming/Project/ParallelDFS/parallel-dfs/source/CMakeFiles" "/Users/enrico/Google Drive/Drive Sync/IV Anno/II - System and Device Programming/Project/ParallelDFS/parallel-dfs/source//CMakeFiles/progress.marks"
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start "/Users/enrico/MEGA/IV Anno/II - System and Device Programming/Project/ParallelDFS/parallel-dfs/source/CMakeFiles" 0
+	$(CMAKE_COMMAND) -E cmake_progress_start "/Users/enrico/Google Drive/Drive Sync/IV Anno/II - System and Device Programming/Project/ParallelDFS/parallel-dfs/source/CMakeFiles" 0
 .PHONY : all
 
 # The main clean target
@@ -277,33 +277,6 @@ ThreadWorker.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/PathBasedThreadWorkers.dir/build.make CMakeFiles/PathBasedThreadWorkers.dir/ThreadWorker.cpp.s
 .PHONY : ThreadWorker.cpp.s
 
-Timer.o: Timer.cpp.o
-
-.PHONY : Timer.o
-
-# target to build an object file
-Timer.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/PathBasedThreadWorkers.dir/build.make CMakeFiles/PathBasedThreadWorkers.dir/Timer.cpp.o
-.PHONY : Timer.cpp.o
-
-Timer.i: Timer.cpp.i
-
-.PHONY : Timer.i
-
-# target to preprocess a source file
-Timer.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/PathBasedThreadWorkers.dir/build.make CMakeFiles/PathBasedThreadWorkers.dir/Timer.cpp.i
-.PHONY : Timer.cpp.i
-
-Timer.s: Timer.cpp.s
-
-.PHONY : Timer.s
-
-# target to generate assembly for a file
-Timer.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/PathBasedThreadWorkers.dir/build.make CMakeFiles/PathBasedThreadWorkers.dir/Timer.cpp.s
-.PHONY : Timer.cpp.s
-
 main.o: main.cpp.o
 
 .PHONY : main.o
@@ -355,9 +328,6 @@ help:
 	@echo "... ThreadWorker.o"
 	@echo "... ThreadWorker.i"
 	@echo "... ThreadWorker.s"
-	@echo "... Timer.o"
-	@echo "... Timer.i"
-	@echo "... Timer.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"

@@ -1,11 +1,11 @@
 #include "SafeQueue.hpp"
 
+template <typename T>
+SafeQueue<T>::SafeQueue() : q(), m(), c() {}
 
 template <typename T>
-SafeQueue<T>::SafeQueue(): q(), m(), c() {}
-
-template <typename T>
-size_t SafeQueue<T>::size() {
+size_t SafeQueue<T>::size()
+{
     return q.size();
 }
 // Add an element to the queue.
@@ -18,27 +18,28 @@ void SafeQueue<T>::push(T t)
 }
 
 template <typename T>
-std::vector<T> SafeQueue<T>::move_underlying_queue() {
+std::vector<T> SafeQueue<T>::move_underlying_queue()
+{
     return q;
 }
 
 template <typename T>
-SafeQueue<T>& SafeQueue<T>::operator=(const SafeQueue<T>& other)
+SafeQueue<T> &SafeQueue<T>::operator=(const SafeQueue<T> &other)
 {
-    if(this == &other)
+    if (this == &other)
         return *this;
-    
+
     this->q = other.q;
     return *this;
 }
 
-
 // Get the "front"-element.
 // If the queue is empty, wait till a element is avaiable.
 template <typename T>
-T SafeQueue<T>::pop() {
+T SafeQueue<T>::pop()
+{
     std::unique_lock<std::mutex> lock(m);
-    while(q.empty())
+    while (q.empty())
     {
         // release lock as long as the wait and reaquire it afterwards.
         c.wait(lock);
@@ -47,25 +48,3 @@ T SafeQueue<T>::pop() {
     q.pop_back();
     return val;
 }
- 
- /*
-
-template<typename T>
-void SafeQueue<T>::push(T elem) {
-    std::lock_guard<std::mutex> lock(m);
-    q.push(elem);
-}
-
-template<typename T>
-bool SafeQueue<T>::pop(T& elem) {
-    std::lock_guard<std::mutex> lock(m);
-    if (q.empty()) {
-        return false;
-    }
-    elem = q.front();
-    q.pop();
-    return true;
-}
-
-
-*/

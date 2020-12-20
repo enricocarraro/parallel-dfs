@@ -38,14 +38,12 @@ struct Node
             subgraph_size = 1,
             pre = 0,
             post = 0,
-            s = numeric_limits<unsigned int>::max();
+            s = numeric_limits<unsigned int>::max(),
+            e = 0;
         int parent = -1;
         vector<unsigned int> adj;
         vector<unsigned int> dt_adj;
-        //unordered_map<unsigned int, bool> inc_visited, adj_visited;
-        /*vector<unsigned int> inc;
-          vector<bool> inc_visited;
-        */
+        vector<unsigned int> inc;
         bool subgraph_size_parent_visited = false;
         bool no_path = true;
         bool visited = false;
@@ -57,7 +55,6 @@ class Graph
         unsigned int nNodes, pre, post;
         bool init_tw_done = false;
         Node main_parent;
-        vector<mutex> muxes;
         vector<Node> nodes;
         vector<ThreadWorker> parent_workers;
         vector<ThreadWorker> child_workers;
@@ -66,6 +63,7 @@ class Graph
         unordered_set<unsigned int> roots;
         vector<unsigned int> roots_sorted;
         unordered_set<unsigned int> leafs;
+        vector<unsigned int> o_leafs;
         SafeQueue<unsigned int> P, C;
         SafeQueue<std::pair<unsigned int, unsigned int>> processChildQ;
         void init();
@@ -75,10 +73,8 @@ class Graph
         void buildDT_processChild(unsigned int i, unsigned int p);
         void subDTSize_computePrefixSum(unsigned int p);
         void subDTSize_processChild(unsigned int i, unsigned int worker_id);
-        void subDTSize_processParent(unsigned int p, unsigned int i);
         void computePrePost_processParent(const unsigned int p, unsigned int depth, unsigned int worker_id);
         void computePrePost_processChild(unsigned int child, unsigned int pre, unsigned int post);
-       
         void computeLabels_process(unsigned int n, unsigned int i);
         void sequentialDFS_r(unsigned int p);
         unsigned int hash(unsigned int x);
