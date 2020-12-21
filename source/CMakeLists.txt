@@ -12,5 +12,5 @@ find_package(Boost COMPONENTS system filesystem REQUIRED)
 include_directories(${Boost_INCLUDE_DIR})
 link_directories(${Boost_LIBRARY_DIR})
 
-add_executable(SSSPThreadWorkers main.cpp Semaphore.cpp Semaphore.hpp FastSemaphore.cpp FastSemaphore.hpp Timer.cpp SafeQueue.cpp SafeQueue.hpp ThreadWorker.cpp ThreadWorker.hpp Graph.cpp Graph.hpp)
+add_executable(SSSPThreadWorkers main.cpp Semaphore.cpp Semaphore.hpp FastSemaphore.cpp FastSemaphore.hpp SafeQueue.cpp SafeQueue.hpp ThreadWorker.cpp ThreadWorker.hpp Graph.cpp Graph.hpp)
 target_link_libraries( SSSPThreadWorkers ${Boost_LIBRARIES} )
