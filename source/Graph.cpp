@@ -80,7 +80,8 @@ void Graph::build(FILE *fp)
         if (i == 0)
             leafs.insert(u);
     }
-
+    o_leafs = vector<unsigned int>(leafs.begin(), leafs.end());
+    
     // hidden parent of all roots
     nodes[nNodes].adj = vector<unsigned int>(roots.begin(), roots.end());
     sort(nodes[nNodes].adj.begin(), nodes[nNodes].adj.end(), std::less<unsigned int>());
@@ -133,7 +134,8 @@ void Graph::printNodesStatus()
 
         //cout << v << ": parent = " << nodes[v].parent << endl;
         //cout << nodes[v].id << ": sub graph size = " << nodes[v].subgraph_size << " depth: " << nodes[v].depth << " cost: " << nodes[v].cost << " pre: " << nodes[v].pre << " post: " << nodes[v].post << endl;
-        cout << nodes[v].id << ":\tparent=" << (nodes[v].parent == nNodes ? -1 : nodes[v].parent) << "\tpre=" << nodes[v].pre << "\tpost=" << nodes[v].post << endl;
+        //cout << nodes[v].id << ":\tparent=" << (nodes[v].parent == nNodes ? -1 : nodes[v].parent) << "\tpre=" << nodes[v].pre << "\tpost=" << nodes[v].post << endl;
+        cout << v << " " << nodes[v].s << " " << nodes[v].e << endl;
         /*cout << "\n Adjacency list of vertex " << v << endl;
          
          for (auto x : nodes[v].adj)
@@ -518,6 +520,52 @@ void Graph::computePrePostOrder()
 
     sort(nodes.begin(), nodes.end(), compareNodeId);
 }
+
+void Graph::computeLabels()
+{
+    FastSemaphore sem;
+    initThreadWorkers();
+
+    if (o_leafs.size() <= 0)
+    {
+        cout << "Error: no leafs" << endl;
+        return;
+    }
+
+    vector<unsigned int> Q(o_leafs.begin(), o_leafs.end());
+    while (Q.size() > 0)
+    {
+        for (const auto node : Q)
+        {
+            unsigned int worker_id = hash(node) % child_workers.size();
+            child_workers[worker_id].addTask([this, node, &sem]() -> void {
+                nodes[node].s = nodes[node].e = (unsigned int) nodes[node].post + 1;
+                for (const auto child : nodes[node].adj)
+                {
+                    if (nodes[node].s > nodes[child].s)
+                        nodes[node].s = nodes[child].s;
+                }
+                for (const auto parent : nodes[node].inc)
+                    C.push(parent);
+                sem.signal();
+            });
+        }
+
+        for (unsigned int i = 0; i < Q.size(); i++)
+            sem.wait();
+
+        vector<unsigned int> tmp = C.move_underlying_queue();
+        C = SafeQueue<unsigned int>();
+        Q = vector<unsigned int>();
+        Q.reserve(C.size());
+        for (const auto n : tmp)
+        {
+            if (nodes[n].adj.size() == ++nodes[n].lab_visited_count)
+                Q.push_back(n);
+        }
+    }
+}
+
 
 unsigned int Graph::hash(unsigned int x)
 {

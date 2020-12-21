@@ -1,7 +1,6 @@
 #include <iostream>
 #include <stdio.h>
 #include "Graph.hpp"
-#include "Timer.cpp"
 
 using namespace std;
 
@@ -44,6 +43,7 @@ int main(int argc, const char *argv[])
         std::cout << "sssp elapsed time: " << pselapsed_seconds.count() << "s\n";
         auto ppstart = std::chrono::steady_clock::now();
         gp.computePrePostOrder();
+        gp.computeLabels();
         auto ppend = std::chrono::steady_clock::now();
         std::chrono::duration<double> ppelapsed_seconds = ppend - ppstart;
         std::cout << "pre post elapsed time: " << ppelapsed_seconds.count() << "s\n";

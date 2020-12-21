@@ -34,20 +34,17 @@ struct Node
         unsigned int id,
             inc_visited_count = 0,
             adj_visited_count = 0,
+            lab_visited_count = 0,
             prefix_subgraph_size = 0,
             pre = 0,
-            depth = 0;
+            depth = 0,
+            s = numeric_limits<unsigned int>::max(),
+            e = 0;
+            
 
         int parent = -1;
-        uint1024_t cost = std::numeric_limits<uint1024_t>::max(), subgraph_size = 1,
-                   post = 0;
-        vector<unsigned int> adj;
-
-        vector<unsigned int> inc;
-        //unordered_map<unsigned int, bool> inc_visited, adj_visited;
-        /*vector<unsigned int> inc;
-          vector<bool> inc_visited;
-        */
+        uint1024_t cost = std::numeric_limits<uint1024_t>::max(), subgraph_size = 1, post = 0;
+        vector<unsigned int> adj, inc;
         bool visited = false;
 };
 
@@ -55,16 +52,15 @@ class Graph
 {
         unsigned int nNodes, pre, post;
         bool init_tw_done = false;
-        Node main_parent;
         vector<mutex> muxes;
         vector<Node> nodes;
         vector<ThreadWorker> parent_workers;
         vector<ThreadWorker> child_workers;
         vector<FastSemaphore> worker_semaphores;
-        //        vector<Semaphore> worker_semaphores;
         unordered_set<unsigned int> roots;
         vector<unsigned int> roots_sorted;
         unordered_set<unsigned int> leafs;
+        vector<unsigned int> o_leafs;
         SafeQueue<unsigned int> P, C;
         void init();
         void build(FILE *fp);
@@ -92,6 +88,7 @@ public:
         void computeSubGraphSize();
         void computeSubDTSize();
         void computePrePostOrder();
+        void computeLabels();
 };
 
 #endif /* Graph_hpp */
