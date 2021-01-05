@@ -1,0 +1,1829 @@
+desc: (none)
+cmd: ./PathBasedThreadWorkers ../../../graph_generator/v5000e50.gra sequential
+time_unit: i
+#-----------
+snapshot=0
+#-----------
+time=0
+mem_heap_B=0
+mem_heap_extra_B=0
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=1
+#-----------
+time=4081767
+mem_heap_B=1015786
+mem_heap_extra_B=45822
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=2
+#-----------
+time=8497293
+mem_heap_B=1007778
+mem_heap_extra_B=67630
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=3
+#-----------
+time=11213474
+mem_heap_B=1011502
+mem_heap_extra_B=72802
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=4
+#-----------
+time=16004684
+mem_heap_B=1028070
+mem_heap_extra_B=73722
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=5
+#-----------
+time=19728928
+mem_heap_B=1047042
+mem_heap_extra_B=71406
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=6
+#-----------
+time=24028798
+mem_heap_B=1072890
+mem_heap_extra_B=67686
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=7
+#-----------
+time=28450121
+mem_heap_B=1101638
+mem_heap_extra_B=65234
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=8
+#-----------
+time=32606556
+mem_heap_B=1129774
+mem_heap_extra_B=64690
+mem_stacks_B=0
+heap_tree=detailed
+n7: 1129774 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 760152 0x111F32: allocate (new_allocator.h:115)
+  n1: 760152 0x111F32: allocate (alloc_traits.h:460)
+   n1: 760152 0x111F32: _M_allocate (stl_vector.h:346)
+    n1: 760152 0x111F32: std::vector<Node, std::allocator<Node> >::_M_default_append(unsigned long) (vector.tcc:635)
+     n1: 760152 0x110C7F: resize (stl_vector.h:940)
+      n1: 760152 0x110C7F: Graph::init() (Graph.cpp:9)
+       n1: 760152 0x11100A: Graph::Graph(_IO_FILE*) (Graph.cpp:87)
+        n0: 760152 0x10AEFC: main (main.cpp:62)
+ n1: 104564 0x1121FA: allocate (new_allocator.h:115)
+  n1: 104564 0x1121FA: allocate (alloc_traits.h:460)
+   n1: 104564 0x1121FA: _M_allocate (stl_vector.h:346)
+    n1: 104564 0x1121FA: void std::vector<unsigned int, std::allocator<unsigned int> >::_M_realloc_insert<unsigned int const&>(__gnu_cxx::__normal_iterator<unsigned int*, std::vector<unsigned int, std::allocator<unsigned int> > >, unsigned int const&) (vector.tcc:440)
+     n1: 104564 0x10DEA4: push_back (stl_vector.h:1198)
+      n1: 104564 0x10DEA4: Graph::build_addEdges(unsigned int, std::vector<unsigned int, std::allocator<unsigned int> >&, unsigned int) (Graph.cpp:28)
+       n1: 104564 0x10FB71: Graph::build(_IO_FILE*) (Graph.cpp:72)
+        n1: 104564 0x111015: Graph::Graph(_IO_FILE*) (Graph.cpp:88)
+         n0: 104564 0x10AEFC: main (main.cpp:62)
+ n1: 81864 0x1120DE: allocate (new_allocator.h:115)
+  n1: 81864 0x1120DE: allocate (alloc_traits.h:460)
+   n1: 81864 0x1120DE: _M_allocate (stl_vector.h:346)
+    n1: 81864 0x1120DE: std::vector<unsigned int, std::allocator<unsigned int> >::_M_default_append(unsigned long) (vector.tcc:635)
+     n1: 81864 0x10DEEE: resize (stl_vector.h:940)
+      n1: 81864 0x10DEEE: Graph::build_addEdges(unsigned int, std::vector<unsigned int, std::allocator<unsigned int> >&, unsigned int) (Graph.cpp:22)
+       n1: 81864 0x10FB71: Graph::build(_IO_FILE*) (Graph.cpp:72)
+        n1: 81864 0x111015: Graph::Graph(_IO_FILE*) (Graph.cpp:88)
+         n0: 81864 0x10AEFC: main (main.cpp:62)
+ n1: 81392 0x11263F: allocate (new_allocator.h:115)
+  n1: 81392 0x11263F: allocate (alloc_traits.h:460)
+   n1: 81392 0x11263F: _M_allocate_buckets (hashtable_policy.h:2085)
+    n1: 81392 0x11263F: _M_allocate_buckets (hashtable.h:398)
+     n1: 81392 0x11263F: _M_rehash_aux (hashtable.h:2091)
+      n2: 81392 0x11263F: std::_Hashtable<unsigned int, unsigned int, std::allocator<unsigned int>, std::__detail::_Identity, std::equal_to<unsigned int>, std::hash<unsigned int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, true, true> >::_M_rehash(unsigned long, unsigned long const&) (hashtable.h:2070)
+       n1: 40696 0x110C4C: rehash (hashtable.h:2052)
+        n1: 40696 0x110C4C: reserve (hashtable_policy.h:1093)
+         n1: 40696 0x110C4C: reserve (unordered_set.h:810)
+          n1: 40696 0x110C4C: Graph::init() (Graph.cpp:8)
+           n1: 40696 0x11100A: Graph::Graph(_IO_FILE*) (Graph.cpp:87)
+            n0: 40696 0x10AEFC: main (main.cpp:62)
+       n1: 40696 0x110C68: rehash (hashtable.h:2052)
+        n1: 40696 0x110C68: reserve (hashtable_policy.h:1093)
+         n1: 40696 0x110C68: reserve (unordered_set.h:810)
+          n1: 40696 0x110C68: Graph::init() (Graph.cpp:7)
+           n1: 40696 0x11100A: Graph::Graph(_IO_FILE*) (Graph.cpp:87)
+            n0: 40696 0x10AEFC: main (main.cpp:62)
+ n1: 72704 0x4913399: ??? (in /usr/lib64/libstdc++.so.6.0.28)
+  n1: 72704 0x4011D11: call_init.part.0 (dl-init.c:72)
+   n1: 72704 0x4011E20: call_init (dl-init.c:30)
+    n1: 72704 0x4011E20: _dl_init (dl-init.c:119)
+     n1: 72704 0x4001179: ??? (in /usr/lib64/ld-2.31.so)
+      n1: 72704 0x2: ???
+       n1: 72704 0x1FFEFFE316: ???
+        n1: 72704 0x1FFEFFE32F: ???
+         n0: 72704 0x1FFEFFE355: ???
+ n1: 20004 0x10F945: allocate (new_allocator.h:115)
+  n1: 20004 0x10F945: allocate (alloc_traits.h:460)
+   n1: 20004 0x10F945: _M_allocate (stl_vector.h:346)
+    n1: 20004 0x10F945: _M_create_storage (stl_vector.h:361)
+     n1: 20004 0x10F945: _Vector_base (stl_vector.h:305)
+      n1: 20004 0x10F945: vector (stl_vector.h:511)
+       n1: 20004 0x10F945: Graph::build(_IO_FILE*) (Graph.cpp:49)
+        n1: 20004 0x111015: Graph::Graph(_IO_FILE*) (Graph.cpp:88)
+         n0: 20004 0x10AEFC: main (main.cpp:62)
+ n0: 9094 in 5 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=9
+#-----------
+time=37111161
+mem_heap_B=1160778
+mem_heap_extra_B=65510
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=10
+#-----------
+time=40977315
+mem_heap_B=1188422
+mem_heap_extra_B=66338
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=11
+#-----------
+time=43507408
+mem_heap_B=1206362
+mem_heap_extra_B=67102
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=12
+#-----------
+time=47848730
+mem_heap_B=1238822
+mem_heap_extra_B=68050
+mem_stacks_B=0
+heap_tree=detailed
+n7: 1238822 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 760152 0x111F32: allocate (new_allocator.h:115)
+  n1: 760152 0x111F32: allocate (alloc_traits.h:460)
+   n1: 760152 0x111F32: _M_allocate (stl_vector.h:346)
+    n1: 760152 0x111F32: std::vector<Node, std::allocator<Node> >::_M_default_append(unsigned long) (vector.tcc:635)
+     n1: 760152 0x110C7F: resize (stl_vector.h:940)
+      n1: 760152 0x110C7F: Graph::init() (Graph.cpp:9)
+       n1: 760152 0x11100A: Graph::Graph(_IO_FILE*) (Graph.cpp:87)
+        n0: 760152 0x10AEFC: main (main.cpp:62)
+ n1: 169808 0x1121FA: allocate (new_allocator.h:115)
+  n1: 169808 0x1121FA: allocate (alloc_traits.h:460)
+   n1: 169808 0x1121FA: _M_allocate (stl_vector.h:346)
+    n1: 169808 0x1121FA: void std::vector<unsigned int, std::allocator<unsigned int> >::_M_realloc_insert<unsigned int const&>(__gnu_cxx::__normal_iterator<unsigned int*, std::vector<unsigned int, std::allocator<unsigned int> > >, unsigned int const&) (vector.tcc:440)
+     n1: 169808 0x10DEA4: push_back (stl_vector.h:1198)
+      n1: 169808 0x10DEA4: Graph::build_addEdges(unsigned int, std::vector<unsigned int, std::allocator<unsigned int> >&, unsigned int) (Graph.cpp:28)
+       n1: 169808 0x10FB71: Graph::build(_IO_FILE*) (Graph.cpp:72)
+        n1: 169808 0x111015: Graph::Graph(_IO_FILE*) (Graph.cpp:88)
+         n0: 169808 0x10AEFC: main (main.cpp:62)
+ n1: 126260 0x1120DE: allocate (new_allocator.h:115)
+  n1: 126260 0x1120DE: allocate (alloc_traits.h:460)
+   n1: 126260 0x1120DE: _M_allocate (stl_vector.h:346)
+    n1: 126260 0x1120DE: std::vector<unsigned int, std::allocator<unsigned int> >::_M_default_append(unsigned long) (vector.tcc:635)
+     n1: 126260 0x10DEEE: resize (stl_vector.h:940)
+      n1: 126260 0x10DEEE: Graph::build_addEdges(unsigned int, std::vector<unsigned int, std::allocator<unsigned int> >&, unsigned int) (Graph.cpp:22)
+       n1: 126260 0x10FB71: Graph::build(_IO_FILE*) (Graph.cpp:72)
+        n1: 126260 0x111015: Graph::Graph(_IO_FILE*) (Graph.cpp:88)
+         n0: 126260 0x10AEFC: main (main.cpp:62)
+ n1: 81392 0x11263F: allocate (new_allocator.h:115)
+  n1: 81392 0x11263F: allocate (alloc_traits.h:460)
+   n1: 81392 0x11263F: _M_allocate_buckets (hashtable_policy.h:2085)
+    n1: 81392 0x11263F: _M_allocate_buckets (hashtable.h:398)
+     n1: 81392 0x11263F: _M_rehash_aux (hashtable.h:2091)
+      n2: 81392 0x11263F: std::_Hashtable<unsigned int, unsigned int, std::allocator<unsigned int>, std::__detail::_Identity, std::equal_to<unsigned int>, std::hash<unsigned int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, true, true> >::_M_rehash(unsigned long, unsigned long const&) (hashtable.h:2070)
+       n1: 40696 0x110C4C: rehash (hashtable.h:2052)
+        n1: 40696 0x110C4C: reserve (hashtable_policy.h:1093)
+         n1: 40696 0x110C4C: reserve (unordered_set.h:810)
+          n1: 40696 0x110C4C: Graph::init() (Graph.cpp:8)
+           n1: 40696 0x11100A: Graph::Graph(_IO_FILE*) (Graph.cpp:87)
+            n0: 40696 0x10AEFC: main (main.cpp:62)
+       n1: 40696 0x110C68: rehash (hashtable.h:2052)
+        n1: 40696 0x110C68: reserve (hashtable_policy.h:1093)
+         n1: 40696 0x110C68: reserve (unordered_set.h:810)
+          n1: 40696 0x110C68: Graph::init() (Graph.cpp:7)
+           n1: 40696 0x11100A: Graph::Graph(_IO_FILE*) (Graph.cpp:87)
+            n0: 40696 0x10AEFC: main (main.cpp:62)
+ n1: 72704 0x4913399: ??? (in /usr/lib64/libstdc++.so.6.0.28)
+  n1: 72704 0x4011D11: call_init.part.0 (dl-init.c:72)
+   n1: 72704 0x4011E20: call_init (dl-init.c:30)
+    n1: 72704 0x4011E20: _dl_init (dl-init.c:119)
+     n1: 72704 0x4001179: ??? (in /usr/lib64/ld-2.31.so)
+      n1: 72704 0x2: ???
+       n1: 72704 0x1FFEFFE316: ???
+        n1: 72704 0x1FFEFFE32F: ???
+         n0: 72704 0x1FFEFFE355: ???
+ n1: 20004 0x10F945: allocate (new_allocator.h:115)
+  n1: 20004 0x10F945: allocate (alloc_traits.h:460)
+   n1: 20004 0x10F945: _M_allocate (stl_vector.h:346)
+    n1: 20004 0x10F945: _M_create_storage (stl_vector.h:361)
+     n1: 20004 0x10F945: _Vector_base (stl_vector.h:305)
+      n1: 20004 0x10F945: vector (stl_vector.h:511)
+       n1: 20004 0x10F945: Graph::build(_IO_FILE*) (Graph.cpp:49)
+        n1: 20004 0x111015: Graph::Graph(_IO_FILE*) (Graph.cpp:88)
+         n0: 20004 0x10AEFC: main (main.cpp:62)
+ n0: 8502 in 5 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=13
+#-----------
+time=51441008
+mem_heap_B=1264466
+mem_heap_extra_B=68750
+mem_stacks_B=0
+heap_tree=detailed
+n7: 1264466 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 760152 0x111F32: allocate (new_allocator.h:115)
+  n1: 760152 0x111F32: allocate (alloc_traits.h:460)
+   n1: 760152 0x111F32: _M_allocate (stl_vector.h:346)
+    n1: 760152 0x111F32: std::vector<Node, std::allocator<Node> >::_M_default_append(unsigned long) (vector.tcc:635)
+     n1: 760152 0x110C7F: resize (stl_vector.h:940)
+      n1: 760152 0x110C7F: Graph::init() (Graph.cpp:9)
+       n1: 760152 0x11100A: Graph::Graph(_IO_FILE*) (Graph.cpp:87)
+        n0: 760152 0x10AEFC: main (main.cpp:62)
+ n1: 184968 0x1121FA: allocate (new_allocator.h:115)
+  n1: 184968 0x1121FA: allocate (alloc_traits.h:460)
+   n1: 184968 0x1121FA: _M_allocate (stl_vector.h:346)
+    n1: 184968 0x1121FA: void std::vector<unsigned int, std::allocator<unsigned int> >::_M_realloc_insert<unsigned int const&>(__gnu_cxx::__normal_iterator<unsigned int*, std::vector<unsigned int, std::allocator<unsigned int> > >, unsigned int const&) (vector.tcc:440)
+     n1: 184968 0x10DEA4: push_back (stl_vector.h:1198)
+      n1: 184968 0x10DEA4: Graph::build_addEdges(unsigned int, std::vector<unsigned int, std::allocator<unsigned int> >&, unsigned int) (Graph.cpp:28)
+       n1: 184968 0x10FB71: Graph::build(_IO_FILE*) (Graph.cpp:72)
+        n1: 184968 0x111015: Graph::Graph(_IO_FILE*) (Graph.cpp:88)
+         n0: 184968 0x10AEFC: main (main.cpp:62)
+ n1: 136760 0x1120DE: allocate (new_allocator.h:115)
+  n1: 136760 0x1120DE: allocate (alloc_traits.h:460)
+   n1: 136760 0x1120DE: _M_allocate (stl_vector.h:346)
+    n1: 136760 0x1120DE: std::vector<unsigned int, std::allocator<unsigned int> >::_M_default_append(unsigned long) (vector.tcc:635)
+     n1: 136760 0x10DEEE: resize (stl_vector.h:940)
+      n1: 136760 0x10DEEE: Graph::build_addEdges(unsigned int, std::vector<unsigned int, std::allocator<unsigned int> >&, unsigned int) (Graph.cpp:22)
+       n1: 136760 0x10FB71: Graph::build(_IO_FILE*) (Graph.cpp:72)
+        n1: 136760 0x111015: Graph::Graph(_IO_FILE*) (Graph.cpp:88)
+         n0: 136760 0x10AEFC: main (main.cpp:62)
+ n1: 81392 0x11263F: allocate (new_allocator.h:115)
+  n1: 81392 0x11263F: allocate (alloc_traits.h:460)
+   n1: 81392 0x11263F: _M_allocate_buckets (hashtable_policy.h:2085)
+    n1: 81392 0x11263F: _M_allocate_buckets (hashtable.h:398)
+     n1: 81392 0x11263F: _M_rehash_aux (hashtable.h:2091)
+      n2: 81392 0x11263F: std::_Hashtable<unsigned int, unsigned int, std::allocator<unsigned int>, std::__detail::_Identity, std::equal_to<unsigned int>, std::hash<unsigned int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, true, true> >::_M_rehash(unsigned long, unsigned long const&) (hashtable.h:2070)
+       n1: 40696 0x110C4C: rehash (hashtable.h:2052)
+        n1: 40696 0x110C4C: reserve (hashtable_policy.h:1093)
+         n1: 40696 0x110C4C: reserve (unordered_set.h:810)
+          n1: 40696 0x110C4C: Graph::init() (Graph.cpp:8)
+           n1: 40696 0x11100A: Graph::Graph(_IO_FILE*) (Graph.cpp:87)
+            n0: 40696 0x10AEFC: main (main.cpp:62)
+       n1: 40696 0x110C68: rehash (hashtable.h:2052)
+        n1: 40696 0x110C68: reserve (hashtable_policy.h:1093)
+         n1: 40696 0x110C68: reserve (unordered_set.h:810)
+          n1: 40696 0x110C68: Graph::init() (Graph.cpp:7)
+           n1: 40696 0x11100A: Graph::Graph(_IO_FILE*) (Graph.cpp:87)
+            n0: 40696 0x10AEFC: main (main.cpp:62)
+ n1: 72704 0x4913399: ??? (in /usr/lib64/libstdc++.so.6.0.28)
+  n1: 72704 0x4011D11: call_init.part.0 (dl-init.c:72)
+   n1: 72704 0x4011E20: call_init (dl-init.c:30)
+    n1: 72704 0x4011E20: _dl_init (dl-init.c:119)
+     n1: 72704 0x4001179: ??? (in /usr/lib64/ld-2.31.so)
+      n1: 72704 0x2: ???
+       n1: 72704 0x1FFEFFE316: ???
+        n1: 72704 0x1FFEFFE32F: ???
+         n0: 72704 0x1FFEFFE355: ???
+ n1: 20004 0x10F945: allocate (new_allocator.h:115)
+  n1: 20004 0x10F945: allocate (alloc_traits.h:460)
+   n1: 20004 0x10F945: _M_allocate (stl_vector.h:346)
+    n1: 20004 0x10F945: _M_create_storage (stl_vector.h:361)
+     n1: 20004 0x10F945: _Vector_base (stl_vector.h:305)
+      n1: 20004 0x10F945: vector (stl_vector.h:511)
+       n1: 20004 0x10F945: Graph::build(_IO_FILE*) (Graph.cpp:49)
+        n1: 20004 0x111015: Graph::Graph(_IO_FILE*) (Graph.cpp:88)
+         n0: 20004 0x10AEFC: main (main.cpp:62)
+ n0: 8486 in 5 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=14
+#-----------
+time=54471953
+mem_heap_B=1285850
+mem_heap_extra_B=69366
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=15
+#-----------
+time=57043496
+mem_heap_B=1303990
+mem_heap_extra_B=69882
+mem_stacks_B=0
+heap_tree=detailed
+n7: 1303990 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 760152 0x111F32: allocate (new_allocator.h:115)
+  n1: 760152 0x111F32: allocate (alloc_traits.h:460)
+   n1: 760152 0x111F32: _M_allocate (stl_vector.h:346)
+    n1: 760152 0x111F32: std::vector<Node, std::allocator<Node> >::_M_default_append(unsigned long) (vector.tcc:635)
+     n1: 760152 0x110C7F: resize (stl_vector.h:940)
+      n1: 760152 0x110C7F: Graph::init() (Graph.cpp:9)
+       n1: 760152 0x11100A: Graph::Graph(_IO_FILE*) (Graph.cpp:87)
+        n0: 760152 0x10AEFC: main (main.cpp:62)
+ n1: 207916 0x1121FA: allocate (new_allocator.h:115)
+  n1: 207916 0x1121FA: allocate (alloc_traits.h:460)
+   n1: 207916 0x1121FA: _M_allocate (stl_vector.h:346)
+    n1: 207916 0x1121FA: void std::vector<unsigned int, std::allocator<unsigned int> >::_M_realloc_insert<unsigned int const&>(__gnu_cxx::__normal_iterator<unsigned int*, std::vector<unsigned int, std::allocator<unsigned int> > >, unsigned int const&) (vector.tcc:440)
+     n1: 207916 0x10DEA4: push_back (stl_vector.h:1198)
+      n1: 207916 0x10DEA4: Graph::build_addEdges(unsigned int, std::vector<unsigned int, std::allocator<unsigned int> >&, unsigned int) (Graph.cpp:28)
+       n1: 207916 0x10FB71: Graph::build(_IO_FILE*) (Graph.cpp:72)
+        n1: 207916 0x111015: Graph::Graph(_IO_FILE*) (Graph.cpp:88)
+         n0: 207916 0x10AEFC: main (main.cpp:62)
+ n1: 153304 0x1120DE: allocate (new_allocator.h:115)
+  n1: 153304 0x1120DE: allocate (alloc_traits.h:460)
+   n1: 153304 0x1120DE: _M_allocate (stl_vector.h:346)
+    n1: 153304 0x1120DE: std::vector<unsigned int, std::allocator<unsigned int> >::_M_default_append(unsigned long) (vector.tcc:635)
+     n1: 153304 0x10DEEE: resize (stl_vector.h:940)
+      n1: 153304 0x10DEEE: Graph::build_addEdges(unsigned int, std::vector<unsigned int, std::allocator<unsigned int> >&, unsigned int) (Graph.cpp:22)
+       n1: 153304 0x10FB71: Graph::build(_IO_FILE*) (Graph.cpp:72)
+        n1: 153304 0x111015: Graph::Graph(_IO_FILE*) (Graph.cpp:88)
+         n0: 153304 0x10AEFC: main (main.cpp:62)
+ n1: 81392 0x11263F: allocate (new_allocator.h:115)
+  n1: 81392 0x11263F: allocate (alloc_traits.h:460)
+   n1: 81392 0x11263F: _M_allocate_buckets (hashtable_policy.h:2085)
+    n1: 81392 0x11263F: _M_allocate_buckets (hashtable.h:398)
+     n1: 81392 0x11263F: _M_rehash_aux (hashtable.h:2091)
+      n2: 81392 0x11263F: std::_Hashtable<unsigned int, unsigned int, std::allocator<unsigned int>, std::__detail::_Identity, std::equal_to<unsigned int>, std::hash<unsigned int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, true, true> >::_M_rehash(unsigned long, unsigned long const&) (hashtable.h:2070)
+       n1: 40696 0x110C4C: rehash (hashtable.h:2052)
+        n1: 40696 0x110C4C: reserve (hashtable_policy.h:1093)
+         n1: 40696 0x110C4C: reserve (unordered_set.h:810)
+          n1: 40696 0x110C4C: Graph::init() (Graph.cpp:8)
+           n1: 40696 0x11100A: Graph::Graph(_IO_FILE*) (Graph.cpp:87)
+            n0: 40696 0x10AEFC: main (main.cpp:62)
+       n1: 40696 0x110C68: rehash (hashtable.h:2052)
+        n1: 40696 0x110C68: reserve (hashtable_policy.h:1093)
+         n1: 40696 0x110C68: reserve (unordered_set.h:810)
+          n1: 40696 0x110C68: Graph::init() (Graph.cpp:7)
+           n1: 40696 0x11100A: Graph::Graph(_IO_FILE*) (Graph.cpp:87)
+            n0: 40696 0x10AEFC: main (main.cpp:62)
+ n1: 72704 0x4913399: ??? (in /usr/lib64/libstdc++.so.6.0.28)
+  n1: 72704 0x4011D11: call_init.part.0 (dl-init.c:72)
+   n1: 72704 0x4011E20: call_init (dl-init.c:30)
+    n1: 72704 0x4011E20: _dl_init (dl-init.c:119)
+     n1: 72704 0x4001179: ??? (in /usr/lib64/ld-2.31.so)
+      n1: 72704 0x2: ???
+       n1: 72704 0x1FFEFFE316: ???
+        n1: 72704 0x1FFEFFE32F: ???
+         n0: 72704 0x1FFEFFE355: ???
+ n1: 20004 0x10F945: allocate (new_allocator.h:115)
+  n1: 20004 0x10F945: allocate (alloc_traits.h:460)
+   n1: 20004 0x10F945: _M_allocate (stl_vector.h:346)
+    n1: 20004 0x10F945: _M_create_storage (stl_vector.h:361)
+     n1: 20004 0x10F945: _Vector_base (stl_vector.h:305)
+      n1: 20004 0x10F945: vector (stl_vector.h:511)
+       n1: 20004 0x10F945: Graph::build(_IO_FILE*) (Graph.cpp:49)
+        n1: 20004 0x111015: Graph::Graph(_IO_FILE*) (Graph.cpp:88)
+         n0: 20004 0x10AEFC: main (main.cpp:62)
+ n0: 8518 in 5 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=16
+#-----------
+time=61367710
+mem_heap_B=1333990
+mem_heap_extra_B=71282
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=17
+#-----------
+time=65941978
+mem_heap_B=1365230
+mem_heap_extra_B=72946
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=18
+#-----------
+time=69351770
+mem_heap_B=1388686
+mem_heap_extra_B=74034
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=19
+#-----------
+time=72661641
+mem_heap_B=1412878
+mem_heap_extra_B=75522
+mem_stacks_B=0
+heap_tree=detailed
+n7: 1412878 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 760152 0x111F32: allocate (new_allocator.h:115)
+  n1: 760152 0x111F32: allocate (alloc_traits.h:460)
+   n1: 760152 0x111F32: _M_allocate (stl_vector.h:346)
+    n1: 760152 0x111F32: std::vector<Node, std::allocator<Node> >::_M_default_append(unsigned long) (vector.tcc:635)
+     n1: 760152 0x110C7F: resize (stl_vector.h:940)
+      n1: 760152 0x110C7F: Graph::init() (Graph.cpp:9)
+       n1: 760152 0x11100A: Graph::Graph(_IO_FILE*) (Graph.cpp:87)
+        n0: 760152 0x10AEFC: main (main.cpp:62)
+ n1: 270480 0x1121FA: allocate (new_allocator.h:115)
+  n1: 270480 0x1121FA: allocate (alloc_traits.h:460)
+   n1: 270480 0x1121FA: _M_allocate (stl_vector.h:346)
+    n1: 270480 0x1121FA: void std::vector<unsigned int, std::allocator<unsigned int> >::_M_realloc_insert<unsigned int const&>(__gnu_cxx::__normal_iterator<unsigned int*, std::vector<unsigned int, std::allocator<unsigned int> > >, unsigned int const&) (vector.tcc:440)
+     n1: 270480 0x10DEA4: push_back (stl_vector.h:1198)
+      n1: 270480 0x10DEA4: Graph::build_addEdges(unsigned int, std::vector<unsigned int, std::allocator<unsigned int> >&, unsigned int) (Graph.cpp:28)
+       n1: 270480 0x10FB71: Graph::build(_IO_FILE*) (Graph.cpp:72)
+        n1: 270480 0x111015: Graph::Graph(_IO_FILE*) (Graph.cpp:88)
+         n0: 270480 0x10AEFC: main (main.cpp:62)
+ n1: 199436 0x1120DE: allocate (new_allocator.h:115)
+  n1: 199436 0x1120DE: allocate (alloc_traits.h:460)
+   n1: 199436 0x1120DE: _M_allocate (stl_vector.h:346)
+    n1: 199436 0x1120DE: std::vector<unsigned int, std::allocator<unsigned int> >::_M_default_append(unsigned long) (vector.tcc:635)
+     n1: 199436 0x10DEEE: resize (stl_vector.h:940)
+      n1: 199436 0x10DEEE: Graph::build_addEdges(unsigned int, std::vector<unsigned int, std::allocator<unsigned int> >&, unsigned int) (Graph.cpp:22)
+       n1: 199436 0x10FB71: Graph::build(_IO_FILE*) (Graph.cpp:72)
+        n1: 199436 0x111015: Graph::Graph(_IO_FILE*) (Graph.cpp:88)
+         n0: 199436 0x10AEFC: main (main.cpp:62)
+ n1: 81392 0x11263F: allocate (new_allocator.h:115)
+  n1: 81392 0x11263F: allocate (alloc_traits.h:460)
+   n1: 81392 0x11263F: _M_allocate_buckets (hashtable_policy.h:2085)
+    n1: 81392 0x11263F: _M_allocate_buckets (hashtable.h:398)
+     n1: 81392 0x11263F: _M_rehash_aux (hashtable.h:2091)
+      n2: 81392 0x11263F: std::_Hashtable<unsigned int, unsigned int, std::allocator<unsigned int>, std::__detail::_Identity, std::equal_to<unsigned int>, std::hash<unsigned int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, true, true> >::_M_rehash(unsigned long, unsigned long const&) (hashtable.h:2070)
+       n1: 40696 0x110C4C: rehash (hashtable.h:2052)
+        n1: 40696 0x110C4C: reserve (hashtable_policy.h:1093)
+         n1: 40696 0x110C4C: reserve (unordered_set.h:810)
+          n1: 40696 0x110C4C: Graph::init() (Graph.cpp:8)
+           n1: 40696 0x11100A: Graph::Graph(_IO_FILE*) (Graph.cpp:87)
+            n0: 40696 0x10AEFC: main (main.cpp:62)
+       n1: 40696 0x110C68: rehash (hashtable.h:2052)
+        n1: 40696 0x110C68: reserve (hashtable_policy.h:1093)
+         n1: 40696 0x110C68: reserve (unordered_set.h:810)
+          n1: 40696 0x110C68: Graph::init() (Graph.cpp:7)
+           n1: 40696 0x11100A: Graph::Graph(_IO_FILE*) (Graph.cpp:87)
+            n0: 40696 0x10AEFC: main (main.cpp:62)
+ n1: 72704 0x4913399: ??? (in /usr/lib64/libstdc++.so.6.0.28)
+  n1: 72704 0x4011D11: call_init.part.0 (dl-init.c:72)
+   n1: 72704 0x4011E20: call_init (dl-init.c:30)
+    n1: 72704 0x4011E20: _dl_init (dl-init.c:119)
+     n1: 72704 0x4001179: ??? (in /usr/lib64/ld-2.31.so)
+      n1: 72704 0x2: ???
+       n1: 72704 0x1FFEFFE316: ???
+        n1: 72704 0x1FFEFFE32F: ???
+         n0: 72704 0x1FFEFFE355: ???
+ n1: 20004 0x10F945: allocate (new_allocator.h:115)
+  n1: 20004 0x10F945: allocate (alloc_traits.h:460)
+   n1: 20004 0x10F945: _M_allocate (stl_vector.h:346)
+    n1: 20004 0x10F945: _M_create_storage (stl_vector.h:361)
+     n1: 20004 0x10F945: _Vector_base (stl_vector.h:305)
+      n1: 20004 0x10F945: vector (stl_vector.h:511)
+       n1: 20004 0x10F945: Graph::build(_IO_FILE*) (Graph.cpp:49)
+        n1: 20004 0x111015: Graph::Graph(_IO_FILE*) (Graph.cpp:88)
+         n0: 20004 0x10AEFC: main (main.cpp:62)
+ n0: 8710 in 5 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=20
+#-----------
+time=74649110
+mem_heap_B=1427222
+mem_heap_extra_B=76186
+mem_stacks_B=0
+heap_tree=detailed
+n7: 1427222 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 760152 0x111F32: allocate (new_allocator.h:115)
+  n1: 760152 0x111F32: allocate (alloc_traits.h:460)
+   n1: 760152 0x111F32: _M_allocate (stl_vector.h:346)
+    n1: 760152 0x111F32: std::vector<Node, std::allocator<Node> >::_M_default_append(unsigned long) (vector.tcc:635)
+     n1: 760152 0x110C7F: resize (stl_vector.h:940)
+      n1: 760152 0x110C7F: Graph::init() (Graph.cpp:9)
+       n1: 760152 0x11100A: Graph::Graph(_IO_FILE*) (Graph.cpp:87)
+        n0: 760152 0x10AEFC: main (main.cpp:62)
+ n1: 278920 0x1121FA: allocate (new_allocator.h:115)
+  n1: 278920 0x1121FA: allocate (alloc_traits.h:460)
+   n1: 278920 0x1121FA: _M_allocate (stl_vector.h:346)
+    n1: 278920 0x1121FA: void std::vector<unsigned int, std::allocator<unsigned int> >::_M_realloc_insert<unsigned int const&>(__gnu_cxx::__normal_iterator<unsigned int*, std::vector<unsigned int, std::allocator<unsigned int> > >, unsigned int const&) (vector.tcc:440)
+     n1: 278920 0x10DEA4: push_back (stl_vector.h:1198)
+      n1: 278920 0x10DEA4: Graph::build_addEdges(unsigned int, std::vector<unsigned int, std::allocator<unsigned int> >&, unsigned int) (Graph.cpp:28)
+       n1: 278920 0x10FB71: Graph::build(_IO_FILE*) (Graph.cpp:72)
+        n1: 278920 0x111015: Graph::Graph(_IO_FILE*) (Graph.cpp:88)
+         n0: 278920 0x10AEFC: main (main.cpp:62)
+ n1: 205340 0x1120DE: allocate (new_allocator.h:115)
+  n1: 205340 0x1120DE: allocate (alloc_traits.h:460)
+   n1: 205340 0x1120DE: _M_allocate (stl_vector.h:346)
+    n1: 205340 0x1120DE: std::vector<unsigned int, std::allocator<unsigned int> >::_M_default_append(unsigned long) (vector.tcc:635)
+     n1: 205340 0x10DEEE: resize (stl_vector.h:940)
+      n1: 205340 0x10DEEE: Graph::build_addEdges(unsigned int, std::vector<unsigned int, std::allocator<unsigned int> >&, unsigned int) (Graph.cpp:22)
+       n1: 205340 0x10FB71: Graph::build(_IO_FILE*) (Graph.cpp:72)
+        n1: 205340 0x111015: Graph::Graph(_IO_FILE*) (Graph.cpp:88)
+         n0: 205340 0x10AEFC: main (main.cpp:62)
+ n1: 81392 0x11263F: allocate (new_allocator.h:115)
+  n1: 81392 0x11263F: allocate (alloc_traits.h:460)
+   n1: 81392 0x11263F: _M_allocate_buckets (hashtable_policy.h:2085)
+    n1: 81392 0x11263F: _M_allocate_buckets (hashtable.h:398)
+     n1: 81392 0x11263F: _M_rehash_aux (hashtable.h:2091)
+      n2: 81392 0x11263F: std::_Hashtable<unsigned int, unsigned int, std::allocator<unsigned int>, std::__detail::_Identity, std::equal_to<unsigned int>, std::hash<unsigned int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, true, true> >::_M_rehash(unsigned long, unsigned long const&) (hashtable.h:2070)
+       n1: 40696 0x110C4C: rehash (hashtable.h:2052)
+        n1: 40696 0x110C4C: reserve (hashtable_policy.h:1093)
+         n1: 40696 0x110C4C: reserve (unordered_set.h:810)
+          n1: 40696 0x110C4C: Graph::init() (Graph.cpp:8)
+           n1: 40696 0x11100A: Graph::Graph(_IO_FILE*) (Graph.cpp:87)
+            n0: 40696 0x10AEFC: main (main.cpp:62)
+       n1: 40696 0x110C68: rehash (hashtable.h:2052)
+        n1: 40696 0x110C68: reserve (hashtable_policy.h:1093)
+         n1: 40696 0x110C68: reserve (unordered_set.h:810)
+          n1: 40696 0x110C68: Graph::init() (Graph.cpp:7)
+           n1: 40696 0x11100A: Graph::Graph(_IO_FILE*) (Graph.cpp:87)
+            n0: 40696 0x10AEFC: main (main.cpp:62)
+ n1: 72704 0x4913399: ??? (in /usr/lib64/libstdc++.so.6.0.28)
+  n1: 72704 0x4011D11: call_init.part.0 (dl-init.c:72)
+   n1: 72704 0x4011E20: call_init (dl-init.c:30)
+    n1: 72704 0x4011E20: _dl_init (dl-init.c:119)
+     n1: 72704 0x4001179: ??? (in /usr/lib64/ld-2.31.so)
+      n1: 72704 0x2: ???
+       n1: 72704 0x1FFEFFE316: ???
+        n1: 72704 0x1FFEFFE32F: ???
+         n0: 72704 0x1FFEFFE355: ???
+ n1: 20004 0x10F945: allocate (new_allocator.h:115)
+  n1: 20004 0x10F945: allocate (alloc_traits.h:460)
+   n1: 20004 0x10F945: _M_allocate (stl_vector.h:346)
+    n1: 20004 0x10F945: _M_create_storage (stl_vector.h:361)
+     n1: 20004 0x10F945: _Vector_base (stl_vector.h:305)
+      n1: 20004 0x10F945: vector (stl_vector.h:511)
+       n1: 20004 0x10F945: Graph::build(_IO_FILE*) (Graph.cpp:49)
+        n1: 20004 0x111015: Graph::Graph(_IO_FILE*) (Graph.cpp:88)
+         n0: 20004 0x10AEFC: main (main.cpp:62)
+ n0: 8710 in 5 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=21
+#-----------
+time=78447094
+mem_heap_B=1456154
+mem_heap_extra_B=77630
+mem_stacks_B=0
+heap_tree=detailed
+n7: 1456154 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 760152 0x111F32: allocate (new_allocator.h:115)
+  n1: 760152 0x111F32: allocate (alloc_traits.h:460)
+   n1: 760152 0x111F32: _M_allocate (stl_vector.h:346)
+    n1: 760152 0x111F32: std::vector<Node, std::allocator<Node> >::_M_default_append(unsigned long) (vector.tcc:635)
+     n1: 760152 0x110C7F: resize (stl_vector.h:940)
+      n1: 760152 0x110C7F: Graph::init() (Graph.cpp:9)
+       n1: 760152 0x11100A: Graph::Graph(_IO_FILE*) (Graph.cpp:87)
+        n0: 760152 0x10AEFC: main (main.cpp:62)
+ n1: 296496 0x1121FA: allocate (new_allocator.h:115)
+  n1: 296496 0x1121FA: allocate (alloc_traits.h:460)
+   n1: 296496 0x1121FA: _M_allocate (stl_vector.h:346)
+    n1: 296496 0x1121FA: void std::vector<unsigned int, std::allocator<unsigned int> >::_M_realloc_insert<unsigned int const&>(__gnu_cxx::__normal_iterator<unsigned int*, std::vector<unsigned int, std::allocator<unsigned int> > >, unsigned int const&) (vector.tcc:440)
+     n1: 296496 0x10DEA4: push_back (stl_vector.h:1198)
+      n1: 296496 0x10DEA4: Graph::build_addEdges(unsigned int, std::vector<unsigned int, std::allocator<unsigned int> >&, unsigned int) (Graph.cpp:28)
+       n1: 296496 0x10FB71: Graph::build(_IO_FILE*) (Graph.cpp:72)
+        n1: 296496 0x111015: Graph::Graph(_IO_FILE*) (Graph.cpp:88)
+         n0: 296496 0x10AEFC: main (main.cpp:62)
+ n1: 216648 0x1120DE: allocate (new_allocator.h:115)
+  n1: 216648 0x1120DE: allocate (alloc_traits.h:460)
+   n1: 216648 0x1120DE: _M_allocate (stl_vector.h:346)
+    n1: 216648 0x1120DE: std::vector<unsigned int, std::allocator<unsigned int> >::_M_default_append(unsigned long) (vector.tcc:635)
+     n1: 216648 0x10DEEE: resize (stl_vector.h:940)
+      n1: 216648 0x10DEEE: Graph::build_addEdges(unsigned int, std::vector<unsigned int, std::allocator<unsigned int> >&, unsigned int) (Graph.cpp:22)
+       n1: 216648 0x10FB71: Graph::build(_IO_FILE*) (Graph.cpp:72)
+        n1: 216648 0x111015: Graph::Graph(_IO_FILE*) (Graph.cpp:88)
+         n0: 216648 0x10AEFC: main (main.cpp:62)
+ n1: 81392 0x11263F: allocate (new_allocator.h:115)
+  n1: 81392 0x11263F: allocate (alloc_traits.h:460)
+   n1: 81392 0x11263F: _M_allocate_buckets (hashtable_policy.h:2085)
+    n1: 81392 0x11263F: _M_allocate_buckets (hashtable.h:398)
+     n1: 81392 0x11263F: _M_rehash_aux (hashtable.h:2091)
+      n2: 81392 0x11263F: std::_Hashtable<unsigned int, unsigned int, std::allocator<unsigned int>, std::__detail::_Identity, std::equal_to<unsigned int>, std::hash<unsigned int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, true, true> >::_M_rehash(unsigned long, unsigned long const&) (hashtable.h:2070)
+       n1: 40696 0x110C4C: rehash (hashtable.h:2052)
+        n1: 40696 0x110C4C: reserve (hashtable_policy.h:1093)
+         n1: 40696 0x110C4C: reserve (unordered_set.h:810)
+          n1: 40696 0x110C4C: Graph::init() (Graph.cpp:8)
+           n1: 40696 0x11100A: Graph::Graph(_IO_FILE*) (Graph.cpp:87)
+            n0: 40696 0x10AEFC: main (main.cpp:62)
+       n1: 40696 0x110C68: rehash (hashtable.h:2052)
+        n1: 40696 0x110C68: reserve (hashtable_policy.h:1093)
+         n1: 40696 0x110C68: reserve (unordered_set.h:810)
+          n1: 40696 0x110C68: Graph::init() (Graph.cpp:7)
+           n1: 40696 0x11100A: Graph::Graph(_IO_FILE*) (Graph.cpp:87)
+            n0: 40696 0x10AEFC: main (main.cpp:62)
+ n1: 72704 0x4913399: ??? (in /usr/lib64/libstdc++.so.6.0.28)
+  n1: 72704 0x4011D11: call_init.part.0 (dl-init.c:72)
+   n1: 72704 0x4011E20: call_init (dl-init.c:30)
+    n1: 72704 0x4011E20: _dl_init (dl-init.c:119)
+     n1: 72704 0x4001179: ??? (in /usr/lib64/ld-2.31.so)
+      n1: 72704 0x2: ???
+       n1: 72704 0x1FFEFFE316: ???
+        n1: 72704 0x1FFEFFE32F: ???
+         n0: 72704 0x1FFEFFE355: ???
+ n1: 20004 0x10F945: allocate (new_allocator.h:115)
+  n1: 20004 0x10F945: allocate (alloc_traits.h:460)
+   n1: 20004 0x10F945: _M_allocate (stl_vector.h:346)
+    n1: 20004 0x10F945: _M_create_storage (stl_vector.h:361)
+     n1: 20004 0x10F945: _Vector_base (stl_vector.h:305)
+      n1: 20004 0x10F945: vector (stl_vector.h:511)
+       n1: 20004 0x10F945: Graph::build(_IO_FILE*) (Graph.cpp:49)
+        n1: 20004 0x111015: Graph::Graph(_IO_FILE*) (Graph.cpp:88)
+         n0: 20004 0x10AEFC: main (main.cpp:62)
+ n0: 8758 in 5 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=22
+#-----------
+time=82105096
+mem_heap_B=1485898
+mem_heap_extra_B=78862
+mem_stacks_B=0
+heap_tree=detailed
+n7: 1485898 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 760152 0x111F32: allocate (new_allocator.h:115)
+  n1: 760152 0x111F32: allocate (alloc_traits.h:460)
+   n1: 760152 0x111F32: _M_allocate (stl_vector.h:346)
+    n1: 760152 0x111F32: std::vector<Node, std::allocator<Node> >::_M_default_append(unsigned long) (vector.tcc:635)
+     n1: 760152 0x110C7F: resize (stl_vector.h:940)
+      n1: 760152 0x110C7F: Graph::init() (Graph.cpp:9)
+       n1: 760152 0x11100A: Graph::Graph(_IO_FILE*) (Graph.cpp:87)
+        n0: 760152 0x10AEFC: main (main.cpp:62)
+ n1: 315264 0x1121FA: allocate (new_allocator.h:115)
+  n1: 315264 0x1121FA: allocate (alloc_traits.h:460)
+   n1: 315264 0x1121FA: _M_allocate (stl_vector.h:346)
+    n1: 315264 0x1121FA: void std::vector<unsigned int, std::allocator<unsigned int> >::_M_realloc_insert<unsigned int const&>(__gnu_cxx::__normal_iterator<unsigned int*, std::vector<unsigned int, std::allocator<unsigned int> > >, unsigned int const&) (vector.tcc:440)
+     n1: 315264 0x10DEA4: push_back (stl_vector.h:1198)
+      n1: 315264 0x10DEA4: Graph::build_addEdges(unsigned int, std::vector<unsigned int, std::allocator<unsigned int> >&, unsigned int) (Graph.cpp:28)
+       n1: 315264 0x10FB71: Graph::build(_IO_FILE*) (Graph.cpp:72)
+        n1: 315264 0x111015: Graph::Graph(_IO_FILE*) (Graph.cpp:88)
+         n0: 315264 0x10AEFC: main (main.cpp:62)
+ n1: 227592 0x1120DE: allocate (new_allocator.h:115)
+  n1: 227592 0x1120DE: allocate (alloc_traits.h:460)
+   n1: 227592 0x1120DE: _M_allocate (stl_vector.h:346)
+    n1: 227592 0x1120DE: std::vector<unsigned int, std::allocator<unsigned int> >::_M_default_append(unsigned long) (vector.tcc:635)
+     n1: 227592 0x10DEEE: resize (stl_vector.h:940)
+      n1: 227592 0x10DEEE: Graph::build_addEdges(unsigned int, std::vector<unsigned int, std::allocator<unsigned int> >&, unsigned int) (Graph.cpp:22)
+       n1: 227592 0x10FB71: Graph::build(_IO_FILE*) (Graph.cpp:72)
+        n1: 227592 0x111015: Graph::Graph(_IO_FILE*) (Graph.cpp:88)
+         n0: 227592 0x10AEFC: main (main.cpp:62)
+ n1: 81392 0x11263F: allocate (new_allocator.h:115)
+  n1: 81392 0x11263F: allocate (alloc_traits.h:460)
+   n1: 81392 0x11263F: _M_allocate_buckets (hashtable_policy.h:2085)
+    n1: 81392 0x11263F: _M_allocate_buckets (hashtable.h:398)
+     n1: 81392 0x11263F: _M_rehash_aux (hashtable.h:2091)
+      n2: 81392 0x11263F: std::_Hashtable<unsigned int, unsigned int, std::allocator<unsigned int>, std::__detail::_Identity, std::equal_to<unsigned int>, std::hash<unsigned int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, true, true> >::_M_rehash(unsigned long, unsigned long const&) (hashtable.h:2070)
+       n1: 40696 0x110C4C: rehash (hashtable.h:2052)
+        n1: 40696 0x110C4C: reserve (hashtable_policy.h:1093)
+         n1: 40696 0x110C4C: reserve (unordered_set.h:810)
+          n1: 40696 0x110C4C: Graph::init() (Graph.cpp:8)
+           n1: 40696 0x11100A: Graph::Graph(_IO_FILE*) (Graph.cpp:87)
+            n0: 40696 0x10AEFC: main (main.cpp:62)
+       n1: 40696 0x110C68: rehash (hashtable.h:2052)
+        n1: 40696 0x110C68: reserve (hashtable_policy.h:1093)
+         n1: 40696 0x110C68: reserve (unordered_set.h:810)
+          n1: 40696 0x110C68: Graph::init() (Graph.cpp:7)
+           n1: 40696 0x11100A: Graph::Graph(_IO_FILE*) (Graph.cpp:87)
+            n0: 40696 0x10AEFC: main (main.cpp:62)
+ n1: 72704 0x4913399: ??? (in /usr/lib64/libstdc++.so.6.0.28)
+  n1: 72704 0x4011D11: call_init.part.0 (dl-init.c:72)
+   n1: 72704 0x4011E20: call_init (dl-init.c:30)
+    n1: 72704 0x4011E20: _dl_init (dl-init.c:119)
+     n1: 72704 0x4001179: ??? (in /usr/lib64/ld-2.31.so)
+      n1: 72704 0x2: ???
+       n1: 72704 0x1FFEFFE316: ???
+        n1: 72704 0x1FFEFFE32F: ???
+         n0: 72704 0x1FFEFFE355: ???
+ n1: 20004 0x10F945: allocate (new_allocator.h:115)
+  n1: 20004 0x10F945: allocate (alloc_traits.h:460)
+   n1: 20004 0x10F945: _M_allocate (stl_vector.h:346)
+    n1: 20004 0x10F945: _M_create_storage (stl_vector.h:361)
+     n1: 20004 0x10F945: _Vector_base (stl_vector.h:305)
+      n1: 20004 0x10F945: vector (stl_vector.h:511)
+       n1: 20004 0x10F945: Graph::build(_IO_FILE*) (Graph.cpp:49)
+        n1: 20004 0x111015: Graph::Graph(_IO_FILE*) (Graph.cpp:88)
+         n0: 20004 0x10AEFC: main (main.cpp:62)
+ n0: 8790 in 5 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=23
+#-----------
+time=84874345
+mem_heap_B=1507810
+mem_heap_extra_B=80054
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=24
+#-----------
+time=87672104
+mem_heap_B=1531018
+mem_heap_extra_B=81062
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=25
+#-----------
+time=91459507
+mem_heap_B=1562038
+mem_heap_extra_B=82738
+mem_stacks_B=0
+heap_tree=detailed
+n7: 1562038 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 760152 0x111F32: allocate (new_allocator.h:115)
+  n1: 760152 0x111F32: allocate (alloc_traits.h:460)
+   n1: 760152 0x111F32: _M_allocate (stl_vector.h:346)
+    n1: 760152 0x111F32: std::vector<Node, std::allocator<Node> >::_M_default_append(unsigned long) (vector.tcc:635)
+     n1: 760152 0x110C7F: resize (stl_vector.h:940)
+      n1: 760152 0x110C7F: Graph::init() (Graph.cpp:9)
+       n1: 760152 0x11100A: Graph::Graph(_IO_FILE*) (Graph.cpp:87)
+        n0: 760152 0x10AEFC: main (main.cpp:62)
+ n1: 363584 0x1121FA: allocate (new_allocator.h:115)
+  n1: 363584 0x1121FA: allocate (alloc_traits.h:460)
+   n1: 363584 0x1121FA: _M_allocate (stl_vector.h:346)
+    n1: 363584 0x1121FA: void std::vector<unsigned int, std::allocator<unsigned int> >::_M_realloc_insert<unsigned int const&>(__gnu_cxx::__normal_iterator<unsigned int*, std::vector<unsigned int, std::allocator<unsigned int> > >, unsigned int const&) (vector.tcc:440)
+     n1: 363584 0x10DEA4: push_back (stl_vector.h:1198)
+      n1: 363584 0x10DEA4: Graph::build_addEdges(unsigned int, std::vector<unsigned int, std::allocator<unsigned int> >&, unsigned int) (Graph.cpp:28)
+       n1: 363584 0x10FB71: Graph::build(_IO_FILE*) (Graph.cpp:72)
+        n1: 363584 0x111015: Graph::Graph(_IO_FILE*) (Graph.cpp:88)
+         n0: 363584 0x10AEFC: main (main.cpp:62)
+ n1: 255300 0x1120DE: allocate (new_allocator.h:115)
+  n1: 255300 0x1120DE: allocate (alloc_traits.h:460)
+   n1: 255300 0x1120DE: _M_allocate (stl_vector.h:346)
+    n1: 255300 0x1120DE: std::vector<unsigned int, std::allocator<unsigned int> >::_M_default_append(unsigned long) (vector.tcc:635)
+     n1: 255300 0x10DEEE: resize (stl_vector.h:940)
+      n1: 255300 0x10DEEE: Graph::build_addEdges(unsigned int, std::vector<unsigned int, std::allocator<unsigned int> >&, unsigned int) (Graph.cpp:22)
+       n1: 255300 0x10FB71: Graph::build(_IO_FILE*) (Graph.cpp:72)
+        n1: 255300 0x111015: Graph::Graph(_IO_FILE*) (Graph.cpp:88)
+         n0: 255300 0x10AEFC: main (main.cpp:62)
+ n1: 81392 0x11263F: allocate (new_allocator.h:115)
+  n1: 81392 0x11263F: allocate (alloc_traits.h:460)
+   n1: 81392 0x11263F: _M_allocate_buckets (hashtable_policy.h:2085)
+    n1: 81392 0x11263F: _M_allocate_buckets (hashtable.h:398)
+     n1: 81392 0x11263F: _M_rehash_aux (hashtable.h:2091)
+      n2: 81392 0x11263F: std::_Hashtable<unsigned int, unsigned int, std::allocator<unsigned int>, std::__detail::_Identity, std::equal_to<unsigned int>, std::hash<unsigned int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, true, true> >::_M_rehash(unsigned long, unsigned long const&) (hashtable.h:2070)
+       n1: 40696 0x110C4C: rehash (hashtable.h:2052)
+        n1: 40696 0x110C4C: reserve (hashtable_policy.h:1093)
+         n1: 40696 0x110C4C: reserve (unordered_set.h:810)
+          n1: 40696 0x110C4C: Graph::init() (Graph.cpp:8)
+           n1: 40696 0x11100A: Graph::Graph(_IO_FILE*) (Graph.cpp:87)
+            n0: 40696 0x10AEFC: main (main.cpp:62)
+       n1: 40696 0x110C68: rehash (hashtable.h:2052)
+        n1: 40696 0x110C68: reserve (hashtable_policy.h:1093)
+         n1: 40696 0x110C68: reserve (unordered_set.h:810)
+          n1: 40696 0x110C68: Graph::init() (Graph.cpp:7)
+           n1: 40696 0x11100A: Graph::Graph(_IO_FILE*) (Graph.cpp:87)
+            n0: 40696 0x10AEFC: main (main.cpp:62)
+ n1: 72704 0x4913399: ??? (in /usr/lib64/libstdc++.so.6.0.28)
+  n1: 72704 0x4011D11: call_init.part.0 (dl-init.c:72)
+   n1: 72704 0x4011E20: call_init (dl-init.c:30)
+    n1: 72704 0x4011E20: _dl_init (dl-init.c:119)
+     n1: 72704 0x4001179: ??? (in /usr/lib64/ld-2.31.so)
+      n1: 72704 0x2: ???
+       n1: 72704 0x1FFEFFE316: ???
+        n1: 72704 0x1FFEFFE32F: ???
+         n0: 72704 0x1FFEFFE355: ???
+ n1: 20004 0x10F945: allocate (new_allocator.h:115)
+  n1: 20004 0x10F945: allocate (alloc_traits.h:460)
+   n1: 20004 0x10F945: _M_allocate (stl_vector.h:346)
+    n1: 20004 0x10F945: _M_create_storage (stl_vector.h:361)
+     n1: 20004 0x10F945: _Vector_base (stl_vector.h:305)
+      n1: 20004 0x10F945: vector (stl_vector.h:511)
+       n1: 20004 0x10F945: Graph::build(_IO_FILE*) (Graph.cpp:49)
+        n1: 20004 0x111015: Graph::Graph(_IO_FILE*) (Graph.cpp:88)
+         n0: 20004 0x10AEFC: main (main.cpp:62)
+ n0: 8902 in 5 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=26
+#-----------
+time=95818566
+mem_heap_B=1593258
+mem_heap_extra_B=84630
+mem_stacks_B=0
+heap_tree=detailed
+n7: 1593258 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 760152 0x111F32: allocate (new_allocator.h:115)
+  n1: 760152 0x111F32: allocate (alloc_traits.h:460)
+   n1: 760152 0x111F32: _M_allocate (stl_vector.h:346)
+    n1: 760152 0x111F32: std::vector<Node, std::allocator<Node> >::_M_default_append(unsigned long) (vector.tcc:635)
+     n1: 760152 0x110C7F: resize (stl_vector.h:940)
+      n1: 760152 0x110C7F: Graph::init() (Graph.cpp:9)
+       n1: 760152 0x11100A: Graph::Graph(_IO_FILE*) (Graph.cpp:87)
+        n0: 760152 0x10AEFC: main (main.cpp:62)
+ n1: 381776 0x1121FA: allocate (new_allocator.h:115)
+  n1: 381776 0x1121FA: allocate (alloc_traits.h:460)
+   n1: 381776 0x1121FA: _M_allocate (stl_vector.h:346)
+    n1: 381776 0x1121FA: void std::vector<unsigned int, std::allocator<unsigned int> >::_M_realloc_insert<unsigned int const&>(__gnu_cxx::__normal_iterator<unsigned int*, std::vector<unsigned int, std::allocator<unsigned int> > >, unsigned int const&) (vector.tcc:440)
+     n1: 381776 0x10DEA4: push_back (stl_vector.h:1198)
+      n1: 381776 0x10DEA4: Graph::build_addEdges(unsigned int, std::vector<unsigned int, std::allocator<unsigned int> >&, unsigned int) (Graph.cpp:28)
+       n1: 381776 0x10FB71: Graph::build(_IO_FILE*) (Graph.cpp:72)
+        n1: 381776 0x111015: Graph::Graph(_IO_FILE*) (Graph.cpp:88)
+         n0: 381776 0x10AEFC: main (main.cpp:62)
+ n1: 268280 0x1120DE: allocate (new_allocator.h:115)
+  n1: 268280 0x1120DE: allocate (alloc_traits.h:460)
+   n1: 268280 0x1120DE: _M_allocate (stl_vector.h:346)
+    n1: 268280 0x1120DE: std::vector<unsigned int, std::allocator<unsigned int> >::_M_default_append(unsigned long) (vector.tcc:635)
+     n1: 268280 0x10DEEE: resize (stl_vector.h:940)
+      n1: 268280 0x10DEEE: Graph::build_addEdges(unsigned int, std::vector<unsigned int, std::allocator<unsigned int> >&, unsigned int) (Graph.cpp:22)
+       n1: 268280 0x10FB71: Graph::build(_IO_FILE*) (Graph.cpp:72)
+        n1: 268280 0x111015: Graph::Graph(_IO_FILE*) (Graph.cpp:88)
+         n0: 268280 0x10AEFC: main (main.cpp:62)
+ n1: 81392 0x11263F: allocate (new_allocator.h:115)
+  n1: 81392 0x11263F: allocate (alloc_traits.h:460)
+   n1: 81392 0x11263F: _M_allocate_buckets (hashtable_policy.h:2085)
+    n1: 81392 0x11263F: _M_allocate_buckets (hashtable.h:398)
+     n1: 81392 0x11263F: _M_rehash_aux (hashtable.h:2091)
+      n2: 81392 0x11263F: std::_Hashtable<unsigned int, unsigned int, std::allocator<unsigned int>, std::__detail::_Identity, std::equal_to<unsigned int>, std::hash<unsigned int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, true, true> >::_M_rehash(unsigned long, unsigned long const&) (hashtable.h:2070)
+       n1: 40696 0x110C4C: rehash (hashtable.h:2052)
+        n1: 40696 0x110C4C: reserve (hashtable_policy.h:1093)
+         n1: 40696 0x110C4C: reserve (unordered_set.h:810)
+          n1: 40696 0x110C4C: Graph::init() (Graph.cpp:8)
+           n1: 40696 0x11100A: Graph::Graph(_IO_FILE*) (Graph.cpp:87)
+            n0: 40696 0x10AEFC: main (main.cpp:62)
+       n1: 40696 0x110C68: rehash (hashtable.h:2052)
+        n1: 40696 0x110C68: reserve (hashtable_policy.h:1093)
+         n1: 40696 0x110C68: reserve (unordered_set.h:810)
+          n1: 40696 0x110C68: Graph::init() (Graph.cpp:7)
+           n1: 40696 0x11100A: Graph::Graph(_IO_FILE*) (Graph.cpp:87)
+            n0: 40696 0x10AEFC: main (main.cpp:62)
+ n1: 72704 0x4913399: ??? (in /usr/lib64/libstdc++.so.6.0.28)
+  n1: 72704 0x4011D11: call_init.part.0 (dl-init.c:72)
+   n1: 72704 0x4011E20: call_init (dl-init.c:30)
+    n1: 72704 0x4011E20: _dl_init (dl-init.c:119)
+     n1: 72704 0x4001179: ??? (in /usr/lib64/ld-2.31.so)
+      n1: 72704 0x2: ???
+       n1: 72704 0x1FFEFFE316: ???
+        n1: 72704 0x1FFEFFE32F: ???
+         n0: 72704 0x1FFEFFE355: ???
+ n1: 20004 0x10F945: allocate (new_allocator.h:115)
+  n1: 20004 0x10F945: allocate (alloc_traits.h:460)
+   n1: 20004 0x10F945: _M_allocate (stl_vector.h:346)
+    n1: 20004 0x10F945: _M_create_storage (stl_vector.h:361)
+     n1: 20004 0x10F945: _Vector_base (stl_vector.h:305)
+      n1: 20004 0x10F945: vector (stl_vector.h:511)
+       n1: 20004 0x10F945: Graph::build(_IO_FILE*) (Graph.cpp:49)
+        n1: 20004 0x111015: Graph::Graph(_IO_FILE*) (Graph.cpp:88)
+         n0: 20004 0x10AEFC: main (main.cpp:62)
+ n0: 8950 in 5 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=27
+#-----------
+time=97774239
+mem_heap_B=1606234
+mem_heap_extra_B=85398
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=28
+#-----------
+time=100797066
+mem_heap_B=1625070
+mem_heap_extra_B=86898
+mem_stacks_B=0
+heap_tree=detailed
+n7: 1625070 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 760152 0x111F32: allocate (new_allocator.h:115)
+  n1: 760152 0x111F32: allocate (alloc_traits.h:460)
+   n1: 760152 0x111F32: _M_allocate (stl_vector.h:346)
+    n1: 760152 0x111F32: std::vector<Node, std::allocator<Node> >::_M_default_append(unsigned long) (vector.tcc:635)
+     n1: 760152 0x110C7F: resize (stl_vector.h:940)
+      n1: 760152 0x110C7F: Graph::init() (Graph.cpp:9)
+       n1: 760152 0x11100A: Graph::Graph(_IO_FILE*) (Graph.cpp:87)
+        n0: 760152 0x10AEFC: main (main.cpp:62)
+ n1: 398672 0x1121FA: allocate (new_allocator.h:115)
+  n1: 398672 0x1121FA: allocate (alloc_traits.h:460)
+   n1: 398672 0x1121FA: _M_allocate (stl_vector.h:346)
+    n1: 398672 0x1121FA: void std::vector<unsigned int, std::allocator<unsigned int> >::_M_realloc_insert<unsigned int const&>(__gnu_cxx::__normal_iterator<unsigned int*, std::vector<unsigned int, std::allocator<unsigned int> > >, unsigned int const&) (vector.tcc:440)
+     n1: 398672 0x10DEA4: push_back (stl_vector.h:1198)
+      n1: 398672 0x10DEA4: Graph::build_addEdges(unsigned int, std::vector<unsigned int, std::allocator<unsigned int> >&, unsigned int) (Graph.cpp:28)
+       n1: 398672 0x10FB71: Graph::build(_IO_FILE*) (Graph.cpp:72)
+        n1: 398672 0x111015: Graph::Graph(_IO_FILE*) (Graph.cpp:88)
+         n0: 398672 0x10AEFC: main (main.cpp:62)
+ n1: 283132 0x1120DE: allocate (new_allocator.h:115)
+  n1: 283132 0x1120DE: allocate (alloc_traits.h:460)
+   n1: 283132 0x1120DE: _M_allocate (stl_vector.h:346)
+    n1: 283132 0x1120DE: std::vector<unsigned int, std::allocator<unsigned int> >::_M_default_append(unsigned long) (vector.tcc:635)
+     n1: 283132 0x10DEEE: resize (stl_vector.h:940)
+      n1: 283132 0x10DEEE: Graph::build_addEdges(unsigned int, std::vector<unsigned int, std::allocator<unsigned int> >&, unsigned int) (Graph.cpp:22)
+       n1: 283132 0x10FB71: Graph::build(_IO_FILE*) (Graph.cpp:72)
+        n1: 283132 0x111015: Graph::Graph(_IO_FILE*) (Graph.cpp:88)
+         n0: 283132 0x10AEFC: main (main.cpp:62)
+ n1: 81392 0x11263F: allocate (new_allocator.h:115)
+  n1: 81392 0x11263F: allocate (alloc_traits.h:460)
+   n1: 81392 0x11263F: _M_allocate_buckets (hashtable_policy.h:2085)
+    n1: 81392 0x11263F: _M_allocate_buckets (hashtable.h:398)
+     n1: 81392 0x11263F: _M_rehash_aux (hashtable.h:2091)
+      n2: 81392 0x11263F: std::_Hashtable<unsigned int, unsigned int, std::allocator<unsigned int>, std::__detail::_Identity, std::equal_to<unsigned int>, std::hash<unsigned int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, true, true> >::_M_rehash(unsigned long, unsigned long const&) (hashtable.h:2070)
+       n1: 40696 0x110C4C: rehash (hashtable.h:2052)
+        n1: 40696 0x110C4C: reserve (hashtable_policy.h:1093)
+         n1: 40696 0x110C4C: reserve (unordered_set.h:810)
+          n1: 40696 0x110C4C: Graph::init() (Graph.cpp:8)
+           n1: 40696 0x11100A: Graph::Graph(_IO_FILE*) (Graph.cpp:87)
+            n0: 40696 0x10AEFC: main (main.cpp:62)
+       n1: 40696 0x110C68: rehash (hashtable.h:2052)
+        n1: 40696 0x110C68: reserve (hashtable_policy.h:1093)
+         n1: 40696 0x110C68: reserve (unordered_set.h:810)
+          n1: 40696 0x110C68: Graph::init() (Graph.cpp:7)
+           n1: 40696 0x11100A: Graph::Graph(_IO_FILE*) (Graph.cpp:87)
+            n0: 40696 0x10AEFC: main (main.cpp:62)
+ n1: 72704 0x4913399: ??? (in /usr/lib64/libstdc++.so.6.0.28)
+  n1: 72704 0x4011D11: call_init.part.0 (dl-init.c:72)
+   n1: 72704 0x4011E20: call_init (dl-init.c:30)
+    n1: 72704 0x4011E20: _dl_init (dl-init.c:119)
+     n1: 72704 0x4001179: ??? (in /usr/lib64/ld-2.31.so)
+      n1: 72704 0x2: ???
+       n1: 72704 0x1FFEFFE316: ???
+        n1: 72704 0x1FFEFFE32F: ???
+         n0: 72704 0x1FFEFFE355: ???
+ n1: 20004 0x10F945: allocate (new_allocator.h:115)
+  n1: 20004 0x10F945: allocate (alloc_traits.h:460)
+   n1: 20004 0x10F945: _M_allocate (stl_vector.h:346)
+    n1: 20004 0x10F945: _M_create_storage (stl_vector.h:361)
+     n1: 20004 0x10F945: _Vector_base (stl_vector.h:305)
+      n1: 20004 0x10F945: vector (stl_vector.h:511)
+       n1: 20004 0x10F945: Graph::build(_IO_FILE*) (Graph.cpp:49)
+        n1: 20004 0x111015: Graph::Graph(_IO_FILE*) (Graph.cpp:88)
+         n0: 20004 0x10AEFC: main (main.cpp:62)
+ n0: 9014 in 5 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=29
+#-----------
+time=105471266
+mem_heap_B=1653134
+mem_heap_extra_B=88914
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=30
+#-----------
+time=108145511
+mem_heap_B=1669474
+mem_heap_extra_B=89982
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=31
+#-----------
+time=111588669
+mem_heap_B=1690522
+mem_heap_extra_B=91750
+mem_stacks_B=0
+heap_tree=detailed
+n7: 1690522 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 760152 0x111F32: allocate (new_allocator.h:115)
+  n1: 760152 0x111F32: allocate (alloc_traits.h:460)
+   n1: 760152 0x111F32: _M_allocate (stl_vector.h:346)
+    n1: 760152 0x111F32: std::vector<Node, std::allocator<Node> >::_M_default_append(unsigned long) (vector.tcc:635)
+     n1: 760152 0x110C7F: resize (stl_vector.h:940)
+      n1: 760152 0x110C7F: Graph::init() (Graph.cpp:9)
+       n1: 760152 0x11100A: Graph::Graph(_IO_FILE*) (Graph.cpp:87)
+        n0: 760152 0x10AEFC: main (main.cpp:62)
+ n1: 431792 0x1121FA: allocate (new_allocator.h:115)
+  n1: 431792 0x1121FA: allocate (alloc_traits.h:460)
+   n1: 431792 0x1121FA: _M_allocate (stl_vector.h:346)
+    n1: 431792 0x1121FA: void std::vector<unsigned int, std::allocator<unsigned int> >::_M_realloc_insert<unsigned int const&>(__gnu_cxx::__normal_iterator<unsigned int*, std::vector<unsigned int, std::allocator<unsigned int> > >, unsigned int const&) (vector.tcc:440)
+     n1: 431792 0x10DEA4: push_back (stl_vector.h:1198)
+      n1: 431792 0x10DEA4: Graph::build_addEdges(unsigned int, std::vector<unsigned int, std::allocator<unsigned int> >&, unsigned int) (Graph.cpp:28)
+       n1: 431792 0x10FB71: Graph::build(_IO_FILE*) (Graph.cpp:72)
+        n1: 431792 0x111015: Graph::Graph(_IO_FILE*) (Graph.cpp:88)
+         n0: 431792 0x10AEFC: main (main.cpp:62)
+ n1: 315432 0x1120DE: allocate (new_allocator.h:115)
+  n1: 315432 0x1120DE: allocate (alloc_traits.h:460)
+   n1: 315432 0x1120DE: _M_allocate (stl_vector.h:346)
+    n1: 315432 0x1120DE: std::vector<unsigned int, std::allocator<unsigned int> >::_M_default_append(unsigned long) (vector.tcc:635)
+     n1: 315432 0x10DEEE: resize (stl_vector.h:940)
+      n1: 315432 0x10DEEE: Graph::build_addEdges(unsigned int, std::vector<unsigned int, std::allocator<unsigned int> >&, unsigned int) (Graph.cpp:22)
+       n1: 315432 0x10FB71: Graph::build(_IO_FILE*) (Graph.cpp:72)
+        n1: 315432 0x111015: Graph::Graph(_IO_FILE*) (Graph.cpp:88)
+         n0: 315432 0x10AEFC: main (main.cpp:62)
+ n1: 81392 0x11263F: allocate (new_allocator.h:115)
+  n1: 81392 0x11263F: allocate (alloc_traits.h:460)
+   n1: 81392 0x11263F: _M_allocate_buckets (hashtable_policy.h:2085)
+    n1: 81392 0x11263F: _M_allocate_buckets (hashtable.h:398)
+     n1: 81392 0x11263F: _M_rehash_aux (hashtable.h:2091)
+      n2: 81392 0x11263F: std::_Hashtable<unsigned int, unsigned int, std::allocator<unsigned int>, std::__detail::_Identity, std::equal_to<unsigned int>, std::hash<unsigned int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, true, true> >::_M_rehash(unsigned long, unsigned long const&) (hashtable.h:2070)
+       n1: 40696 0x110C4C: rehash (hashtable.h:2052)
+        n1: 40696 0x110C4C: reserve (hashtable_policy.h:1093)
+         n1: 40696 0x110C4C: reserve (unordered_set.h:810)
+          n1: 40696 0x110C4C: Graph::init() (Graph.cpp:8)
+           n1: 40696 0x11100A: Graph::Graph(_IO_FILE*) (Graph.cpp:87)
+            n0: 40696 0x10AEFC: main (main.cpp:62)
+       n1: 40696 0x110C68: rehash (hashtable.h:2052)
+        n1: 40696 0x110C68: reserve (hashtable_policy.h:1093)
+         n1: 40696 0x110C68: reserve (unordered_set.h:810)
+          n1: 40696 0x110C68: Graph::init() (Graph.cpp:7)
+           n1: 40696 0x11100A: Graph::Graph(_IO_FILE*) (Graph.cpp:87)
+            n0: 40696 0x10AEFC: main (main.cpp:62)
+ n1: 72704 0x4913399: ??? (in /usr/lib64/libstdc++.so.6.0.28)
+  n1: 72704 0x4011D11: call_init.part.0 (dl-init.c:72)
+   n1: 72704 0x4011E20: call_init (dl-init.c:30)
+    n1: 72704 0x4011E20: _dl_init (dl-init.c:119)
+     n1: 72704 0x4001179: ??? (in /usr/lib64/ld-2.31.so)
+      n1: 72704 0x2: ???
+       n1: 72704 0x1FFEFFE316: ???
+        n1: 72704 0x1FFEFFE32F: ???
+         n0: 72704 0x1FFEFFE355: ???
+ n1: 20004 0x10F945: allocate (new_allocator.h:115)
+  n1: 20004 0x10F945: allocate (alloc_traits.h:460)
+   n1: 20004 0x10F945: _M_allocate (stl_vector.h:346)
+    n1: 20004 0x10F945: _M_create_storage (stl_vector.h:361)
+     n1: 20004 0x10F945: _Vector_base (stl_vector.h:305)
+      n1: 20004 0x10F945: vector (stl_vector.h:511)
+       n1: 20004 0x10F945: Graph::build(_IO_FILE*) (Graph.cpp:49)
+        n1: 20004 0x111015: Graph::Graph(_IO_FILE*) (Graph.cpp:88)
+         n0: 20004 0x10AEFC: main (main.cpp:62)
+ n0: 9046 in 5 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=32
+#-----------
+time=115730253
+mem_heap_B=1718166
+mem_heap_extra_B=93906
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=33
+#-----------
+time=117975568
+mem_heap_B=1733786
+mem_heap_extra_B=95046
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=34
+#-----------
+time=120989454
+mem_heap_B=1758214
+mem_heap_extra_B=96778
+mem_stacks_B=0
+heap_tree=detailed
+n7: 1758214 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 760152 0x111F32: allocate (new_allocator.h:115)
+  n1: 760152 0x111F32: allocate (alloc_traits.h:460)
+   n1: 760152 0x111F32: _M_allocate (stl_vector.h:346)
+    n1: 760152 0x111F32: std::vector<Node, std::allocator<Node> >::_M_default_append(unsigned long) (vector.tcc:635)
+     n1: 760152 0x110C7F: resize (stl_vector.h:940)
+      n1: 760152 0x110C7F: Graph::init() (Graph.cpp:9)
+       n1: 760152 0x11100A: Graph::Graph(_IO_FILE*) (Graph.cpp:87)
+        n0: 760152 0x10AEFC: main (main.cpp:62)
+ n1: 471376 0x1121FA: allocate (new_allocator.h:115)
+  n1: 471376 0x1121FA: allocate (alloc_traits.h:460)
+   n1: 471376 0x1121FA: _M_allocate (stl_vector.h:346)
+    n1: 471376 0x1121FA: void std::vector<unsigned int, std::allocator<unsigned int> >::_M_realloc_insert<unsigned int const&>(__gnu_cxx::__normal_iterator<unsigned int*, std::vector<unsigned int, std::allocator<unsigned int> > >, unsigned int const&) (vector.tcc:440)
+     n1: 471376 0x10DEA4: push_back (stl_vector.h:1198)
+      n1: 471376 0x10DEA4: Graph::build_addEdges(unsigned int, std::vector<unsigned int, std::allocator<unsigned int> >&, unsigned int) (Graph.cpp:28)
+       n1: 471376 0x10FB71: Graph::build(_IO_FILE*) (Graph.cpp:72)
+        n1: 471376 0x111015: Graph::Graph(_IO_FILE*) (Graph.cpp:88)
+         n0: 471376 0x10AEFC: main (main.cpp:62)
+ n1: 343476 0x1120DE: allocate (new_allocator.h:115)
+  n1: 343476 0x1120DE: allocate (alloc_traits.h:460)
+   n1: 343476 0x1120DE: _M_allocate (stl_vector.h:346)
+    n1: 343476 0x1120DE: std::vector<unsigned int, std::allocator<unsigned int> >::_M_default_append(unsigned long) (vector.tcc:635)
+     n1: 343476 0x10DEEE: resize (stl_vector.h:940)
+      n1: 343476 0x10DEEE: Graph::build_addEdges(unsigned int, std::vector<unsigned int, std::allocator<unsigned int> >&, unsigned int) (Graph.cpp:22)
+       n1: 343476 0x10FB71: Graph::build(_IO_FILE*) (Graph.cpp:72)
+        n1: 343476 0x111015: Graph::Graph(_IO_FILE*) (Graph.cpp:88)
+         n0: 343476 0x10AEFC: main (main.cpp:62)
+ n1: 81392 0x11263F: allocate (new_allocator.h:115)
+  n1: 81392 0x11263F: allocate (alloc_traits.h:460)
+   n1: 81392 0x11263F: _M_allocate_buckets (hashtable_policy.h:2085)
+    n1: 81392 0x11263F: _M_allocate_buckets (hashtable.h:398)
+     n1: 81392 0x11263F: _M_rehash_aux (hashtable.h:2091)
+      n2: 81392 0x11263F: std::_Hashtable<unsigned int, unsigned int, std::allocator<unsigned int>, std::__detail::_Identity, std::equal_to<unsigned int>, std::hash<unsigned int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, true, true> >::_M_rehash(unsigned long, unsigned long const&) (hashtable.h:2070)
+       n1: 40696 0x110C4C: rehash (hashtable.h:2052)
+        n1: 40696 0x110C4C: reserve (hashtable_policy.h:1093)
+         n1: 40696 0x110C4C: reserve (unordered_set.h:810)
+          n1: 40696 0x110C4C: Graph::init() (Graph.cpp:8)
+           n1: 40696 0x11100A: Graph::Graph(_IO_FILE*) (Graph.cpp:87)
+            n0: 40696 0x10AEFC: main (main.cpp:62)
+       n1: 40696 0x110C68: rehash (hashtable.h:2052)
+        n1: 40696 0x110C68: reserve (hashtable_policy.h:1093)
+         n1: 40696 0x110C68: reserve (unordered_set.h:810)
+          n1: 40696 0x110C68: Graph::init() (Graph.cpp:7)
+           n1: 40696 0x11100A: Graph::Graph(_IO_FILE*) (Graph.cpp:87)
+            n0: 40696 0x10AEFC: main (main.cpp:62)
+ n1: 72704 0x4913399: ??? (in /usr/lib64/libstdc++.so.6.0.28)
+  n1: 72704 0x4011D11: call_init.part.0 (dl-init.c:72)
+   n1: 72704 0x4011E20: call_init (dl-init.c:30)
+    n1: 72704 0x4011E20: _dl_init (dl-init.c:119)
+     n1: 72704 0x4001179: ??? (in /usr/lib64/ld-2.31.so)
+      n1: 72704 0x2: ???
+       n1: 72704 0x1FFEFFE316: ???
+        n1: 72704 0x1FFEFFE32F: ???
+         n0: 72704 0x1FFEFFE355: ???
+ n1: 20004 0x10F945: allocate (new_allocator.h:115)
+  n1: 20004 0x10F945: allocate (alloc_traits.h:460)
+   n1: 20004 0x10F945: _M_allocate (stl_vector.h:346)
+    n1: 20004 0x10F945: _M_create_storage (stl_vector.h:361)
+     n1: 20004 0x10F945: _Vector_base (stl_vector.h:305)
+      n1: 20004 0x10F945: vector (stl_vector.h:511)
+       n1: 20004 0x10F945: Graph::build(_IO_FILE*) (Graph.cpp:49)
+        n1: 20004 0x111015: Graph::Graph(_IO_FILE*) (Graph.cpp:88)
+         n0: 20004 0x10AEFC: main (main.cpp:62)
+ n0: 9110 in 5 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=35
+#-----------
+time=122977069
+mem_heap_B=1775546
+mem_heap_extra_B=98022
+mem_stacks_B=0
+heap_tree=detailed
+n7: 1775546 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 760152 0x111F32: allocate (new_allocator.h:115)
+  n1: 760152 0x111F32: allocate (alloc_traits.h:460)
+   n1: 760152 0x111F32: _M_allocate (stl_vector.h:346)
+    n1: 760152 0x111F32: std::vector<Node, std::allocator<Node> >::_M_default_append(unsigned long) (vector.tcc:635)
+     n1: 760152 0x110C7F: resize (stl_vector.h:940)
+      n1: 760152 0x110C7F: Graph::init() (Graph.cpp:9)
+       n1: 760152 0x11100A: Graph::Graph(_IO_FILE*) (Graph.cpp:87)
+        n0: 760152 0x10AEFC: main (main.cpp:62)
+ n1: 482768 0x1121FA: allocate (new_allocator.h:115)
+  n1: 482768 0x1121FA: allocate (alloc_traits.h:460)
+   n1: 482768 0x1121FA: _M_allocate (stl_vector.h:346)
+    n1: 482768 0x1121FA: void std::vector<unsigned int, std::allocator<unsigned int> >::_M_realloc_insert<unsigned int const&>(__gnu_cxx::__normal_iterator<unsigned int*, std::vector<unsigned int, std::allocator<unsigned int> > >, unsigned int const&) (vector.tcc:440)
+     n1: 482768 0x10DEA4: push_back (stl_vector.h:1198)
+      n1: 482768 0x10DEA4: Graph::build_addEdges(unsigned int, std::vector<unsigned int, std::allocator<unsigned int> >&, unsigned int) (Graph.cpp:28)
+       n1: 482768 0x10FB71: Graph::build(_IO_FILE*) (Graph.cpp:72)
+        n1: 482768 0x111015: Graph::Graph(_IO_FILE*) (Graph.cpp:88)
+         n0: 482768 0x10AEFC: main (main.cpp:62)
+ n1: 349352 0x1120DE: allocate (new_allocator.h:115)
+  n1: 349352 0x1120DE: allocate (alloc_traits.h:460)
+   n1: 349352 0x1120DE: _M_allocate (stl_vector.h:346)
+    n1: 349352 0x1120DE: std::vector<unsigned int, std::allocator<unsigned int> >::_M_default_append(unsigned long) (vector.tcc:635)
+     n1: 349352 0x10DEEE: resize (stl_vector.h:940)
+      n1: 349352 0x10DEEE: Graph::build_addEdges(unsigned int, std::vector<unsigned int, std::allocator<unsigned int> >&, unsigned int) (Graph.cpp:22)
+       n1: 349352 0x10FB71: Graph::build(_IO_FILE*) (Graph.cpp:72)
+        n1: 349352 0x111015: Graph::Graph(_IO_FILE*) (Graph.cpp:88)
+         n0: 349352 0x10AEFC: main (main.cpp:62)
+ n1: 81392 0x11263F: allocate (new_allocator.h:115)
+  n1: 81392 0x11263F: allocate (alloc_traits.h:460)
+   n1: 81392 0x11263F: _M_allocate_buckets (hashtable_policy.h:2085)
+    n1: 81392 0x11263F: _M_allocate_buckets (hashtable.h:398)
+     n1: 81392 0x11263F: _M_rehash_aux (hashtable.h:2091)
+      n2: 81392 0x11263F: std::_Hashtable<unsigned int, unsigned int, std::allocator<unsigned int>, std::__detail::_Identity, std::equal_to<unsigned int>, std::hash<unsigned int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, true, true> >::_M_rehash(unsigned long, unsigned long const&) (hashtable.h:2070)
+       n1: 40696 0x110C4C: rehash (hashtable.h:2052)
+        n1: 40696 0x110C4C: reserve (hashtable_policy.h:1093)
+         n1: 40696 0x110C4C: reserve (unordered_set.h:810)
+          n1: 40696 0x110C4C: Graph::init() (Graph.cpp:8)
+           n1: 40696 0x11100A: Graph::Graph(_IO_FILE*) (Graph.cpp:87)
+            n0: 40696 0x10AEFC: main (main.cpp:62)
+       n1: 40696 0x110C68: rehash (hashtable.h:2052)
+        n1: 40696 0x110C68: reserve (hashtable_policy.h:1093)
+         n1: 40696 0x110C68: reserve (unordered_set.h:810)
+          n1: 40696 0x110C68: Graph::init() (Graph.cpp:7)
+           n1: 40696 0x11100A: Graph::Graph(_IO_FILE*) (Graph.cpp:87)
+            n0: 40696 0x10AEFC: main (main.cpp:62)
+ n1: 72704 0x4913399: ??? (in /usr/lib64/libstdc++.so.6.0.28)
+  n1: 72704 0x4011D11: call_init.part.0 (dl-init.c:72)
+   n1: 72704 0x4011E20: call_init (dl-init.c:30)
+    n1: 72704 0x4011E20: _dl_init (dl-init.c:119)
+     n1: 72704 0x4001179: ??? (in /usr/lib64/ld-2.31.so)
+      n1: 72704 0x2: ???
+       n1: 72704 0x1FFEFFE316: ???
+        n1: 72704 0x1FFEFFE32F: ???
+         n0: 72704 0x1FFEFFE355: ???
+ n1: 20004 0x10F945: allocate (new_allocator.h:115)
+  n1: 20004 0x10F945: allocate (alloc_traits.h:460)
+   n1: 20004 0x10F945: _M_allocate (stl_vector.h:346)
+    n1: 20004 0x10F945: _M_create_storage (stl_vector.h:361)
+     n1: 20004 0x10F945: _Vector_base (stl_vector.h:305)
+      n1: 20004 0x10F945: vector (stl_vector.h:511)
+       n1: 20004 0x10F945: Graph::build(_IO_FILE*) (Graph.cpp:49)
+        n1: 20004 0x111015: Graph::Graph(_IO_FILE*) (Graph.cpp:88)
+         n0: 20004 0x10AEFC: main (main.cpp:62)
+ n0: 9174 in 5 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=36
+#-----------
+time=126664390
+mem_heap_B=1811558
+mem_heap_extra_B=99970
+mem_stacks_B=0
+heap_tree=detailed
+n7: 1811558 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 760152 0x111F32: allocate (new_allocator.h:115)
+  n1: 760152 0x111F32: allocate (alloc_traits.h:460)
+   n1: 760152 0x111F32: _M_allocate (stl_vector.h:346)
+    n1: 760152 0x111F32: std::vector<Node, std::allocator<Node> >::_M_default_append(unsigned long) (vector.tcc:635)
+     n1: 760152 0x110C7F: resize (stl_vector.h:940)
+      n1: 760152 0x110C7F: Graph::init() (Graph.cpp:9)
+       n1: 760152 0x11100A: Graph::Graph(_IO_FILE*) (Graph.cpp:87)
+        n0: 760152 0x10AEFC: main (main.cpp:62)
+ n1: 507728 0x1121FA: allocate (new_allocator.h:115)
+  n1: 507728 0x1121FA: allocate (alloc_traits.h:460)
+   n1: 507728 0x1121FA: _M_allocate (stl_vector.h:346)
+    n1: 507728 0x1121FA: void std::vector<unsigned int, std::allocator<unsigned int> >::_M_realloc_insert<unsigned int const&>(__gnu_cxx::__normal_iterator<unsigned int*, std::vector<unsigned int, std::allocator<unsigned int> > >, unsigned int const&) (vector.tcc:440)
+     n1: 507728 0x10DEA4: push_back (stl_vector.h:1198)
+      n1: 507728 0x10DEA4: Graph::build_addEdges(unsigned int, std::vector<unsigned int, std::allocator<unsigned int> >&, unsigned int) (Graph.cpp:28)
+       n1: 507728 0x10FB71: Graph::build(_IO_FILE*) (Graph.cpp:72)
+        n1: 507728 0x111015: Graph::Graph(_IO_FILE*) (Graph.cpp:88)
+         n0: 507728 0x10AEFC: main (main.cpp:62)
+ n1: 360356 0x1120DE: allocate (new_allocator.h:115)
+  n1: 360356 0x1120DE: allocate (alloc_traits.h:460)
+   n1: 360356 0x1120DE: _M_allocate (stl_vector.h:346)
+    n1: 360356 0x1120DE: std::vector<unsigned int, std::allocator<unsigned int> >::_M_default_append(unsigned long) (vector.tcc:635)
+     n1: 360356 0x10DEEE: resize (stl_vector.h:940)
+      n1: 360356 0x10DEEE: Graph::build_addEdges(unsigned int, std::vector<unsigned int, std::allocator<unsigned int> >&, unsigned int) (Graph.cpp:22)
+       n1: 360356 0x10FB71: Graph::build(_IO_FILE*) (Graph.cpp:72)
+        n1: 360356 0x111015: Graph::Graph(_IO_FILE*) (Graph.cpp:88)
+         n0: 360356 0x10AEFC: main (main.cpp:62)
+ n1: 81392 0x11263F: allocate (new_allocator.h:115)
+  n1: 81392 0x11263F: allocate (alloc_traits.h:460)
+   n1: 81392 0x11263F: _M_allocate_buckets (hashtable_policy.h:2085)
+    n1: 81392 0x11263F: _M_allocate_buckets (hashtable.h:398)
+     n1: 81392 0x11263F: _M_rehash_aux (hashtable.h:2091)
+      n2: 81392 0x11263F: std::_Hashtable<unsigned int, unsigned int, std::allocator<unsigned int>, std::__detail::_Identity, std::equal_to<unsigned int>, std::hash<unsigned int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, true, true> >::_M_rehash(unsigned long, unsigned long const&) (hashtable.h:2070)
+       n1: 40696 0x110C4C: rehash (hashtable.h:2052)
+        n1: 40696 0x110C4C: reserve (hashtable_policy.h:1093)
+         n1: 40696 0x110C4C: reserve (unordered_set.h:810)
+          n1: 40696 0x110C4C: Graph::init() (Graph.cpp:8)
+           n1: 40696 0x11100A: Graph::Graph(_IO_FILE*) (Graph.cpp:87)
+            n0: 40696 0x10AEFC: main (main.cpp:62)
+       n1: 40696 0x110C68: rehash (hashtable.h:2052)
+        n1: 40696 0x110C68: reserve (hashtable_policy.h:1093)
+         n1: 40696 0x110C68: reserve (unordered_set.h:810)
+          n1: 40696 0x110C68: Graph::init() (Graph.cpp:7)
+           n1: 40696 0x11100A: Graph::Graph(_IO_FILE*) (Graph.cpp:87)
+            n0: 40696 0x10AEFC: main (main.cpp:62)
+ n1: 72704 0x4913399: ??? (in /usr/lib64/libstdc++.so.6.0.28)
+  n1: 72704 0x4011D11: call_init.part.0 (dl-init.c:72)
+   n1: 72704 0x4011E20: call_init (dl-init.c:30)
+    n1: 72704 0x4011E20: _dl_init (dl-init.c:119)
+     n1: 72704 0x4001179: ??? (in /usr/lib64/ld-2.31.so)
+      n1: 72704 0x2: ???
+       n1: 72704 0x1FFEFFE316: ???
+        n1: 72704 0x1FFEFFE32F: ???
+         n0: 72704 0x1FFEFFE355: ???
+ n1: 20004 0x10F945: allocate (new_allocator.h:115)
+  n1: 20004 0x10F945: allocate (alloc_traits.h:460)
+   n1: 20004 0x10F945: _M_allocate (stl_vector.h:346)
+    n1: 20004 0x10F945: _M_create_storage (stl_vector.h:361)
+     n1: 20004 0x10F945: _Vector_base (stl_vector.h:305)
+      n1: 20004 0x10F945: vector (stl_vector.h:511)
+       n1: 20004 0x10F945: Graph::build(_IO_FILE*) (Graph.cpp:49)
+        n1: 20004 0x111015: Graph::Graph(_IO_FILE*) (Graph.cpp:88)
+         n0: 20004 0x10AEFC: main (main.cpp:62)
+ n0: 9222 in 5 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=37
+#-----------
+time=128661061
+mem_heap_B=1829702
+mem_heap_extra_B=101106
+mem_stacks_B=0
+heap_tree=detailed
+n7: 1829702 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 760152 0x111F32: allocate (new_allocator.h:115)
+  n1: 760152 0x111F32: allocate (alloc_traits.h:460)
+   n1: 760152 0x111F32: _M_allocate (stl_vector.h:346)
+    n1: 760152 0x111F32: std::vector<Node, std::allocator<Node> >::_M_default_append(unsigned long) (vector.tcc:635)
+     n1: 760152 0x110C7F: resize (stl_vector.h:940)
+      n1: 760152 0x110C7F: Graph::init() (Graph.cpp:9)
+       n1: 760152 0x11100A: Graph::Graph(_IO_FILE*) (Graph.cpp:87)
+        n0: 760152 0x10AEFC: main (main.cpp:62)
+ n1: 519888 0x1121FA: allocate (new_allocator.h:115)
+  n1: 519888 0x1121FA: allocate (alloc_traits.h:460)
+   n1: 519888 0x1121FA: _M_allocate (stl_vector.h:346)
+    n1: 519888 0x1121FA: void std::vector<unsigned int, std::allocator<unsigned int> >::_M_realloc_insert<unsigned int const&>(__gnu_cxx::__normal_iterator<unsigned int*, std::vector<unsigned int, std::allocator<unsigned int> > >, unsigned int const&) (vector.tcc:440)
+     n1: 519888 0x10DEA4: push_back (stl_vector.h:1198)
+      n1: 519888 0x10DEA4: Graph::build_addEdges(unsigned int, std::vector<unsigned int, std::allocator<unsigned int> >&, unsigned int) (Graph.cpp:28)
+       n1: 519888 0x10FB71: Graph::build(_IO_FILE*) (Graph.cpp:72)
+        n1: 519888 0x111015: Graph::Graph(_IO_FILE*) (Graph.cpp:88)
+         n0: 519888 0x10AEFC: main (main.cpp:62)
+ n1: 366308 0x1120DE: allocate (new_allocator.h:115)
+  n1: 366308 0x1120DE: allocate (alloc_traits.h:460)
+   n1: 366308 0x1120DE: _M_allocate (stl_vector.h:346)
+    n1: 366308 0x1120DE: std::vector<unsigned int, std::allocator<unsigned int> >::_M_default_append(unsigned long) (vector.tcc:635)
+     n1: 366308 0x10DEEE: resize (stl_vector.h:940)
+      n1: 366308 0x10DEEE: Graph::build_addEdges(unsigned int, std::vector<unsigned int, std::allocator<unsigned int> >&, unsigned int) (Graph.cpp:22)
+       n1: 366308 0x10FB71: Graph::build(_IO_FILE*) (Graph.cpp:72)
+        n1: 366308 0x111015: Graph::Graph(_IO_FILE*) (Graph.cpp:88)
+         n0: 366308 0x10AEFC: main (main.cpp:62)
+ n1: 81392 0x11263F: allocate (new_allocator.h:115)
+  n1: 81392 0x11263F: allocate (alloc_traits.h:460)
+   n1: 81392 0x11263F: _M_allocate_buckets (hashtable_policy.h:2085)
+    n1: 81392 0x11263F: _M_allocate_buckets (hashtable.h:398)
+     n1: 81392 0x11263F: _M_rehash_aux (hashtable.h:2091)
+      n2: 81392 0x11263F: std::_Hashtable<unsigned int, unsigned int, std::allocator<unsigned int>, std::__detail::_Identity, std::equal_to<unsigned int>, std::hash<unsigned int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, true, true> >::_M_rehash(unsigned long, unsigned long const&) (hashtable.h:2070)
+       n1: 40696 0x110C4C: rehash (hashtable.h:2052)
+        n1: 40696 0x110C4C: reserve (hashtable_policy.h:1093)
+         n1: 40696 0x110C4C: reserve (unordered_set.h:810)
+          n1: 40696 0x110C4C: Graph::init() (Graph.cpp:8)
+           n1: 40696 0x11100A: Graph::Graph(_IO_FILE*) (Graph.cpp:87)
+            n0: 40696 0x10AEFC: main (main.cpp:62)
+       n1: 40696 0x110C68: rehash (hashtable.h:2052)
+        n1: 40696 0x110C68: reserve (hashtable_policy.h:1093)
+         n1: 40696 0x110C68: reserve (unordered_set.h:810)
+          n1: 40696 0x110C68: Graph::init() (Graph.cpp:7)
+           n1: 40696 0x11100A: Graph::Graph(_IO_FILE*) (Graph.cpp:87)
+            n0: 40696 0x10AEFC: main (main.cpp:62)
+ n1: 72704 0x4913399: ??? (in /usr/lib64/libstdc++.so.6.0.28)
+  n1: 72704 0x4011D11: call_init.part.0 (dl-init.c:72)
+   n1: 72704 0x4011E20: call_init (dl-init.c:30)
+    n1: 72704 0x4011E20: _dl_init (dl-init.c:119)
+     n1: 72704 0x4001179: ??? (in /usr/lib64/ld-2.31.so)
+      n1: 72704 0x2: ???
+       n1: 72704 0x1FFEFFE316: ???
+        n1: 72704 0x1FFEFFE32F: ???
+         n0: 72704 0x1FFEFFE355: ???
+ n1: 20004 0x10F945: allocate (new_allocator.h:115)
+  n1: 20004 0x10F945: allocate (alloc_traits.h:460)
+   n1: 20004 0x10F945: _M_allocate (stl_vector.h:346)
+    n1: 20004 0x10F945: _M_create_storage (stl_vector.h:361)
+     n1: 20004 0x10F945: _Vector_base (stl_vector.h:305)
+      n1: 20004 0x10F945: vector (stl_vector.h:511)
+       n1: 20004 0x10F945: Graph::build(_IO_FILE*) (Graph.cpp:49)
+        n1: 20004 0x111015: Graph::Graph(_IO_FILE*) (Graph.cpp:88)
+         n0: 20004 0x10AEFC: main (main.cpp:62)
+ n0: 9254 in 5 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=38
+#-----------
+time=131896805
+mem_heap_B=1862322
+mem_heap_extra_B=102742
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=39
+#-----------
+time=136198618
+mem_heap_B=1897790
+mem_heap_extra_B=105146
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=40
+#-----------
+time=138755911
+mem_heap_B=1915042
+mem_heap_extra_B=106374
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=41
+#-----------
+time=141514883
+mem_heap_B=1930758
+mem_heap_extra_B=107722
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=42
+#-----------
+time=145119084
+mem_heap_B=1948134
+mem_heap_extra_B=109634
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=43
+#-----------
+time=148196023
+mem_heap_B=1959730
+mem_heap_extra_B=111318
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=44
+#-----------
+time=152858407
+mem_heap_B=1981486
+mem_heap_extra_B=113698
+mem_stacks_B=0
+heap_tree=detailed
+n6: 1981486 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 760152 0x111F32: allocate (new_allocator.h:115)
+  n1: 760152 0x111F32: allocate (alloc_traits.h:460)
+   n1: 760152 0x111F32: _M_allocate (stl_vector.h:346)
+    n1: 760152 0x111F32: std::vector<Node, std::allocator<Node> >::_M_default_append(unsigned long) (vector.tcc:635)
+     n1: 760152 0x110C7F: resize (stl_vector.h:940)
+      n1: 760152 0x110C7F: Graph::init() (Graph.cpp:9)
+       n1: 760152 0x11100A: Graph::Graph(_IO_FILE*) (Graph.cpp:87)
+        n0: 760152 0x10AEFC: main (main.cpp:62)
+ n1: 599120 0x1121FA: allocate (new_allocator.h:115)
+  n1: 599120 0x1121FA: allocate (alloc_traits.h:460)
+   n1: 599120 0x1121FA: _M_allocate (stl_vector.h:346)
+    n1: 599120 0x1121FA: void std::vector<unsigned int, std::allocator<unsigned int> >::_M_realloc_insert<unsigned int const&>(__gnu_cxx::__normal_iterator<unsigned int*, std::vector<unsigned int, std::allocator<unsigned int> > >, unsigned int const&) (vector.tcc:440)
+     n1: 599120 0x10DEA4: push_back (stl_vector.h:1198)
+      n1: 599120 0x10DEA4: Graph::build_addEdges(unsigned int, std::vector<unsigned int, std::allocator<unsigned int> >&, unsigned int) (Graph.cpp:28)
+       n1: 599120 0x10FB71: Graph::build(_IO_FILE*) (Graph.cpp:72)
+        n1: 599120 0x111015: Graph::Graph(_IO_FILE*) (Graph.cpp:88)
+         n0: 599120 0x10AEFC: main (main.cpp:62)
+ n1: 438604 0x1120DE: allocate (new_allocator.h:115)
+  n1: 438604 0x1120DE: allocate (alloc_traits.h:460)
+   n1: 438604 0x1120DE: _M_allocate (stl_vector.h:346)
+    n1: 438604 0x1120DE: std::vector<unsigned int, std::allocator<unsigned int> >::_M_default_append(unsigned long) (vector.tcc:635)
+     n1: 438604 0x10DEEE: resize (stl_vector.h:940)
+      n1: 438604 0x10DEEE: Graph::build_addEdges(unsigned int, std::vector<unsigned int, std::allocator<unsigned int> >&, unsigned int) (Graph.cpp:22)
+       n1: 438604 0x10FB71: Graph::build(_IO_FILE*) (Graph.cpp:72)
+        n1: 438604 0x111015: Graph::Graph(_IO_FILE*) (Graph.cpp:88)
+         n0: 438604 0x10AEFC: main (main.cpp:62)
+ n1: 81392 0x11263F: allocate (new_allocator.h:115)
+  n1: 81392 0x11263F: allocate (alloc_traits.h:460)
+   n1: 81392 0x11263F: _M_allocate_buckets (hashtable_policy.h:2085)
+    n1: 81392 0x11263F: _M_allocate_buckets (hashtable.h:398)
+     n1: 81392 0x11263F: _M_rehash_aux (hashtable.h:2091)
+      n2: 81392 0x11263F: std::_Hashtable<unsigned int, unsigned int, std::allocator<unsigned int>, std::__detail::_Identity, std::equal_to<unsigned int>, std::hash<unsigned int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, true, true> >::_M_rehash(unsigned long, unsigned long const&) (hashtable.h:2070)
+       n1: 40696 0x110C4C: rehash (hashtable.h:2052)
+        n1: 40696 0x110C4C: reserve (hashtable_policy.h:1093)
+         n1: 40696 0x110C4C: reserve (unordered_set.h:810)
+          n1: 40696 0x110C4C: Graph::init() (Graph.cpp:8)
+           n1: 40696 0x11100A: Graph::Graph(_IO_FILE*) (Graph.cpp:87)
+            n0: 40696 0x10AEFC: main (main.cpp:62)
+       n1: 40696 0x110C68: rehash (hashtable.h:2052)
+        n1: 40696 0x110C68: reserve (hashtable_policy.h:1093)
+         n1: 40696 0x110C68: reserve (unordered_set.h:810)
+          n1: 40696 0x110C68: Graph::init() (Graph.cpp:7)
+           n1: 40696 0x11100A: Graph::Graph(_IO_FILE*) (Graph.cpp:87)
+            n0: 40696 0x10AEFC: main (main.cpp:62)
+ n1: 72704 0x4913399: ??? (in /usr/lib64/libstdc++.so.6.0.28)
+  n1: 72704 0x4011D11: call_init.part.0 (dl-init.c:72)
+   n1: 72704 0x4011E20: call_init (dl-init.c:30)
+    n1: 72704 0x4011E20: _dl_init (dl-init.c:119)
+     n1: 72704 0x4001179: ??? (in /usr/lib64/ld-2.31.so)
+      n1: 72704 0x2: ???
+       n1: 72704 0x1FFEFFE316: ???
+        n1: 72704 0x1FFEFFE32F: ???
+         n0: 72704 0x1FFEFFE355: ???
+ n0: 29514 in 6 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=45
+#-----------
+time=155922600
+mem_heap_B=2001734
+mem_heap_extra_B=115058
+mem_stacks_B=0
+heap_tree=detailed
+n6: 2001734 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 760152 0x111F32: allocate (new_allocator.h:115)
+  n1: 760152 0x111F32: allocate (alloc_traits.h:460)
+   n1: 760152 0x111F32: _M_allocate (stl_vector.h:346)
+    n1: 760152 0x111F32: std::vector<Node, std::allocator<Node> >::_M_default_append(unsigned long) (vector.tcc:635)
+     n1: 760152 0x110C7F: resize (stl_vector.h:940)
+      n1: 760152 0x110C7F: Graph::init() (Graph.cpp:9)
+       n1: 760152 0x11100A: Graph::Graph(_IO_FILE*) (Graph.cpp:87)
+        n0: 760152 0x10AEFC: main (main.cpp:62)
+ n1: 610128 0x1121FA: allocate (new_allocator.h:115)
+  n1: 610128 0x1121FA: allocate (alloc_traits.h:460)
+   n1: 610128 0x1121FA: _M_allocate (stl_vector.h:346)
+    n1: 610128 0x1121FA: void std::vector<unsigned int, std::allocator<unsigned int> >::_M_realloc_insert<unsigned int const&>(__gnu_cxx::__normal_iterator<unsigned int*, std::vector<unsigned int, std::allocator<unsigned int> > >, unsigned int const&) (vector.tcc:440)
+     n1: 610128 0x10DEA4: push_back (stl_vector.h:1198)
+      n1: 610128 0x10DEA4: Graph::build_addEdges(unsigned int, std::vector<unsigned int, std::allocator<unsigned int> >&, unsigned int) (Graph.cpp:28)
+       n1: 610128 0x10FB71: Graph::build(_IO_FILE*) (Graph.cpp:72)
+        n1: 610128 0x111015: Graph::Graph(_IO_FILE*) (Graph.cpp:88)
+         n0: 610128 0x10AEFC: main (main.cpp:62)
+ n1: 447828 0x1120DE: allocate (new_allocator.h:115)
+  n1: 447828 0x1120DE: allocate (alloc_traits.h:460)
+   n1: 447828 0x1120DE: _M_allocate (stl_vector.h:346)
+    n1: 447828 0x1120DE: std::vector<unsigned int, std::allocator<unsigned int> >::_M_default_append(unsigned long) (vector.tcc:635)
+     n1: 447828 0x10DEEE: resize (stl_vector.h:940)
+      n1: 447828 0x10DEEE: Graph::build_addEdges(unsigned int, std::vector<unsigned int, std::allocator<unsigned int> >&, unsigned int) (Graph.cpp:22)
+       n1: 447828 0x10FB71: Graph::build(_IO_FILE*) (Graph.cpp:72)
+        n1: 447828 0x111015: Graph::Graph(_IO_FILE*) (Graph.cpp:88)
+         n0: 447828 0x10AEFC: main (main.cpp:62)
+ n1: 81392 0x11263F: allocate (new_allocator.h:115)
+  n1: 81392 0x11263F: allocate (alloc_traits.h:460)
+   n1: 81392 0x11263F: _M_allocate_buckets (hashtable_policy.h:2085)
+    n1: 81392 0x11263F: _M_allocate_buckets (hashtable.h:398)
+     n1: 81392 0x11263F: _M_rehash_aux (hashtable.h:2091)
+      n2: 81392 0x11263F: std::_Hashtable<unsigned int, unsigned int, std::allocator<unsigned int>, std::__detail::_Identity, std::equal_to<unsigned int>, std::hash<unsigned int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, true, true> >::_M_rehash(unsigned long, unsigned long const&) (hashtable.h:2070)
+       n1: 40696 0x110C4C: rehash (hashtable.h:2052)
+        n1: 40696 0x110C4C: reserve (hashtable_policy.h:1093)
+         n1: 40696 0x110C4C: reserve (unordered_set.h:810)
+          n1: 40696 0x110C4C: Graph::init() (Graph.cpp:8)
+           n1: 40696 0x11100A: Graph::Graph(_IO_FILE*) (Graph.cpp:87)
+            n0: 40696 0x10AEFC: main (main.cpp:62)
+       n1: 40696 0x110C68: rehash (hashtable.h:2052)
+        n1: 40696 0x110C68: reserve (hashtable_policy.h:1093)
+         n1: 40696 0x110C68: reserve (unordered_set.h:810)
+          n1: 40696 0x110C68: Graph::init() (Graph.cpp:7)
+           n1: 40696 0x11100A: Graph::Graph(_IO_FILE*) (Graph.cpp:87)
+            n0: 40696 0x10AEFC: main (main.cpp:62)
+ n1: 72704 0x4913399: ??? (in /usr/lib64/libstdc++.so.6.0.28)
+  n1: 72704 0x4011D11: call_init.part.0 (dl-init.c:72)
+   n1: 72704 0x4011E20: call_init (dl-init.c:30)
+    n1: 72704 0x4011E20: _dl_init (dl-init.c:119)
+     n1: 72704 0x4001179: ??? (in /usr/lib64/ld-2.31.so)
+      n1: 72704 0x2: ???
+       n1: 72704 0x1FFEFFE316: ???
+        n1: 72704 0x1FFEFFE32F: ???
+         n0: 72704 0x1FFEFFE355: ???
+ n0: 29530 in 6 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=46
+#-----------
+time=158048504
+mem_heap_B=2022218
+mem_heap_extra_B=115918
+mem_stacks_B=0
+heap_tree=detailed
+n6: 2022218 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 760152 0x111F32: allocate (new_allocator.h:115)
+  n1: 760152 0x111F32: allocate (alloc_traits.h:460)
+   n1: 760152 0x111F32: _M_allocate (stl_vector.h:346)
+    n1: 760152 0x111F32: std::vector<Node, std::allocator<Node> >::_M_default_append(unsigned long) (vector.tcc:635)
+     n1: 760152 0x110C7F: resize (stl_vector.h:940)
+      n1: 760152 0x110C7F: Graph::init() (Graph.cpp:9)
+       n1: 760152 0x11100A: Graph::Graph(_IO_FILE*) (Graph.cpp:87)
+        n0: 760152 0x10AEFC: main (main.cpp:62)
+ n1: 624208 0x1121FA: allocate (new_allocator.h:115)
+  n1: 624208 0x1121FA: allocate (alloc_traits.h:460)
+   n1: 624208 0x1121FA: _M_allocate (stl_vector.h:346)
+    n1: 624208 0x1121FA: void std::vector<unsigned int, std::allocator<unsigned int> >::_M_realloc_insert<unsigned int const&>(__gnu_cxx::__normal_iterator<unsigned int*, std::vector<unsigned int, std::allocator<unsigned int> > >, unsigned int const&) (vector.tcc:440)
+     n1: 624208 0x10DEA4: push_back (stl_vector.h:1198)
+      n1: 624208 0x10DEA4: Graph::build_addEdges(unsigned int, std::vector<unsigned int, std::allocator<unsigned int> >&, unsigned int) (Graph.cpp:28)
+       n1: 624208 0x10FB71: Graph::build(_IO_FILE*) (Graph.cpp:72)
+        n1: 624208 0x111015: Graph::Graph(_IO_FILE*) (Graph.cpp:88)
+         n0: 624208 0x10AEFC: main (main.cpp:62)
+ n1: 454232 0x1120DE: allocate (new_allocator.h:115)
+  n1: 454232 0x1120DE: allocate (alloc_traits.h:460)
+   n1: 454232 0x1120DE: _M_allocate (stl_vector.h:346)
+    n1: 454232 0x1120DE: std::vector<unsigned int, std::allocator<unsigned int> >::_M_default_append(unsigned long) (vector.tcc:635)
+     n1: 454232 0x10DEEE: resize (stl_vector.h:940)
+      n1: 454232 0x10DEEE: Graph::build_addEdges(unsigned int, std::vector<unsigned int, std::allocator<unsigned int> >&, unsigned int) (Graph.cpp:22)
+       n1: 454232 0x10FB71: Graph::build(_IO_FILE*) (Graph.cpp:72)
+        n1: 454232 0x111015: Graph::Graph(_IO_FILE*) (Graph.cpp:88)
+         n0: 454232 0x10AEFC: main (main.cpp:62)
+ n1: 81392 0x11263F: allocate (new_allocator.h:115)
+  n1: 81392 0x11263F: allocate (alloc_traits.h:460)
+   n1: 81392 0x11263F: _M_allocate_buckets (hashtable_policy.h:2085)
+    n1: 81392 0x11263F: _M_allocate_buckets (hashtable.h:398)
+     n1: 81392 0x11263F: _M_rehash_aux (hashtable.h:2091)
+      n2: 81392 0x11263F: std::_Hashtable<unsigned int, unsigned int, std::allocator<unsigned int>, std::__detail::_Identity, std::equal_to<unsigned int>, std::hash<unsigned int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, true, true> >::_M_rehash(unsigned long, unsigned long const&) (hashtable.h:2070)
+       n1: 40696 0x110C4C: rehash (hashtable.h:2052)
+        n1: 40696 0x110C4C: reserve (hashtable_policy.h:1093)
+         n1: 40696 0x110C4C: reserve (unordered_set.h:810)
+          n1: 40696 0x110C4C: Graph::init() (Graph.cpp:8)
+           n1: 40696 0x11100A: Graph::Graph(_IO_FILE*) (Graph.cpp:87)
+            n0: 40696 0x10AEFC: main (main.cpp:62)
+       n1: 40696 0x110C68: rehash (hashtable.h:2052)
+        n1: 40696 0x110C68: reserve (hashtable_policy.h:1093)
+         n1: 40696 0x110C68: reserve (unordered_set.h:810)
+          n1: 40696 0x110C68: Graph::init() (Graph.cpp:7)
+           n1: 40696 0x11100A: Graph::Graph(_IO_FILE*) (Graph.cpp:87)
+            n0: 40696 0x10AEFC: main (main.cpp:62)
+ n1: 72704 0x4913399: ??? (in /usr/lib64/libstdc++.so.6.0.28)
+  n1: 72704 0x4011D11: call_init.part.0 (dl-init.c:72)
+   n1: 72704 0x4011E20: call_init (dl-init.c:30)
+    n1: 72704 0x4011E20: _dl_init (dl-init.c:119)
+     n1: 72704 0x4001179: ??? (in /usr/lib64/ld-2.31.so)
+      n1: 72704 0x2: ???
+       n1: 72704 0x1FFEFFE316: ???
+        n1: 72704 0x1FFEFFE32F: ???
+         n0: 72704 0x1FFEFFE355: ???
+ n0: 29530 in 6 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=47
+#-----------
+time=161202463
+mem_heap_B=2060310
+mem_heap_extra_B=117378
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=48
+#-----------
+time=165731758
+mem_heap_B=2106090
+mem_heap_extra_B=119598
+mem_stacks_B=0
+heap_tree=detailed
+n6: 2106090 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 760152 0x111F32: allocate (new_allocator.h:115)
+  n1: 760152 0x111F32: allocate (alloc_traits.h:460)
+   n1: 760152 0x111F32: _M_allocate (stl_vector.h:346)
+    n1: 760152 0x111F32: std::vector<Node, std::allocator<Node> >::_M_default_append(unsigned long) (vector.tcc:635)
+     n1: 760152 0x110C7F: resize (stl_vector.h:940)
+      n1: 760152 0x110C7F: Graph::init() (Graph.cpp:9)
+       n1: 760152 0x11100A: Graph::Graph(_IO_FILE*) (Graph.cpp:87)
+        n0: 760152 0x10AEFC: main (main.cpp:62)
+ n1: 685136 0x1121FA: allocate (new_allocator.h:115)
+  n1: 685136 0x1121FA: allocate (alloc_traits.h:460)
+   n1: 685136 0x1121FA: _M_allocate (stl_vector.h:346)
+    n1: 685136 0x1121FA: void std::vector<unsigned int, std::allocator<unsigned int> >::_M_realloc_insert<unsigned int const&>(__gnu_cxx::__normal_iterator<unsigned int*, std::vector<unsigned int, std::allocator<unsigned int> > >, unsigned int const&) (vector.tcc:440)
+     n1: 685136 0x10DEA4: push_back (stl_vector.h:1198)
+      n1: 685136 0x10DEA4: Graph::build_addEdges(unsigned int, std::vector<unsigned int, std::allocator<unsigned int> >&, unsigned int) (Graph.cpp:28)
+       n1: 685136 0x10FB71: Graph::build(_IO_FILE*) (Graph.cpp:72)
+        n1: 685136 0x111015: Graph::Graph(_IO_FILE*) (Graph.cpp:88)
+         n0: 685136 0x10AEFC: main (main.cpp:62)
+ n1: 477048 0x1120DE: allocate (new_allocator.h:115)
+  n1: 477048 0x1120DE: allocate (alloc_traits.h:460)
+   n1: 477048 0x1120DE: _M_allocate (stl_vector.h:346)
+    n1: 477048 0x1120DE: std::vector<unsigned int, std::allocator<unsigned int> >::_M_default_append(unsigned long) (vector.tcc:635)
+     n1: 477048 0x10DEEE: resize (stl_vector.h:940)
+      n1: 477048 0x10DEEE: Graph::build_addEdges(unsigned int, std::vector<unsigned int, std::allocator<unsigned int> >&, unsigned int) (Graph.cpp:22)
+       n1: 477048 0x10FB71: Graph::build(_IO_FILE*) (Graph.cpp:72)
+        n1: 477048 0x111015: Graph::Graph(_IO_FILE*) (Graph.cpp:88)
+         n0: 477048 0x10AEFC: main (main.cpp:62)
+ n1: 81392 0x11263F: allocate (new_allocator.h:115)
+  n1: 81392 0x11263F: allocate (alloc_traits.h:460)
+   n1: 81392 0x11263F: _M_allocate_buckets (hashtable_policy.h:2085)
+    n1: 81392 0x11263F: _M_allocate_buckets (hashtable.h:398)
+     n1: 81392 0x11263F: _M_rehash_aux (hashtable.h:2091)
+      n2: 81392 0x11263F: std::_Hashtable<unsigned int, unsigned int, std::allocator<unsigned int>, std::__detail::_Identity, std::equal_to<unsigned int>, std::hash<unsigned int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, true, true> >::_M_rehash(unsigned long, unsigned long const&) (hashtable.h:2070)
+       n1: 40696 0x110C4C: rehash (hashtable.h:2052)
+        n1: 40696 0x110C4C: reserve (hashtable_policy.h:1093)
+         n1: 40696 0x110C4C: reserve (unordered_set.h:810)
+          n1: 40696 0x110C4C: Graph::init() (Graph.cpp:8)
+           n1: 40696 0x11100A: Graph::Graph(_IO_FILE*) (Graph.cpp:87)
+            n0: 40696 0x10AEFC: main (main.cpp:62)
+       n1: 40696 0x110C68: rehash (hashtable.h:2052)
+        n1: 40696 0x110C68: reserve (hashtable_policy.h:1093)
+         n1: 40696 0x110C68: reserve (unordered_set.h:810)
+          n1: 40696 0x110C68: Graph::init() (Graph.cpp:7)
+           n1: 40696 0x11100A: Graph::Graph(_IO_FILE*) (Graph.cpp:87)
+            n0: 40696 0x10AEFC: main (main.cpp:62)
+ n1: 72704 0x4913399: ??? (in /usr/lib64/libstdc++.so.6.0.28)
+  n1: 72704 0x4011D11: call_init.part.0 (dl-init.c:72)
+   n1: 72704 0x4011E20: call_init (dl-init.c:30)
+    n1: 72704 0x4011E20: _dl_init (dl-init.c:119)
+     n1: 72704 0x4001179: ??? (in /usr/lib64/ld-2.31.so)
+      n1: 72704 0x2: ???
+       n1: 72704 0x1FFEFFE316: ???
+        n1: 72704 0x1FFEFFE32F: ???
+         n0: 72704 0x1FFEFFE355: ???
+ n0: 29658 in 6 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=49
+#-----------
+time=168825849
+mem_heap_B=2117442
+mem_heap_extra_B=121150
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=50
+#-----------
+time=170791445
+mem_heap_B=2123854
+mem_heap_extra_B=122146
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=51
+#-----------
+time=171017951
+mem_heap_B=2126058
+mem_heap_extra_B=122302
+mem_stacks_B=0
+heap_tree=detailed
+n6: 2126058 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 760152 0x111F32: allocate (new_allocator.h:115)
+  n1: 760152 0x111F32: allocate (alloc_traits.h:460)
+   n1: 760152 0x111F32: _M_allocate (stl_vector.h:346)
+    n1: 760152 0x111F32: std::vector<Node, std::allocator<Node> >::_M_default_append(unsigned long) (vector.tcc:635)
+     n1: 760152 0x110C7F: resize (stl_vector.h:940)
+      n1: 760152 0x110C7F: Graph::init() (Graph.cpp:9)
+       n1: 760152 0x11100A: Graph::Graph(_IO_FILE*) (Graph.cpp:87)
+        n0: 760152 0x10AEFC: main (main.cpp:62)
+ n1: 689232 0x1121FA: allocate (new_allocator.h:115)
+  n1: 689232 0x1121FA: allocate (alloc_traits.h:460)
+   n1: 689232 0x1121FA: _M_allocate (stl_vector.h:346)
+    n1: 689232 0x1121FA: void std::vector<unsigned int, std::allocator<unsigned int> >::_M_realloc_insert<unsigned int const&>(__gnu_cxx::__normal_iterator<unsigned int*, std::vector<unsigned int, std::allocator<unsigned int> > >, unsigned int const&) (vector.tcc:440)
+     n1: 689232 0x10DEA4: push_back (stl_vector.h:1198)
+      n1: 689232 0x10DEA4: Graph::build_addEdges(unsigned int, std::vector<unsigned int, std::allocator<unsigned int> >&, unsigned int) (Graph.cpp:28)
+       n1: 689232 0x10FB71: Graph::build(_IO_FILE*) (Graph.cpp:72)
+        n1: 689232 0x111015: Graph::Graph(_IO_FILE*) (Graph.cpp:88)
+         n0: 689232 0x10AEFC: main (main.cpp:62)
+ n1: 492888 0x1120DE: allocate (new_allocator.h:115)
+  n1: 492888 0x1120DE: allocate (alloc_traits.h:460)
+   n1: 492888 0x1120DE: _M_allocate (stl_vector.h:346)
+    n1: 492888 0x1120DE: std::vector<unsigned int, std::allocator<unsigned int> >::_M_default_append(unsigned long) (vector.tcc:635)
+     n1: 492888 0x10DEEE: resize (stl_vector.h:940)
+      n1: 492888 0x10DEEE: Graph::build_addEdges(unsigned int, std::vector<unsigned int, std::allocator<unsigned int> >&, unsigned int) (Graph.cpp:22)
+       n1: 492888 0x10FB71: Graph::build(_IO_FILE*) (Graph.cpp:72)
+        n1: 492888 0x111015: Graph::Graph(_IO_FILE*) (Graph.cpp:88)
+         n0: 492888 0x10AEFC: main (main.cpp:62)
+ n1: 81392 0x11263F: allocate (new_allocator.h:115)
+  n1: 81392 0x11263F: allocate (alloc_traits.h:460)
+   n1: 81392 0x11263F: _M_allocate_buckets (hashtable_policy.h:2085)
+    n1: 81392 0x11263F: _M_allocate_buckets (hashtable.h:398)
+     n1: 81392 0x11263F: _M_rehash_aux (hashtable.h:2091)
+      n2: 81392 0x11263F: std::_Hashtable<unsigned int, unsigned int, std::allocator<unsigned int>, std::__detail::_Identity, std::equal_to<unsigned int>, std::hash<unsigned int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, true, true> >::_M_rehash(unsigned long, unsigned long const&) (hashtable.h:2070)
+       n1: 40696 0x110C4C: rehash (hashtable.h:2052)
+        n1: 40696 0x110C4C: reserve (hashtable_policy.h:1093)
+         n1: 40696 0x110C4C: reserve (unordered_set.h:810)
+          n1: 40696 0x110C4C: Graph::init() (Graph.cpp:8)
+           n1: 40696 0x11100A: Graph::Graph(_IO_FILE*) (Graph.cpp:87)
+            n0: 40696 0x10AEFC: main (main.cpp:62)
+       n1: 40696 0x110C68: rehash (hashtable.h:2052)
+        n1: 40696 0x110C68: reserve (hashtable_policy.h:1093)
+         n1: 40696 0x110C68: reserve (unordered_set.h:810)
+          n1: 40696 0x110C68: Graph::init() (Graph.cpp:7)
+           n1: 40696 0x11100A: Graph::Graph(_IO_FILE*) (Graph.cpp:87)
+            n0: 40696 0x10AEFC: main (main.cpp:62)
+ n1: 72704 0x4913399: ??? (in /usr/lib64/libstdc++.so.6.0.28)
+  n1: 72704 0x4011D11: call_init.part.0 (dl-init.c:72)
+   n1: 72704 0x4011E20: call_init (dl-init.c:30)
+    n1: 72704 0x4011E20: _dl_init (dl-init.c:119)
+     n1: 72704 0x4001179: ??? (in /usr/lib64/ld-2.31.so)
+      n1: 72704 0x2: ???
+       n1: 72704 0x1FFEFFE316: ???
+        n1: 72704 0x1FFEFFE32F: ???
+         n0: 72704 0x1FFEFFE355: ???
+ n0: 29690 in 6 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=52
+#-----------
+time=172974682
+mem_heap_B=2124794
+mem_heap_extra_B=123510
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=53
+#-----------
+time=174931650
+mem_heap_B=2124922
+mem_heap_extra_B=123510
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=54
+#-----------
+time=176888103
+mem_heap_B=2125050
+mem_heap_extra_B=123510
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=55
+#-----------
+time=178843777
+mem_heap_B=2125226
+mem_heap_extra_B=123542
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=56
+#-----------
+time=180801474
+mem_heap_B=2125306
+mem_heap_extra_B=123510
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=57
+#-----------
+time=182272824
+mem_heap_B=2144402
+mem_heap_extra_B=127630
+mem_stacks_B=0
+heap_tree=peak
+n6: 2144402 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 760152 0x111F32: allocate (new_allocator.h:115)
+  n1: 760152 0x111F32: allocate (alloc_traits.h:460)
+   n1: 760152 0x111F32: _M_allocate (stl_vector.h:346)
+    n1: 760152 0x111F32: std::vector<Node, std::allocator<Node> >::_M_default_append(unsigned long) (vector.tcc:635)
+     n1: 760152 0x110C7F: resize (stl_vector.h:940)
+      n1: 760152 0x110C7F: Graph::init() (Graph.cpp:9)
+       n1: 760152 0x11100A: Graph::Graph(_IO_FILE*) (Graph.cpp:87)
+        n0: 760152 0x10AEFC: main (main.cpp:62)
+ n1: 698960 0x1121FA: allocate (new_allocator.h:115)
+  n1: 698960 0x1121FA: allocate (alloc_traits.h:460)
+   n1: 698960 0x1121FA: _M_allocate (stl_vector.h:346)
+    n1: 698960 0x1121FA: void std::vector<unsigned int, std::allocator<unsigned int> >::_M_realloc_insert<unsigned int const&>(__gnu_cxx::__normal_iterator<unsigned int*, std::vector<unsigned int, std::allocator<unsigned int> > >, unsigned int const&) (vector.tcc:440)
+     n1: 698960 0x10DEA4: push_back (stl_vector.h:1198)
+      n1: 698960 0x10DEA4: Graph::build_addEdges(unsigned int, std::vector<unsigned int, std::allocator<unsigned int> >&, unsigned int) (Graph.cpp:28)
+       n1: 698960 0x10FB71: Graph::build(_IO_FILE*) (Graph.cpp:72)
+        n1: 698960 0x111015: Graph::Graph(_IO_FILE*) (Graph.cpp:88)
+         n0: 698960 0x10AEFC: main (main.cpp:62)
+ n1: 496564 0x1120DE: allocate (new_allocator.h:115)
+  n1: 496564 0x1120DE: allocate (alloc_traits.h:460)
+   n1: 496564 0x1120DE: _M_allocate (stl_vector.h:346)
+    n1: 496564 0x1120DE: std::vector<unsigned int, std::allocator<unsigned int> >::_M_default_append(unsigned long) (vector.tcc:635)
+     n1: 496564 0x10DEEE: resize (stl_vector.h:940)
+      n1: 496564 0x10DEEE: Graph::build_addEdges(unsigned int, std::vector<unsigned int, std::allocator<unsigned int> >&, unsigned int) (Graph.cpp:22)
+       n1: 496564 0x10FB71: Graph::build(_IO_FILE*) (Graph.cpp:72)
+        n1: 496564 0x111015: Graph::Graph(_IO_FILE*) (Graph.cpp:88)
+         n0: 496564 0x10AEFC: main (main.cpp:62)
+ n1: 81392 0x11263F: allocate (new_allocator.h:115)
+  n1: 81392 0x11263F: allocate (alloc_traits.h:460)
+   n1: 81392 0x11263F: _M_allocate_buckets (hashtable_policy.h:2085)
+    n1: 81392 0x11263F: _M_allocate_buckets (hashtable.h:398)
+     n1: 81392 0x11263F: _M_rehash_aux (hashtable.h:2091)
+      n2: 81392 0x11263F: std::_Hashtable<unsigned int, unsigned int, std::allocator<unsigned int>, std::__detail::_Identity, std::equal_to<unsigned int>, std::hash<unsigned int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, true, true> >::_M_rehash(unsigned long, unsigned long const&) (hashtable.h:2070)
+       n1: 40696 0x110C4C: rehash (hashtable.h:2052)
+        n1: 40696 0x110C4C: reserve (hashtable_policy.h:1093)
+         n1: 40696 0x110C4C: reserve (unordered_set.h:810)
+          n1: 40696 0x110C4C: Graph::init() (Graph.cpp:8)
+           n1: 40696 0x11100A: Graph::Graph(_IO_FILE*) (Graph.cpp:87)
+            n0: 40696 0x10AEFC: main (main.cpp:62)
+       n1: 40696 0x110C68: rehash (hashtable.h:2052)
+        n1: 40696 0x110C68: reserve (hashtable_policy.h:1093)
+         n1: 40696 0x110C68: reserve (unordered_set.h:810)
+          n1: 40696 0x110C68: Graph::init() (Graph.cpp:7)
+           n1: 40696 0x11100A: Graph::Graph(_IO_FILE*) (Graph.cpp:87)
+            n0: 40696 0x10AEFC: main (main.cpp:62)
+ n1: 72704 0x4913399: ??? (in /usr/lib64/libstdc++.so.6.0.28)
+  n1: 72704 0x4011D11: call_init.part.0 (dl-init.c:72)
+   n1: 72704 0x4011E20: call_init (dl-init.c:30)
+    n1: 72704 0x4011E20: _dl_init (dl-init.c:119)
+     n1: 72704 0x4001179: ??? (in /usr/lib64/ld-2.31.so)
+      n1: 72704 0x2: ???
+       n1: 72704 0x1FFEFFE316: ???
+        n1: 72704 0x1FFEFFE32F: ???
+         n0: 72704 0x1FFEFFE355: ???
+ n0: 34630 in 17 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=58
+#-----------
+time=184420630
+mem_heap_B=2138806
+mem_heap_extra_B=123450
+mem_stacks_B=0
+heap_tree=empty
