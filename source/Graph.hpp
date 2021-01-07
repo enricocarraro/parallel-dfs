@@ -22,6 +22,7 @@
 #include <random>
 #include <mutex>
 #include <limits>
+#include <exception>
 
 #define GRAPH_DEBUG 1
 
@@ -58,6 +59,7 @@ class Graph
         vector<Node> nodes;
         vector<ThreadWorker> parent_workers;
         vector<ThreadWorker> child_workers;
+        vector<thread> threads;
         vector<FastSemaphore> worker_semaphores;
         //        vector<Semaphore> worker_semaphores;
         unordered_set<unsigned int> roots;
@@ -83,6 +85,7 @@ class Graph
 public:
         Graph(FILE *fp);
         Graph(unsigned int nodes);
+        ~Graph();
         void addEdge(unsigned int u, unsigned int v);
         void printGraph();
         void printNodesStatus();

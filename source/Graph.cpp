@@ -16,6 +16,13 @@ void Graph::init()
     }
 }
 
+Graph::~Graph() {
+    if(init_tw_done) {
+        child_workers.clear();
+        parent_workers.clear();
+    }
+}
+
 // should only be used by build
 void Graph::build_addEdges(unsigned int u, vector<unsigned int> &adj, unsigned int adj_size)
 {
@@ -196,15 +203,17 @@ void Graph::initThreadWorkers()
         vector<FastSemaphore> to_swap_sem(hw_conc);
         worker_semaphores.swap(to_swap_sem);
 
+        threads.reserve(parent_workers.size() + child_workers.size());
+
         for (auto &worker : parent_workers)
         {
-            auto t = std::thread(&ThreadWorker::processTasks, &worker);
-            t.detach();
+            threads.emplace_back(&ThreadWorker::processTasks, &worker);
+            threads.back().detach();
         }
         for (auto &worker : child_workers)
         {
-            auto t = std::thread(&ThreadWorker::processTasks, &worker);
-            t.detach();
+            threads.emplace_back(&ThreadWorker::processTasks, &worker);
+            threads.back().detach();
         }
 
         init_tw_done = true;

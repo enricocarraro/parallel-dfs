@@ -34,7 +34,7 @@ SafeQueue<T> &SafeQueue<T>::operator=(const SafeQueue<T> &other)
 }
 
 // Get the "front"-element.
-// If the queue is empty, wait till a element is avaiable.
+// If the queue is empty, wait utill an element is avaiable.
 template <typename T>
 T SafeQueue<T>::pop()
 {
