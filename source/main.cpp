@@ -1,5 +1,6 @@
 #include <iostream>
 #include <stdio.h>
+#include <stdlib.h>
 #include "Graph.hpp"
 
 using namespace std;
@@ -16,6 +17,7 @@ int main(int argc, const char *argv[])
     }
     string graname(argv[1]);
 
+    auto itotal=std::chrono::steady_clock::now();
     if ((fp = fopen(graname.c_str(), "r")) == NULL)
     {
         cout << "Error: File doesn't exist." << endl;
@@ -48,7 +50,10 @@ int main(int argc, const char *argv[])
         std::chrono::duration<double> ppelapsed_seconds = ppend - ppstart;
         std::cout << "pre post elapsed time: " << ppelapsed_seconds.count() << "s\n";
         //gp.printGraph();
-        gp.printNodesStatus();
+	auto itotalend=std::chrono::steady_clock::now();
+        std::chrono::duration<double> pptotal= itotalend -itotal;
+cout<<"total time taken:"<< pptotal.count()<<endl;
+        //gp.printNodesStatus();
     }
 
     if ((fp = fopen(graname.c_str(), "r")) == NULL)
@@ -71,7 +76,7 @@ int main(int argc, const char *argv[])
         std::chrono::duration<double> elapsed_seconds = end - start;
         std::cout << "Sequential elapsed time: " << elapsed_seconds.count() << "s\n";
         //gs.printGraph();
-        gs.printNodesStatus();
+      //  gs.printNodesStatus();
     }
     return 0;
 }

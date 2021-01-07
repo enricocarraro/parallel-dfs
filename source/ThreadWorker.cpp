@@ -13,11 +13,12 @@ void ThreadWorker::processTasks()
         while (true)
         {
                 auto m = queue.pop();
-                m();
+                if(m()) break;
         }
+        
 }
 
-void ThreadWorker::addTask(const std::function<void()> &task)
+void ThreadWorker::addTask(const std::function<bool()> &task)
 {
         queue.push(task);
 }

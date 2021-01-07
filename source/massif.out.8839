@@ -1,0 +1,795 @@
+desc: (none)
+cmd: ./PathBasedThreadWorkers ../../../graph_generator/v10e3.gra parallel
+time_unit: i
+#-----------
+snapshot=0
+#-----------
+time=0
+mem_heap_B=0
+mem_heap_extra_B=0
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=1
+#-----------
+time=2432065
+mem_heap_B=72704
+mem_heap_extra_B=8
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=2
+#-----------
+time=2544067
+mem_heap_B=72739
+mem_heap_extra_B=29
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=3
+#-----------
+time=2547018
+mem_heap_B=77395
+mem_heap_extra_B=69
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=4
+#-----------
+time=2553330
+mem_heap_B=79391
+mem_heap_extra_B=209
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=5
+#-----------
+time=2557843
+mem_heap_B=79375
+mem_heap_extra_B=249
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=6
+#-----------
+time=2561184
+mem_heap_B=79367
+mem_heap_extra_B=281
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=7
+#-----------
+time=2566849
+mem_heap_B=79359
+mem_heap_extra_B=313
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=8
+#-----------
+time=2571374
+mem_heap_B=79375
+mem_heap_extra_B=321
+mem_stacks_B=0
+heap_tree=detailed
+n4: 79375 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 72704 0x4913399: ??? (in /usr/lib64/libstdc++.so.6.0.28)
+  n1: 72704 0x4011D11: call_init.part.0 (dl-init.c:72)
+   n1: 72704 0x4011E20: call_init (dl-init.c:30)
+    n1: 72704 0x4011E20: _dl_init (dl-init.c:119)
+     n1: 72704 0x4001179: ??? (in /usr/lib64/ld-2.31.so)
+      n1: 72704 0x2: ???
+       n1: 72704 0x1FFEFFE31A: ???
+        n1: 72704 0x1FFEFFE333: ???
+         n0: 72704 0x1FFEFFE356: ???
+ n1: 4096 0x4C78693: _IO_file_doallocate (in /usr/lib64/haswell/libc-2.31.so)
+  n1: 4096 0x4C8965F: _IO_doallocbuf (in /usr/lib64/haswell/libc-2.31.so)
+   n1: 4096 0x4C8838B: _IO_file_underflow (in /usr/lib64/haswell/libc-2.31.so)
+    n1: 4096 0x4C89715: _IO_default_uflow (in /usr/lib64/haswell/libc-2.31.so)
+     n1: 4096 0x4C59B72: ??? (in /usr/lib64/haswell/libc-2.31.so)
+      n1: 4096 0x4C58A85: __isoc99_fscanf (in /usr/lib64/haswell/libc-2.31.so)
+       n1: 4096 0x111082: Graph::Graph(_IO_FILE*) (Graph.cpp:86)
+        n0: 4096 0x10AC92: main (main.cpp:28)
+ n1: 1672 0x111FB2: allocate (new_allocator.h:115)
+  n1: 1672 0x111FB2: allocate (alloc_traits.h:460)
+   n1: 1672 0x111FB2: _M_allocate (stl_vector.h:346)
+    n1: 1672 0x111FB2: std::vector<Node, std::allocator<Node> >::_M_default_append(unsigned long) (vector.tcc:635)
+     n1: 1672 0x110CFF: resize (stl_vector.h:940)
+      n1: 1672 0x110CFF: Graph::init() (Graph.cpp:9)
+       n1: 1672 0x11108A: Graph::Graph(_IO_FILE*) (Graph.cpp:87)
+        n0: 1672 0x10AC92: main (main.cpp:28)
+ n0: 903 in 8 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=9
+#-----------
+time=2575877
+mem_heap_B=79395
+mem_heap_extra_B=325
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=10
+#-----------
+time=2579988
+mem_heap_B=79403
+mem_heap_extra_B=341
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=11
+#-----------
+time=2583350
+mem_heap_B=79415
+mem_heap_extra_B=353
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=12
+#-----------
+time=2588041
+mem_heap_B=79443
+mem_heap_extra_B=373
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=13
+#-----------
+time=2592155
+mem_heap_B=77795
+mem_heap_extra_B=413
+mem_stacks_B=0
+heap_tree=detailed
+n6: 77795 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 72704 0x4913399: ??? (in /usr/lib64/libstdc++.so.6.0.28)
+  n1: 72704 0x4011D11: call_init.part.0 (dl-init.c:72)
+   n1: 72704 0x4011E20: call_init (dl-init.c:30)
+    n1: 72704 0x4011E20: _dl_init (dl-init.c:119)
+     n1: 72704 0x4001179: ??? (in /usr/lib64/ld-2.31.so)
+      n1: 72704 0x2: ???
+       n1: 72704 0x1FFEFFE31A: ???
+        n1: 72704 0x1FFEFFE333: ???
+         n0: 72704 0x1FFEFFE356: ???
+ n1: 1672 0x111FB2: allocate (new_allocator.h:115)
+  n1: 1672 0x111FB2: allocate (alloc_traits.h:460)
+   n1: 1672 0x111FB2: _M_allocate (stl_vector.h:346)
+    n1: 1672 0x111FB2: std::vector<Node, std::allocator<Node> >::_M_default_append(unsigned long) (vector.tcc:635)
+     n1: 1672 0x110CFF: resize (stl_vector.h:940)
+      n1: 1672 0x110CFF: Graph::init() (Graph.cpp:9)
+       n1: 1672 0x11108A: Graph::Graph(_IO_FILE*) (Graph.cpp:87)
+        n0: 1672 0x10AC92: main (main.cpp:28)
+ n1: 896 0x10D390: allocate (new_allocator.h:115)
+  n1: 896 0x10D390: allocate (alloc_traits.h:460)
+   n1: 896 0x10D390: _M_allocate (stl_vector.h:346)
+    n1: 896 0x10D390: _M_create_storage (stl_vector.h:361)
+     n1: 896 0x10D390: _Vector_base (stl_vector.h:305)
+      n1: 896 0x10D390: vector (stl_vector.h:511)
+       n1: 896 0x10D390: Graph::initThreadWorkers() (Graph.cpp:190)
+        n1: 896 0x10D932: Graph::sortVectors() (Graph.cpp:163)
+         n0: 896 0x10ACA2: main (main.cpp:30)
+ n1: 896 0x10D450: allocate (new_allocator.h:115)
+  n1: 896 0x10D450: allocate (alloc_traits.h:460)
+   n1: 896 0x10D450: _M_allocate (stl_vector.h:346)
+    n1: 896 0x10D450: _M_create_storage (stl_vector.h:361)
+     n1: 896 0x10D450: _Vector_base (stl_vector.h:305)
+      n1: 896 0x10D450: vector (stl_vector.h:511)
+       n1: 896 0x10D450: Graph::initThreadWorkers() (Graph.cpp:193)
+        n1: 896 0x10D932: Graph::sortVectors() (Graph.cpp:163)
+         n0: 896 0x10ACA2: main (main.cpp:30)
+ n1: 832 0x10D510: allocate (new_allocator.h:115)
+  n1: 832 0x10D510: allocate (alloc_traits.h:460)
+   n1: 832 0x10D510: _M_allocate (stl_vector.h:346)
+    n1: 832 0x10D510: _M_create_storage (stl_vector.h:361)
+     n1: 832 0x10D510: _Vector_base (stl_vector.h:305)
+      n1: 832 0x10D510: vector (stl_vector.h:511)
+       n1: 832 0x10D510: Graph::initThreadWorkers() (Graph.cpp:196)
+        n1: 832 0x10D932: Graph::sortVectors() (Graph.cpp:163)
+         n0: 832 0x10ACA2: main (main.cpp:30)
+ n0: 795 in 13 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=14
+#-----------
+time=2596833
+mem_heap_B=78467
+mem_heap_extra_B=453
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=15
+#-----------
+time=2600713
+mem_heap_B=80035
+mem_heap_extra_B=525
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=16
+#-----------
+time=2605681
+mem_heap_B=81635
+mem_heap_extra_B=605
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=17
+#-----------
+time=2609135
+mem_heap_B=82595
+mem_heap_extra_B=653
+mem_stacks_B=0
+heap_tree=detailed
+n7: 82595 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 72704 0x4913399: ??? (in /usr/lib64/libstdc++.so.6.0.28)
+  n1: 72704 0x4011D11: call_init.part.0 (dl-init.c:72)
+   n1: 72704 0x4011E20: call_init (dl-init.c:30)
+    n1: 72704 0x4011E20: _dl_init (dl-init.c:119)
+     n1: 72704 0x4001179: ??? (in /usr/lib64/ld-2.31.so)
+      n1: 72704 0x2: ???
+       n1: 72704 0x1FFEFFE31A: ???
+        n1: 72704 0x1FFEFFE333: ???
+         n0: 72704 0x1FFEFFE356: ???
+ n1: 4608 0x4014C6A: allocate_dtv (dl-tls.c:286)
+  n1: 4608 0x4014C6A: _dl_allocate_tls (dl-tls.c:532)
+   n1: 4608 0x4BD74F5: pthread_create (in /usr/lib64/libpthread-2.31.so)
+    n2: 4608 0x4950218: std::thread::_M_start_thread(std::unique_ptr<std::thread::_State, std::default_delete<std::thread::_State> >, void (*)()) (in /usr/lib64/libstdc++.so.6.0.28)
+     n1: 2304 0x10D5EA: thread<void (ThreadWorker::*)(), ThreadWorker*> (thread:149)
+      n1: 2304 0x10D5EA: Graph::initThreadWorkers() (Graph.cpp:201)
+       n1: 2304 0x10D932: Graph::sortVectors() (Graph.cpp:163)
+        n0: 2304 0x10ACA2: main (main.cpp:30)
+     n1: 2304 0x10D682: thread<void (ThreadWorker::*)(), ThreadWorker*> (thread:149)
+      n1: 2304 0x10D682: Graph::initThreadWorkers() (Graph.cpp:206)
+       n1: 2304 0x10D932: Graph::sortVectors() (Graph.cpp:163)
+        n0: 2304 0x10ACA2: main (main.cpp:30)
+ n1: 1672 0x111FB2: allocate (new_allocator.h:115)
+  n1: 1672 0x111FB2: allocate (alloc_traits.h:460)
+   n1: 1672 0x111FB2: _M_allocate (stl_vector.h:346)
+    n1: 1672 0x111FB2: std::vector<Node, std::allocator<Node> >::_M_default_append(unsigned long) (vector.tcc:635)
+     n1: 1672 0x110CFF: resize (stl_vector.h:940)
+      n1: 1672 0x110CFF: Graph::init() (Graph.cpp:9)
+       n1: 1672 0x11108A: Graph::Graph(_IO_FILE*) (Graph.cpp:87)
+        n0: 1672 0x10AC92: main (main.cpp:28)
+ n0: 987 in 13 places, all below massif's threshold (1.00%)
+ n1: 896 0x10D390: allocate (new_allocator.h:115)
+  n1: 896 0x10D390: allocate (alloc_traits.h:460)
+   n1: 896 0x10D390: _M_allocate (stl_vector.h:346)
+    n1: 896 0x10D390: _M_create_storage (stl_vector.h:361)
+     n1: 896 0x10D390: _Vector_base (stl_vector.h:305)
+      n1: 896 0x10D390: vector (stl_vector.h:511)
+       n1: 896 0x10D390: Graph::initThreadWorkers() (Graph.cpp:190)
+        n1: 896 0x10D932: Graph::sortVectors() (Graph.cpp:163)
+         n0: 896 0x10ACA2: main (main.cpp:30)
+ n1: 896 0x10D450: allocate (new_allocator.h:115)
+  n1: 896 0x10D450: allocate (alloc_traits.h:460)
+   n1: 896 0x10D450: _M_allocate (stl_vector.h:346)
+    n1: 896 0x10D450: _M_create_storage (stl_vector.h:361)
+     n1: 896 0x10D450: _Vector_base (stl_vector.h:305)
+      n1: 896 0x10D450: vector (stl_vector.h:511)
+       n1: 896 0x10D450: Graph::initThreadWorkers() (Graph.cpp:193)
+        n1: 896 0x10D932: Graph::sortVectors() (Graph.cpp:163)
+         n0: 896 0x10ACA2: main (main.cpp:30)
+ n1: 832 0x10D510: allocate (new_allocator.h:115)
+  n1: 832 0x10D510: allocate (alloc_traits.h:460)
+   n1: 832 0x10D510: _M_allocate (stl_vector.h:346)
+    n1: 832 0x10D510: _M_create_storage (stl_vector.h:361)
+     n1: 832 0x10D510: _Vector_base (stl_vector.h:305)
+      n1: 832 0x10D510: vector (stl_vector.h:511)
+       n1: 832 0x10D510: Graph::initThreadWorkers() (Graph.cpp:196)
+        n1: 832 0x10D932: Graph::sortVectors() (Graph.cpp:163)
+         n0: 832 0x10ACA2: main (main.cpp:30)
+#-----------
+snapshot=18
+#-----------
+time=2613035
+mem_heap_B=82787
+mem_heap_extra_B=733
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=19
+#-----------
+time=2618751
+mem_heap_B=82835
+mem_heap_extra_B=725
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=20
+#-----------
+time=2622620
+mem_heap_B=82915
+mem_heap_extra_B=701
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=21
+#-----------
+time=2637603
+mem_heap_B=82919
+mem_heap_extra_B=737
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=22
+#-----------
+time=2640198
+mem_heap_B=83079
+mem_heap_extra_B=777
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=23
+#-----------
+time=2644885
+mem_heap_B=83067
+mem_heap_extra_B=829
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=24
+#-----------
+time=2649913
+mem_heap_B=83271
+mem_heap_extra_B=1001
+mem_stacks_B=0
+heap_tree=peak
+n6: 83271 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 72704 0x4913399: ??? (in /usr/lib64/libstdc++.so.6.0.28)
+  n1: 72704 0x4011D11: call_init.part.0 (dl-init.c:72)
+   n1: 72704 0x4011E20: call_init (dl-init.c:30)
+    n1: 72704 0x4011E20: _dl_init (dl-init.c:119)
+     n1: 72704 0x4001179: ??? (in /usr/lib64/ld-2.31.so)
+      n1: 72704 0x2: ???
+       n1: 72704 0x1FFEFFE31A: ???
+        n1: 72704 0x1FFEFFE333: ???
+         n0: 72704 0x1FFEFFE356: ???
+ n1: 4608 0x4014C6A: allocate_dtv (dl-tls.c:286)
+  n1: 4608 0x4014C6A: _dl_allocate_tls (dl-tls.c:532)
+   n1: 4608 0x4BD74F5: pthread_create (in /usr/lib64/libpthread-2.31.so)
+    n2: 4608 0x4950218: std::thread::_M_start_thread(std::unique_ptr<std::thread::_State, std::default_delete<std::thread::_State> >, void (*)()) (in /usr/lib64/libstdc++.so.6.0.28)
+     n1: 2304 0x10D5EA: thread<void (ThreadWorker::*)(), ThreadWorker*> (thread:149)
+      n1: 2304 0x10D5EA: Graph::initThreadWorkers() (Graph.cpp:201)
+       n1: 2304 0x10D932: Graph::sortVectors() (Graph.cpp:163)
+        n0: 2304 0x10ACA2: main (main.cpp:30)
+     n1: 2304 0x10D682: thread<void (ThreadWorker::*)(), ThreadWorker*> (thread:149)
+      n1: 2304 0x10D682: Graph::initThreadWorkers() (Graph.cpp:206)
+       n1: 2304 0x10D932: Graph::sortVectors() (Graph.cpp:163)
+        n0: 2304 0x10ACA2: main (main.cpp:30)
+ n0: 2495 in 26 places, all below massif's threshold (1.00%)
+ n1: 1672 0x111FB2: allocate (new_allocator.h:115)
+  n1: 1672 0x111FB2: allocate (alloc_traits.h:460)
+   n1: 1672 0x111FB2: _M_allocate (stl_vector.h:346)
+    n1: 1672 0x111FB2: std::vector<Node, std::allocator<Node> >::_M_default_append(unsigned long) (vector.tcc:635)
+     n1: 1672 0x110CFF: resize (stl_vector.h:940)
+      n1: 1672 0x110CFF: Graph::init() (Graph.cpp:9)
+       n1: 1672 0x11108A: Graph::Graph(_IO_FILE*) (Graph.cpp:87)
+        n0: 1672 0x10AC92: main (main.cpp:28)
+ n1: 896 0x10D390: allocate (new_allocator.h:115)
+  n1: 896 0x10D390: allocate (alloc_traits.h:460)
+   n1: 896 0x10D390: _M_allocate (stl_vector.h:346)
+    n1: 896 0x10D390: _M_create_storage (stl_vector.h:361)
+     n1: 896 0x10D390: _Vector_base (stl_vector.h:305)
+      n1: 896 0x10D390: vector (stl_vector.h:511)
+       n1: 896 0x10D390: Graph::initThreadWorkers() (Graph.cpp:190)
+        n1: 896 0x10D932: Graph::sortVectors() (Graph.cpp:163)
+         n0: 896 0x10ACA2: main (main.cpp:30)
+ n1: 896 0x10D450: allocate (new_allocator.h:115)
+  n1: 896 0x10D450: allocate (alloc_traits.h:460)
+   n1: 896 0x10D450: _M_allocate (stl_vector.h:346)
+    n1: 896 0x10D450: _M_create_storage (stl_vector.h:361)
+     n1: 896 0x10D450: _Vector_base (stl_vector.h:305)
+      n1: 896 0x10D450: vector (stl_vector.h:511)
+       n1: 896 0x10D450: Graph::initThreadWorkers() (Graph.cpp:193)
+        n1: 896 0x10D932: Graph::sortVectors() (Graph.cpp:163)
+         n0: 896 0x10ACA2: main (main.cpp:30)
+#-----------
+snapshot=25
+#-----------
+time=2654522
+mem_heap_B=83331
+mem_heap_extra_B=957
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=26
+#-----------
+time=2659399
+mem_heap_B=83563
+mem_heap_extra_B=1085
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=27
+#-----------
+time=2662717
+mem_heap_B=83547
+mem_heap_extra_B=1101
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=28
+#-----------
+time=2668895
+mem_heap_B=83463
+mem_heap_extra_B=1065
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=29
+#-----------
+time=2673581
+mem_heap_B=83471
+mem_heap_extra_B=1089
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=30
+#-----------
+time=2679921
+mem_heap_B=83459
+mem_heap_extra_B=1061
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=31
+#-----------
+time=2685745
+mem_heap_B=83479
+mem_heap_extra_B=1097
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=32
+#-----------
+time=2692053
+mem_heap_B=83411
+mem_heap_extra_B=1149
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=33
+#-----------
+time=2698489
+mem_heap_B=83599
+mem_heap_extra_B=1161
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=34
+#-----------
+time=2703742
+mem_heap_B=83423
+mem_heap_extra_B=1137
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=35
+#-----------
+time=2708208
+mem_heap_B=83479
+mem_heap_extra_B=1169
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=36
+#-----------
+time=2711423
+mem_heap_B=83511
+mem_heap_extra_B=1177
+mem_stacks_B=0
+heap_tree=detailed
+n6: 83511 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 72704 0x4913399: ??? (in /usr/lib64/libstdc++.so.6.0.28)
+  n1: 72704 0x4011D11: call_init.part.0 (dl-init.c:72)
+   n1: 72704 0x4011E20: call_init (dl-init.c:30)
+    n1: 72704 0x4011E20: _dl_init (dl-init.c:119)
+     n1: 72704 0x4001179: ??? (in /usr/lib64/ld-2.31.so)
+      n1: 72704 0x2: ???
+       n1: 72704 0x1FFEFFE31A: ???
+        n1: 72704 0x1FFEFFE333: ???
+         n0: 72704 0x1FFEFFE356: ???
+ n1: 4608 0x4014C6A: allocate_dtv (dl-tls.c:286)
+  n1: 4608 0x4014C6A: _dl_allocate_tls (dl-tls.c:532)
+   n1: 4608 0x4BD74F5: pthread_create (in /usr/lib64/libpthread-2.31.so)
+    n2: 4608 0x4950218: std::thread::_M_start_thread(std::unique_ptr<std::thread::_State, std::default_delete<std::thread::_State> >, void (*)()) (in /usr/lib64/libstdc++.so.6.0.28)
+     n1: 2304 0x10D5EA: thread<void (ThreadWorker::*)(), ThreadWorker*> (thread:149)
+      n1: 2304 0x10D5EA: Graph::initThreadWorkers() (Graph.cpp:201)
+       n1: 2304 0x10D932: Graph::sortVectors() (Graph.cpp:163)
+        n0: 2304 0x10ACA2: main (main.cpp:30)
+     n1: 2304 0x10D682: thread<void (ThreadWorker::*)(), ThreadWorker*> (thread:149)
+      n1: 2304 0x10D682: Graph::initThreadWorkers() (Graph.cpp:206)
+       n1: 2304 0x10D932: Graph::sortVectors() (Graph.cpp:163)
+        n0: 2304 0x10ACA2: main (main.cpp:30)
+ n0: 2735 in 34 places, all below massif's threshold (1.00%)
+ n1: 1672 0x111FB2: allocate (new_allocator.h:115)
+  n1: 1672 0x111FB2: allocate (alloc_traits.h:460)
+   n1: 1672 0x111FB2: _M_allocate (stl_vector.h:346)
+    n1: 1672 0x111FB2: std::vector<Node, std::allocator<Node> >::_M_default_append(unsigned long) (vector.tcc:635)
+     n1: 1672 0x110CFF: resize (stl_vector.h:940)
+      n1: 1672 0x110CFF: Graph::init() (Graph.cpp:9)
+       n1: 1672 0x11108A: Graph::Graph(_IO_FILE*) (Graph.cpp:87)
+        n0: 1672 0x10AC92: main (main.cpp:28)
+ n1: 896 0x10D390: allocate (new_allocator.h:115)
+  n1: 896 0x10D390: allocate (alloc_traits.h:460)
+   n1: 896 0x10D390: _M_allocate (stl_vector.h:346)
+    n1: 896 0x10D390: _M_create_storage (stl_vector.h:361)
+     n1: 896 0x10D390: _Vector_base (stl_vector.h:305)
+      n1: 896 0x10D390: vector (stl_vector.h:511)
+       n1: 896 0x10D390: Graph::initThreadWorkers() (Graph.cpp:190)
+        n1: 896 0x10D932: Graph::sortVectors() (Graph.cpp:163)
+         n0: 896 0x10ACA2: main (main.cpp:30)
+ n1: 896 0x10D450: allocate (new_allocator.h:115)
+  n1: 896 0x10D450: allocate (alloc_traits.h:460)
+   n1: 896 0x10D450: _M_allocate (stl_vector.h:346)
+    n1: 896 0x10D450: _M_create_storage (stl_vector.h:361)
+     n1: 896 0x10D450: _Vector_base (stl_vector.h:305)
+      n1: 896 0x10D450: vector (stl_vector.h:511)
+       n1: 896 0x10D450: Graph::initThreadWorkers() (Graph.cpp:193)
+        n1: 896 0x10D932: Graph::sortVectors() (Graph.cpp:163)
+         n0: 896 0x10ACA2: main (main.cpp:30)
+#-----------
+snapshot=37
+#-----------
+time=2715787
+mem_heap_B=83491
+mem_heap_extra_B=1181
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=38
+#-----------
+time=2718858
+mem_heap_B=83527
+mem_heap_extra_B=1209
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=39
+#-----------
+time=2723922
+mem_heap_B=83491
+mem_heap_extra_B=1181
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=40
+#-----------
+time=2729243
+mem_heap_B=83667
+mem_heap_extra_B=1285
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=41
+#-----------
+time=2734138
+mem_heap_B=83571
+mem_heap_extra_B=1197
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=42
+#-----------
+time=2737354
+mem_heap_B=83659
+mem_heap_extra_B=1229
+mem_stacks_B=0
+heap_tree=detailed
+n6: 83659 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 72704 0x4913399: ??? (in /usr/lib64/libstdc++.so.6.0.28)
+  n1: 72704 0x4011D11: call_init.part.0 (dl-init.c:72)
+   n1: 72704 0x4011E20: call_init (dl-init.c:30)
+    n1: 72704 0x4011E20: _dl_init (dl-init.c:119)
+     n1: 72704 0x4001179: ??? (in /usr/lib64/ld-2.31.so)
+      n1: 72704 0x2: ???
+       n1: 72704 0x1FFEFFE31A: ???
+        n1: 72704 0x1FFEFFE333: ???
+         n0: 72704 0x1FFEFFE356: ???
+ n1: 4608 0x4014C6A: allocate_dtv (dl-tls.c:286)
+  n1: 4608 0x4014C6A: _dl_allocate_tls (dl-tls.c:532)
+   n1: 4608 0x4BD74F5: pthread_create (in /usr/lib64/libpthread-2.31.so)
+    n2: 4608 0x4950218: std::thread::_M_start_thread(std::unique_ptr<std::thread::_State, std::default_delete<std::thread::_State> >, void (*)()) (in /usr/lib64/libstdc++.so.6.0.28)
+     n1: 2304 0x10D5EA: thread<void (ThreadWorker::*)(), ThreadWorker*> (thread:149)
+      n1: 2304 0x10D5EA: Graph::initThreadWorkers() (Graph.cpp:201)
+       n1: 2304 0x10D932: Graph::sortVectors() (Graph.cpp:163)
+        n0: 2304 0x10ACA2: main (main.cpp:30)
+     n1: 2304 0x10D682: thread<void (ThreadWorker::*)(), ThreadWorker*> (thread:149)
+      n1: 2304 0x10D682: Graph::initThreadWorkers() (Graph.cpp:206)
+       n1: 2304 0x10D932: Graph::sortVectors() (Graph.cpp:163)
+        n0: 2304 0x10ACA2: main (main.cpp:30)
+ n0: 2883 in 40 places, all below massif's threshold (1.00%)
+ n1: 1672 0x111FB2: allocate (new_allocator.h:115)
+  n1: 1672 0x111FB2: allocate (alloc_traits.h:460)
+   n1: 1672 0x111FB2: _M_allocate (stl_vector.h:346)
+    n1: 1672 0x111FB2: std::vector<Node, std::allocator<Node> >::_M_default_append(unsigned long) (vector.tcc:635)
+     n1: 1672 0x110CFF: resize (stl_vector.h:940)
+      n1: 1672 0x110CFF: Graph::init() (Graph.cpp:9)
+       n1: 1672 0x11108A: Graph::Graph(_IO_FILE*) (Graph.cpp:87)
+        n0: 1672 0x10AC92: main (main.cpp:28)
+ n1: 896 0x10D390: allocate (new_allocator.h:115)
+  n1: 896 0x10D390: allocate (alloc_traits.h:460)
+   n1: 896 0x10D390: _M_allocate (stl_vector.h:346)
+    n1: 896 0x10D390: _M_create_storage (stl_vector.h:361)
+     n1: 896 0x10D390: _Vector_base (stl_vector.h:305)
+      n1: 896 0x10D390: vector (stl_vector.h:511)
+       n1: 896 0x10D390: Graph::initThreadWorkers() (Graph.cpp:190)
+        n1: 896 0x10D932: Graph::sortVectors() (Graph.cpp:163)
+         n0: 896 0x10ACA2: main (main.cpp:30)
+ n1: 896 0x10D450: allocate (new_allocator.h:115)
+  n1: 896 0x10D450: allocate (alloc_traits.h:460)
+   n1: 896 0x10D450: _M_allocate (stl_vector.h:346)
+    n1: 896 0x10D450: _M_create_storage (stl_vector.h:361)
+     n1: 896 0x10D450: _Vector_base (stl_vector.h:305)
+      n1: 896 0x10D450: vector (stl_vector.h:511)
+       n1: 896 0x10D450: Graph::initThreadWorkers() (Graph.cpp:193)
+        n1: 896 0x10D932: Graph::sortVectors() (Graph.cpp:163)
+         n0: 896 0x10ACA2: main (main.cpp:30)
+#-----------
+snapshot=43
+#-----------
+time=2740625
+mem_heap_B=83539
+mem_heap_extra_B=1189
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=44
+#-----------
+time=2745296
+mem_heap_B=83559
+mem_heap_extra_B=1193
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=45
+#-----------
+time=2749459
+mem_heap_B=83491
+mem_heap_extra_B=1181
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=46
+#-----------
+time=2754872
+mem_heap_B=83491
+mem_heap_extra_B=1181
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=47
+#-----------
+time=2759458
+mem_heap_B=83499
+mem_heap_extra_B=1173
+mem_stacks_B=0
+heap_tree=detailed
+n6: 83499 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 72704 0x4913399: ??? (in /usr/lib64/libstdc++.so.6.0.28)
+  n1: 72704 0x4011D11: call_init.part.0 (dl-init.c:72)
+   n1: 72704 0x4011E20: call_init (dl-init.c:30)
+    n1: 72704 0x4011E20: _dl_init (dl-init.c:119)
+     n1: 72704 0x4001179: ??? (in /usr/lib64/ld-2.31.so)
+      n1: 72704 0x2: ???
+       n1: 72704 0x1FFEFFE31A: ???
+        n1: 72704 0x1FFEFFE333: ???
+         n0: 72704 0x1FFEFFE356: ???
+ n1: 4608 0x4014C6A: allocate_dtv (dl-tls.c:286)
+  n1: 4608 0x4014C6A: _dl_allocate_tls (dl-tls.c:532)
+   n1: 4608 0x4BD74F5: pthread_create (in /usr/lib64/libpthread-2.31.so)
+    n2: 4608 0x4950218: std::thread::_M_start_thread(std::unique_ptr<std::thread::_State, std::default_delete<std::thread::_State> >, void (*)()) (in /usr/lib64/libstdc++.so.6.0.28)
+     n1: 2304 0x10D5EA: thread<void (ThreadWorker::*)(), ThreadWorker*> (thread:149)
+      n1: 2304 0x10D5EA: Graph::initThreadWorkers() (Graph.cpp:201)
+       n1: 2304 0x10D932: Graph::sortVectors() (Graph.cpp:163)
+        n0: 2304 0x10ACA2: main (main.cpp:30)
+     n1: 2304 0x10D682: thread<void (ThreadWorker::*)(), ThreadWorker*> (thread:149)
+      n1: 2304 0x10D682: Graph::initThreadWorkers() (Graph.cpp:206)
+       n1: 2304 0x10D932: Graph::sortVectors() (Graph.cpp:163)
+        n0: 2304 0x10ACA2: main (main.cpp:30)
+ n0: 2723 in 43 places, all below massif's threshold (1.00%)
+ n1: 1672 0x111FB2: allocate (new_allocator.h:115)
+  n1: 1672 0x111FB2: allocate (alloc_traits.h:460)
+   n1: 1672 0x111FB2: _M_allocate (stl_vector.h:346)
+    n1: 1672 0x111FB2: std::vector<Node, std::allocator<Node> >::_M_default_append(unsigned long) (vector.tcc:635)
+     n1: 1672 0x110CFF: resize (stl_vector.h:940)
+      n1: 1672 0x110CFF: Graph::init() (Graph.cpp:9)
+       n1: 1672 0x11108A: Graph::Graph(_IO_FILE*) (Graph.cpp:87)
+        n0: 1672 0x10AC92: main (main.cpp:28)
+ n1: 896 0x10D390: allocate (new_allocator.h:115)
+  n1: 896 0x10D390: allocate (alloc_traits.h:460)
+   n1: 896 0x10D390: _M_allocate (stl_vector.h:346)
+    n1: 896 0x10D390: _M_create_storage (stl_vector.h:361)
+     n1: 896 0x10D390: _Vector_base (stl_vector.h:305)
+      n1: 896 0x10D390: vector (stl_vector.h:511)
+       n1: 896 0x10D390: Graph::initThreadWorkers() (Graph.cpp:190)
+        n1: 896 0x10D932: Graph::sortVectors() (Graph.cpp:163)
+         n0: 896 0x10ACA2: main (main.cpp:30)
+ n1: 896 0x10D450: allocate (new_allocator.h:115)
+  n1: 896 0x10D450: allocate (alloc_traits.h:460)
+   n1: 896 0x10D450: _M_allocate (stl_vector.h:346)
+    n1: 896 0x10D450: _M_create_storage (stl_vector.h:361)
+     n1: 896 0x10D450: _Vector_base (stl_vector.h:305)
+      n1: 896 0x10D450: vector (stl_vector.h:511)
+       n1: 896 0x10D450: Graph::initThreadWorkers() (Graph.cpp:193)
+        n1: 896 0x10D932: Graph::sortVectors() (Graph.cpp:163)
+         n0: 896 0x10ACA2: main (main.cpp:30)
+#-----------
+snapshot=48
+#-----------
+time=2763935
+mem_heap_B=83575
+mem_heap_extra_B=1217
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=49
+#-----------
+time=2768813
+mem_heap_B=83615
+mem_heap_extra_B=1273
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=50
+#-----------
+time=2771450
+mem_heap_B=83539
+mem_heap_extra_B=1213
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=51
+#-----------
+time=2782149
+mem_heap_B=83455
+mem_heap_extra_B=1153
+mem_stacks_B=0
+heap_tree=detailed
+n6: 83455 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 72704 0x4913399: ??? (in /usr/lib64/libstdc++.so.6.0.28)
+  n1: 72704 0x4011D11: call_init.part.0 (dl-init.c:72)
+   n1: 72704 0x4011E20: call_init (dl-init.c:30)
+    n1: 72704 0x4011E20: _dl_init (dl-init.c:119)
+     n1: 72704 0x4001179: ??? (in /usr/lib64/ld-2.31.so)
+      n1: 72704 0x2: ???
+       n1: 72704 0x1FFEFFE31A: ???
+        n1: 72704 0x1FFEFFE333: ???
+         n0: 72704 0x1FFEFFE356: ???
+ n1: 4608 0x4014C6A: allocate_dtv (dl-tls.c:286)
+  n1: 4608 0x4014C6A: _dl_allocate_tls (dl-tls.c:532)
+   n1: 4608 0x4BD74F5: pthread_create (in /usr/lib64/libpthread-2.31.so)
+    n2: 4608 0x4950218: std::thread::_M_start_thread(std::unique_ptr<std::thread::_State, std::default_delete<std::thread::_State> >, void (*)()) (in /usr/lib64/libstdc++.so.6.0.28)
+     n1: 2304 0x10D5EA: thread<void (ThreadWorker::*)(), ThreadWorker*> (thread:149)
+      n1: 2304 0x10D5EA: Graph::initThreadWorkers() (Graph.cpp:201)
+       n1: 2304 0x10D932: Graph::sortVectors() (Graph.cpp:163)
+        n0: 2304 0x10ACA2: main (main.cpp:30)
+     n1: 2304 0x10D682: thread<void (ThreadWorker::*)(), ThreadWorker*> (thread:149)
+      n1: 2304 0x10D682: Graph::initThreadWorkers() (Graph.cpp:206)
+       n1: 2304 0x10D932: Graph::sortVectors() (Graph.cpp:163)
+        n0: 2304 0x10ACA2: main (main.cpp:30)
+ n0: 2679 in 44 places, all below massif's threshold (1.00%)
+ n1: 1672 0x111FB2: allocate (new_allocator.h:115)
+  n1: 1672 0x111FB2: allocate (alloc_traits.h:460)
+   n1: 1672 0x111FB2: _M_allocate (stl_vector.h:346)
+    n1: 1672 0x111FB2: std::vector<Node, std::allocator<Node> >::_M_default_append(unsigned long) (vector.tcc:635)
+     n1: 1672 0x110CFF: resize (stl_vector.h:940)
+      n1: 1672 0x110CFF: Graph::init() (Graph.cpp:9)
+       n1: 1672 0x11108A: Graph::Graph(_IO_FILE*) (Graph.cpp:87)
+        n0: 1672 0x10AC92: main (main.cpp:28)
+ n1: 896 0x10D390: allocate (new_allocator.h:115)
+  n1: 896 0x10D390: allocate (alloc_traits.h:460)
+   n1: 896 0x10D390: _M_allocate (stl_vector.h:346)
+    n1: 896 0x10D390: _M_create_storage (stl_vector.h:361)
+     n1: 896 0x10D390: _Vector_base (stl_vector.h:305)
+      n1: 896 0x10D390: vector (stl_vector.h:511)
+       n1: 896 0x10D390: Graph::initThreadWorkers() (Graph.cpp:190)
+        n1: 896 0x10D932: Graph::sortVectors() (Graph.cpp:163)
+         n0: 896 0x10ACA2: main (main.cpp:30)
+ n1: 896 0x10D450: allocate (new_allocator.h:115)
+  n1: 896 0x10D450: allocate (alloc_traits.h:460)
+   n1: 896 0x10D450: _M_allocate (stl_vector.h:346)
+    n1: 896 0x10D450: _M_create_storage (stl_vector.h:361)
+     n1: 896 0x10D450: _Vector_base (stl_vector.h:305)
+      n1: 896 0x10D450: vector (stl_vector.h:511)
+       n1: 896 0x10D450: Graph::initThreadWorkers() (Graph.cpp:193)
+        n1: 896 0x10D932: Graph::sortVectors() (Graph.cpp:163)
+         n0: 896 0x10ACA2: main (main.cpp:30)

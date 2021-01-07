@@ -18,8 +18,12 @@ void Graph::init()
 
 Graph::~Graph() {
     if(init_tw_done) {
-        child_workers.clear();
-        parent_workers.clear();
+        for(auto& cw: child_workers) cw.addTask([]() -> bool { 
+            return true;
+        });
+        for(auto& pw: parent_workers) pw.addTask([]() -> bool { 
+            return true;
+        });
     }
 }
 
@@ -171,9 +175,10 @@ void Graph::sortVectors()
 
     for (int v = 0; v < nNodes; v++)
     {
-        parent_workers[hash(v) % parent_workers.size()].addTask([this, v, &sem]() -> void {
+        parent_workers[hash(v) % parent_workers.size()].addTask([this, v, &sem]() -> bool {
             sort(nodes[v].adj.begin(), nodes[v].adj.end(), std::less<int>());
             sem.signal();
+            return false;
         });
     }
 
@@ -257,9 +262,10 @@ void Graph::computeSubDTSize()
                 lnodes++;
 
                 unsigned int worker_id = hash(node) % parent_workers.size();
-                parent_workers[worker_id].addTask([this, node, &sem, worker_id]() -> void {
+                parent_workers[worker_id].addTask([this, node, &sem, worker_id]() -> bool {
                     this->subDTSize_computePrefixSum(node);
                     sem.signal();
+                    return false;
                 });
                 Q.push_back(node);
             }
@@ -293,9 +299,10 @@ void Graph::buildDT()
     for (const auto &child : nodes[nNodes].adj)
     {
         unsigned int worker_id = hash(child) % parent_workers.size();
-        parent_workers[worker_id].addTask([this, child, &sem, worker_id]() -> void {
+        parent_workers[worker_id].addTask([this, child, &sem, worker_id]() -> bool {
             nodes[child].inc_count = 1;
             sem.signal();
+            return false;
         });
     }
 
@@ -309,9 +316,10 @@ void Graph::buildDT()
         for (const auto &node : Q)
         {
             unsigned int worker_id = hash(node) % parent_workers.size();
-            parent_workers[worker_id].addTask([this, node, &sem, worker_id]() -> void {
+            parent_workers[worker_id].addTask([this, node, &sem, worker_id]() -> bool {
                 this->buildDT_processParent(node, worker_id);
                 sem.signal();
+                return false;
             });
         }
 
@@ -325,10 +333,11 @@ void Graph::buildDT()
     for (unsigned int i = 0; i < nodes.size() - 1; i++)
     {
         unsigned int worker_id = hash(i) % parent_workers.size();
-        parent_workers[worker_id].addTask([this, i, &sem, worker_id]() -> void {
+        parent_workers[worker_id].addTask([this, i, &sem, worker_id]() -> bool {
             swap(nodes[i].adj, nodes[i].dt_adj);
             sort(nodes[i].adj.begin(), nodes[i].adj.end(), std::less<unsigned int>());
             sem.signal();
+            return false;
         });
     }
 
@@ -347,17 +356,19 @@ void Graph::buildDT_processParent(const unsigned int p, unsigned int worker_id)
     for (unsigned int i = 0; i < nodes[p].adj.size(); i++)
     {
         unsigned node = nodes[p].adj[i];
-        child_workers[hash(node) % child_workers.size()].addTask([this, node, p, worker_id]() -> void {
+        child_workers[hash(node) % child_workers.size()].addTask([this, node, p, worker_id]() -> bool {
             this->buildDT_processChild(node, p);
             this->worker_semaphores[worker_id].signal();
+            return false;
         });
     }
 
     if (nodes[p].parent >= 0 && nodes[p].parent < nNodes)
     {
-        child_workers[hash(nodes[p].parent) % child_workers.size()].addTask([this, p, worker_id]() -> void {
+        child_workers[hash(nodes[p].parent) % child_workers.size()].addTask([this, p, worker_id]() -> bool {
             this->nodes[nodes[p].parent].dt_adj.push_back(p);
             this->worker_semaphores[worker_id].signal();
+            return false;
         });
 
         this->worker_semaphores[worker_id].wait();
@@ -459,9 +470,10 @@ void Graph::computePrePostOrder()
         for (const auto &node : Q)
         {
             unsigned int worker_id = hash(node) % parent_workers.size();
-            parent_workers[worker_id].addTask([this, node, depth, &sem, worker_id]() -> void {
+            parent_workers[worker_id].addTask([this, node, depth, &sem, worker_id]() -> bool {
                 this->computePrePost_processParent(node, depth, worker_id);
                 sem.signal();
+                return false;
             });
         }
 
@@ -483,9 +495,10 @@ void Graph::computePrePost_processParent(const unsigned int p, unsigned int dept
     for (unsigned int i = 0; i < nodes[p].adj.size(); i++)
     {
         unsigned int node = nodes[p].adj[i];
-        child_workers[hash(node) % child_workers.size()].addTask([this, node, pre, post, worker_id]() -> void {
+        child_workers[hash(node) % child_workers.size()].addTask([this, node, pre, post, worker_id]() -> bool {
             this->computePrePost_processChild(node, pre, post);
             this->worker_semaphores[worker_id].signal();
+            return false;
         });
     }
 
@@ -548,7 +561,7 @@ void Graph::computeLabels()
         for (const auto node : Q)
         {
             unsigned int worker_id = hash(node) % child_workers.size();
-            child_workers[worker_id].addTask([this, node, &sem]() -> void {
+            child_workers[worker_id].addTask([this, node, &sem]() -> bool {
                 nodes[node].s = nodes[node].e = nodes[node].post + 1;
                 for (const auto child : nodes[node].dt_adj)
                 {
@@ -558,6 +571,7 @@ void Graph::computeLabels()
                 for (const auto parent : nodes[node].inc)
                     C.push(parent);
                 sem.signal();
+                return false;
             });
         }
 
