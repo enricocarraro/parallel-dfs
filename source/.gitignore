@@ -5,3 +5,4 @@ CMakeFiles
 CMakeFiles/*
 build/
 .vscode/
+Makefile
