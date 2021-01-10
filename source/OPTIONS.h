@@ -10,7 +10,7 @@
 #define READ_TYPE 0 //0: line by line; 1: byte by byte; 2: int by int
 
 //quick run
-#define QUICK_RUN 1
+#define QUICK_RUN 0
 #define FILE_N 5
 
 //opt quickSemaphores
