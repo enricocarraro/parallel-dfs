@@ -10,15 +10,15 @@
 
 void ThreadWorker::processTasks()
 {
-        while (true)
-        {
-                auto m = queue.pop();
-                if(m()) break;
-        }
-        
+	while (true)
+	{
+		auto m = queue.pop();
+		if (m())
+			break;
+	}
 }
 
 void ThreadWorker::addTask(const std::function<bool()> &task)
 {
-        queue.push(task);
+	queue.push(task);
 }

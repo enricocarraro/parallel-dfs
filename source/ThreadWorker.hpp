@@ -14,11 +14,11 @@
 
 class ThreadWorker
 {
-        SafeQueue<std::function<bool()>> queue;
+	SafeQueue<std::function<bool()>> queue;
 
 public:
-        void addTask(const std::function<bool()> &task);
-        void processTasks();
+	void addTask(const std::function<bool()> &task);
+	void processTasks();
 };
 
 #endif /* ThreadWorker_hpp */

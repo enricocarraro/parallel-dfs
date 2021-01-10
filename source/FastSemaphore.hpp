@@ -18,13 +18,13 @@
 class FastSemaphore
 {
 public:
-        FastSemaphore() noexcept;
-        void signal();
-        void wait();
+		FastSemaphore() noexcept;
+		void signal();
+		void wait();
 
 private:
-        std::atomic<int> m_count;
-        Semaphore m_semaphore;
+		std::atomic<int> m_count;
+		Semaphore m_semaphore;
 };
 
 #endif /* FastSemaphore_hpp */

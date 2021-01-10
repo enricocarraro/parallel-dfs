@@ -6,31 +6,31 @@ SafeQueue<T>::SafeQueue() : q(), m(), c() {}
 template <typename T>
 size_t SafeQueue<T>::size()
 {
-    return q.size();
+	return q.size();
 }
 // Add an element to the queue.
 template <typename T>
 void SafeQueue<T>::push(T t)
 {
-    std::lock_guard<std::mutex> lock(m);
-    q.push_back(t);
-    c.notify_one();
+	std::lock_guard<std::mutex> lock(m);
+	q.push_back(t);
+	c.notify_one();
 }
 
 template <typename T>
 std::vector<T> SafeQueue<T>::move_underlying_queue()
 {
-    return q;
+	return q;
 }
 
 template <typename T>
 SafeQueue<T> &SafeQueue<T>::operator=(const SafeQueue<T> &other)
 {
-    if (this == &other)
-        return *this;
+	if (this == &other)
+		return *this;
 
-    this->q = other.q;
-    return *this;
+	this->q = other.q;
+	return *this;
 }
 
 // Get the "front"-element.
@@ -38,13 +38,13 @@ SafeQueue<T> &SafeQueue<T>::operator=(const SafeQueue<T> &other)
 template <typename T>
 T SafeQueue<T>::pop()
 {
-    std::unique_lock<std::mutex> lock(m);
-    while (q.empty())
-    {
-        // release lock as long as the wait and reaquire it afterwards.
-        c.wait(lock);
-    }
-    T val = q.back();
-    q.pop_back();
-    return val;
+	std::unique_lock<std::mutex> lock(m);
+	while (q.empty())
+	{
+		// release lock as long as the wait and reaquire it afterwards.
+		c.wait(lock);
+	}
+	T val = q.back();
+	q.pop_back();
+	return val;
 }
