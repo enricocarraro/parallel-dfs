@@ -10,7 +10,7 @@
 #define FILE_N 5
 
 //read options
-#define READ_TYPE 0
+#define READ_TYPE 0 //0: line by line; 1: byte by byte; 2: int by int
 
 //Graph options
 #define GRAPH_DEBUG 0
