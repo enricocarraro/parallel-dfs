@@ -22,7 +22,17 @@ Graph::Graph(FILE *fp) {
 
     rootsSize = nNodes;
 
+#if READ_TYPE == 0
     this->build(fp);
+#elif READ_TYPE == 1
+    this->build2(fp);
+#elif READ_TYPE == 2
+    this->build3(fp);
+#else
+    printf("Read option not supported");
+    exit(-1);
+#endif
+
     roots.resize(rootsSize);
 
     for (int i = 0; i < nNodes; i++) {
@@ -104,9 +114,9 @@ void Graph::reBuild(FILE * fp) {
 }
 #endif
 
-
+#if READ_TYPE == 0
 void Graph::build(FILE *fp) {
-    unsigned u, v;
+    unsigned u;
     unsigned max_line_size = (log10(nNodes) + 2) * (nNodes + 1) + 3;
     char str[max_line_size];
     char dontcare[3];
@@ -128,7 +138,52 @@ void Graph::build(FILE *fp) {
             j++; i++;
         }
         build_addEdges(u, buf, j);
-
     }
-
 }
+#elif READ_TYPE == 1
+void Graph::build2(FILE *fp) {
+    unsigned u;
+    char str;
+    vector<unsigned> buf;
+
+    while (fscanf(fp, "%c", &str) != EOF) {
+        u = 0;
+        while(str != ':') {
+            u = u * 10 + (str & 0x0f);
+            fscanf(fp, "%c", &str);
+        }
+        fscanf(fp, "%c", &str);
+        fscanf(fp, "%c", &str);
+
+        while(str != '\n') {
+            while(str != '#') {
+                buf.push_back(0);
+                while(str != ' ') {
+                    buf.back() = buf.back() * 10 + (str & 0x0f);
+                    fscanf(fp, "%c", &str);
+                }
+                fscanf(fp, "%c", &str);
+            }
+            build_addEdges(u, buf, buf.size());
+            fscanf(fp, "%c", &str);
+        }
+        buf.clear();
+    }
+}
+#elif READ_TYPE == 2
+void Graph::build3(FILE *fp) {
+    unsigned u;
+    char str;
+    vector<unsigned> buf;
+    unsigned val;
+
+    while (fscanf(fp, "%d: ", &u) != EOF) {
+        while(fscanf(fp, "%d ", &val)) {
+            buf.push_back(val);
+        }
+        build_addEdges(u, buf, buf.size());
+        buf.clear();
+        fscanf(fp, "#\n");
+    }
+}
+#endif

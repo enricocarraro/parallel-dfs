@@ -30,7 +30,13 @@ public:
 
     void sortVectors();
 
+#if READ_TYPE == 0
     void build(FILE *fp);
+#elif READ_TYPE == 1
+    void build2(FILE *fp);
+#elif READ_TYPE == 2
+    void build3(FILE *fp);
+#endif
 
     int startingNode;
     int epoca = 0;

@@ -6,11 +6,11 @@
 #define PRINT_RESULT 1
 
 //quick run
-#define QUICK_RUN 0
+#define QUICK_RUN 1
 #define FILE_N 5
 
-//opt quickSemaphores
-#define USE_QUICK_SEM 1
+//read options
+#define READ_TYPE 0
 
 //Graph options
 #define GRAPH_DEBUG 0
