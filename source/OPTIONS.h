@@ -6,7 +6,7 @@
 #define PRINT_RESULT 1
 
 //quick run
-#define QUICK_RUN 1
+#define QUICK_RUN 0
 #define FILE_N 5
 
 //read options
