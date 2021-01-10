@@ -38,8 +38,17 @@ public:
     void printTrueLabelsPreWeights();
 
     void sortVectors();
-
+#if !EXPERIMENTAL_READ
     void build(FILE *fp);
+#else
+#if READ_TYPE == 0
+    void build1(FILE *fp);
+#elif READ_TYPE == 1
+    void build2(FILE *fp);
+#elif READ_TYPE == 2
+    void build3(FILE *fp);
+#endif
+#endif
 
 
 

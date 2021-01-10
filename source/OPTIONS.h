@@ -5,8 +5,12 @@
 #define N_THREADS 4
 #define PRINT_RESULT 1
 
+//read options
+#define EXPERIMENTAL_READ 1
+#define READ_TYPE 0 //0: line by line; 1: byte by byte; 2: int by int
+
 //quick run
-#define QUICK_RUN 0
+#define QUICK_RUN 1
 #define FILE_N 5
 
 //opt quickSemaphores
@@ -19,7 +23,6 @@
 #define GRAPH_DOUBLE_READ 0
 #define GRAPH_REREAD_GRAPH 1
 #define USE_BOOL 0
-#define EXPERIMENTAL_READ 1
 
 //worker used space
 

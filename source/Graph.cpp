@@ -10,55 +10,47 @@ Graph::Graph(FILE *fp) {
 
     fscanf(fp, "%d\n", &nNodes);
     nodes.resize(nNodes+1);
-    //nodesWeights.resize(nNodes, INT32_MAX);
 
-    //leaves.resize(nNodes, true); //keeping this for now
     preLeaves.resize(nNodes);
     rootsSize = nNodes;
 
-    /*
-    for (int i = 0; i < nNodes; i++) {
-        //nodes[i].id = i;
-        nodes[i].adj = new vector<int>;
-        //nodes[i].trueAdj = new vector<int>;
-    }
-    */
+#if !EXPERIMENTAL_READ
     this->build(fp);
+#else
+#if READ_TYPE == 0
+    this->build1(fp);
+#elif READ_TYPE == 1
+    this->build2(fp);
+#elif READ_TYPE == 2
+    this->build3(fp);
+#else
+    printf("Read option not supported");
+    exit(-1);
+#endif
+#endif
     preLeaves.resize(preLeavesPos);
     roots.resize(rootsSize);
 
-    //30-40% faster than GRAPH_PUSHBACK
     for (int i = 0; i < nNodes; i++) {
         nodes[i].ancestors.resize(nodes[i].ancSize);
 
-        if (nodes[i].ancSize == 0) { //MUST change into if(nodes[i].root)
+        if (nodes[i].ancSize == 0) {
             roots.at(rootsPos++) = i;
         }
 
     }
     this->reBuild();
-
-
-    //cancelledEdges = new vector<intint> (nEdges);
-    //var = 128;
-    //var += nNodes;
-
 }
 
 Graph::Graph(int nNodes) :
         nNodes(nNodes) {
     nodes.resize(nNodes+1);
-    //for (int i = 0; i < nNodes; i++)
-        //nodes[i].id = i;
 }
 
 void Graph::printTrueLabelsPreWeights() {
     for (int v = 0; v < nNodes; ++v) {
         cout << "\n Adjacency list of vertex " << v << "\n head ";
-        //for (auto x : *nodes[v].trueAdj)
-        //    cout << "-> " << x;
         cout << "\nPre-weight val: " << nodes[v].nodeWeight;
-        //printf("\nSub-graph size: %d", nodes[v].subTreeSize);
         printf("\nStart-end time: %d -> %d\n", nodes[v].start, nodes[v].end);
     }
 }
@@ -70,7 +62,6 @@ void Graph::sortVectors() {
 }
 
 void Graph::build_addEdges(unsigned u, vector<unsigned> &adj, unsigned adj_size) {
-    //nEdges += adj_size;
     if (adj_size > 0) {
         nodes[u].adj.resize(adj_size);
         for (int i = 0; i < adj_size; i++) {
@@ -142,6 +133,7 @@ void Graph::reBuild() {
 
 #endif
 
+#if !EXPERIMENTAL_READ
 void Graph::build(FILE *fp) {
     unsigned u, v;
     unsigned max_line_size = (log10(nNodes) + 2) * (nNodes + 1) + 3;
@@ -152,7 +144,6 @@ void Graph::build(FILE *fp) {
     while (fscanf(fp, "%[^#]s", str) != EOF) {
         fscanf(fp, "%s\n", dontcare);
 
-#if !EXPERIMENTAL_READ
         char *token;
         unsigned i = 0;
 
@@ -175,7 +166,22 @@ void Graph::build(FILE *fp) {
         }
 
         this->build_addEdges(u, buf, i);
+
+    }
+
+}
 #else
+#if READ_TYPE == 0
+void Graph::build1(FILE *fp) {
+    unsigned u;
+    unsigned max_line_size = (log10(nNodes) + 2) * (nNodes + 1) + 3;
+    char str[max_line_size];
+    char dontcare[3];
+    vector<unsigned> buf = vector<unsigned>(nNodes + 1);
+
+    while (fscanf(fp, "%[^#]s", str) != EOF) {
+        fscanf(fp, "%s\n", dontcare);
+
         unsigned i = 0, j = 0;
         u = 0;
         while(str[i] != ':') {
@@ -190,14 +196,53 @@ void Graph::build(FILE *fp) {
             j++; i++;
         }
         build_addEdges(u, buf, j);
-#endif
-
     }
-
 }
+#elif READ_TYPE == 1
+void Graph::build2(FILE *fp) {
+    unsigned u;
+    char str;
+    vector<unsigned> buf;
 
-/*
-std::vector<bool> Graph::returnRoots() {
-    return roots;
+    while (fscanf(fp, "%c", &str) != EOF) {
+        u = 0;
+        while(str != ':') {
+            u = u * 10 + (str & 0x0f);
+            fscanf(fp, "%c", &str);
+        }
+        fscanf(fp, "%c", &str);
+        fscanf(fp, "%c", &str);
+
+        while(str != '\n') {
+            while(str != '#') {
+                buf.push_back(0);
+                while(str != ' ') {
+                    buf.back() = buf.back() * 10 + (str & 0x0f);
+                    fscanf(fp, "%c", &str);
+                }
+                fscanf(fp, "%c", &str);
+            }
+            build_addEdges(u, buf, buf.size());
+            fscanf(fp, "%c", &str);
+        }
+        buf.clear();
+    }
 }
- */
+#elif READ_TYPE == 2
+void Graph::build3(FILE *fp) {
+    unsigned u;
+    char str;
+    vector<unsigned> buf;
+    unsigned val;
+
+    while (fscanf(fp, "%d: ", &u) != EOF) {
+        while(fscanf(fp, "%d ", &val)) {
+            buf.push_back(val);
+        }
+        build_addEdges(u, buf, buf.size());
+        buf.clear();
+        fscanf(fp, "#\n");
+    }
+}
+#endif
+#endif
