@@ -9,8 +9,8 @@
 #include "BusySemaphore.h"
 
 struct Node {
-    boost::multiprecision::uint1024_t nodeWeight = 1;
-    boost::multiprecision::uint1024_t time = std::numeric_limits<boost::multiprecision::uint1024_t>::max();
+    boost::multiprecision::cpp_int nodeWeight = 1;
+    boost::multiprecision::cpp_int time;
 
     int start = INT32_MAX;
     int end = -1;
@@ -22,12 +22,7 @@ struct Node {
     std::vector<int> ancestors;
     int ancSize = 0;
 
-#if GRAPH_DOUBLE_READ | GRAPH_REREAD_GRAPH
     int ancNumber = 0;
-#endif
-#if !USE_BOOL
-    //bool root = true;
-#endif
 
     bool operator<(const Node &n) const {
         return (nodeWeight < n.nodeWeight);

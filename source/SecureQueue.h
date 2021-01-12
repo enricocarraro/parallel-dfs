@@ -10,7 +10,6 @@
 #include <atomic>
 #include "FastSemaphore.h"
 
-#define OPT_ATOMIC 0
 
 class SecureQueue {
     int queueSize;
@@ -18,14 +17,8 @@ class SecureQueue {
     std::vector<int> controlN;
     bool ready = true;
 public:
-#if OPT_ATOMIC
-    std::vector<bool> barrier = {true};
     std::atomic<int> insertPosition;
     std::atomic<int> extractPosition;
-#else
-    std::atomic<int> insertPosition;
-    std::atomic<int> extractPosition;
-#endif
     std::vector<int> queue;
     FastSemaphore dataReady;
 

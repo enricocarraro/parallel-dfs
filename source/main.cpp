@@ -9,27 +9,30 @@
 
 #include "Graph.h"
 #include "Worker.h"
-#if !USE_QUICK_SEM
-#include "Semaphore.h"
-#else
-#include "FastSemaphore.h"
-#endif
 
 using namespace std;
 
 void nodeSize(Worker *worker) {
-    //cout << "Starting worker " << worker->getId() << "\n";
     worker->nodeSize();
 }
 
 void nodeWeights(Worker *worker, bool works_on_roots) {
-    //cout << "Starting worker " << worker->getId() << "\n";
     worker->nodeWeights(works_on_roots);
 }
 
 void nodeTimes(Worker *worker) {
-    //cout << "Starting worker " << worker->getId() << "\n";
     worker->nodeTimes();
+}
+
+
+void setupTime(Graph *g) {
+    boost::multiprecision::cpp_int max = 0;
+    for(int i=0; i<g->rootsSize; i++) {
+        max = max + g->nodes.at(g->roots.at(i)).nodeWeight;
+    }
+    for(int i=0; i<g->nNodes; i++) {
+        g->nodes.at(i).time = max;
+    }
 }
 
 
@@ -56,7 +59,6 @@ void reset(sharedData *sd) {
     sd->nodeRead = 0;
     fill(sd->visitedNeighbours.begin(), sd->visitedNeighbours.end(), 0);
     sd->g->posIntoPreLeaves = 0;
-//    sd->g->posIntoRoots = 0;
 }
 
 void start(int nWorkers, Graph *g) {
@@ -100,6 +102,8 @@ void start(int nWorkers, Graph *g) {
     auto start = std::chrono::steady_clock::now();
 #endif
 
+    setupTime(g);
+
 
     t_workers[0] = thread(nodeWeights, &allWorkers.at(0), true);
     for (int i = 1; i < nWorkers; i++) {
@@ -139,7 +143,7 @@ void start(int nWorkers, Graph *g) {
 
 #if CATCH_BIGGEST_INT
     int indice = static_cast<int>(tmp.at(tmp.size()-1));
-    boost::multiprecision::uint1024_t check = g->nodes.at(indice).nodeWeight;
+    boost::multiprecision::cpp_int check = g->nodes.at(indice).nodeWeight;
 #endif
 
 

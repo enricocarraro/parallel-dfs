@@ -77,49 +77,6 @@ void Graph::build_addEdges(unsigned u, vector<unsigned> &adj, unsigned adj_size)
     }
 }
 
-#if GRAPH_DOUBLE_READ
-void Graph::addAncestor(unsigned int u, std::vector<unsigned int> &adj, unsigned int adj_size) {
-    for (int i = 0; i < adj_size; i++) {
-        nodes[adj[i]].ancestors->at(nodes[adj[i]].ancNumber++) = u;
-    }
-}
-
-void Graph::reBuild(FILE * fp) {
-    unsigned u, v;
-    unsigned max_line_size = (log10(nNodes) + 2) * (nNodes + 1) + 3;
-    char str[max_line_size];
-    char dontcare[3];
-    vector<unsigned> buf = vector<unsigned> (nNodes + 1);
-
-    while(fscanf(fp, "%[^#]s", str) != EOF) {
-        fscanf(fp, "%s", dontcare);
-        char *token;
-        unsigned i = 0;
-
-        /* get the first token */
-        token = strtok(str, " ");
-#if GRAPH_DEBUG
-        printf( " %s\n", token );
-#endif
-        sscanf(token, "%d", &u);
-        token = strtok(NULL, " ");
-        /* walk through other tokens */
-        while(token != NULL){
-
-            sscanf(token, "%d", &v);
-            buf[i++] = v;
-
-            token = strtok(NULL, " ");
-        }
-
-        this->addAncestor(u, buf, i);
-
-    }
-
-}
-#endif
-
-#if GRAPH_REREAD_GRAPH
 
 void Graph::reBuild() {
 
@@ -130,8 +87,6 @@ void Graph::reBuild() {
     }
 
 }
-
-#endif
 
 #if !EXPERIMENTAL_READ
 void Graph::build(FILE *fp) {

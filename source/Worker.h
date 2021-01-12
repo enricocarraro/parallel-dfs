@@ -5,7 +5,6 @@
 #ifndef SDP_PIPELINERESOLUTION_WORKER_H
 #define SDP_PIPELINERESOLUTION_WORKER_H
 
-//#include <queue>
 #include <vector>
 
 #include "Graph.h"
