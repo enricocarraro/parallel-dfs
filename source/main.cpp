@@ -60,12 +60,19 @@ void start(int nWorkers, Graph *g) {
     }
     vector<thread> t_workers(nWorkers-1);
 
+    auto timeStart = std::chrono::steady_clock::now();
+
     for (int i = 0; i < nWorkers-1; i++) {
         t_workers[i] = thread(newStart, &allWorkers.at(i), i);
     }
 
 
     int indice = allWorkers.at(nWorkers-1).start(nWorkers-1);
+
+    auto timeEnd = std::chrono::steady_clock::now();
+    std::chrono::duration<double> elapsed_seconds = timeEnd - timeStart;
+    std::cout << "Interesting elapsed time: " << elapsed_seconds.count() << "s\n";
+
     sort_start_indexes(g, indice);
 
 #if PRINT_MAT
