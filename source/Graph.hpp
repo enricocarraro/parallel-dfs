@@ -83,6 +83,7 @@ class Graph
 
 public:
 	Graph(ifstream& input_stream);
+	Graph(FILE *fp);
 	Graph(unsigned int nodes);
 	~Graph();
 	void addEdge(unsigned int u, unsigned int v);

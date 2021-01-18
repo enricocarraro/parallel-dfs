@@ -43,9 +43,37 @@ void Graph::build_addEdges(unsigned int u, vector<unsigned int> &adj, unsigned i
 		nodes[adj[i]].inc.push_back(u);
 	}
 }
+Graph::Graph(FILE *fp) : nodes(), roots(), P() {
+    unsigned int u;
+    char str;
+    vector<unsigned> buf;
+    unsigned val;
+    
+    fscanf(fp, "%d\n", &nNodes);
+    init();
+	buf = vector<unsigned int>(nNodes + 1);
+    while (fscanf(fp, "%d: ", &u) != EOF) {
+        while(fscanf(fp, "%d ", &val)) {
+            buf.push_back(val);
+            roots.erase(val);
+        }
+        build_addEdges(u, buf, buf.size());
+        if(buf.size() == 0) {
+			leafs.insert(u);
+        }
+        buf.clear();
+        fscanf(fp, "#\n");
+    }
+    o_leafs = vector<unsigned int>(leafs.begin(), leafs.end());
+
+	// hidden parent of all roots
+	nodes[nNodes].adj = vector<unsigned int>(roots.begin(), roots.end());
+	sort(nodes[nNodes].adj.begin(), nodes[nNodes].adj.end(), std::less<unsigned int>());
+}
 
 Graph::Graph(ifstream &input_stream) : nodes(), roots(), P()
 {
+    
 	unsigned int u, v;
 	string node_adj;
 	vector<unsigned int> buf;

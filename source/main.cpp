@@ -3,6 +3,11 @@
 #include <stdlib.h>
 #include "Graph.hpp"
 
+
+// READ_TYPE = 1 => C++ ifstream
+// READ_TYPE = 0 => C fscanf
+#define READ_TYPE 0
+
 using namespace std;
 
 int main(int argc, const char *argv[])
@@ -18,17 +23,31 @@ int main(int argc, const char *argv[])
 
 	auto itotal = std::chrono::steady_clock::now();
 
-	std::ifstream ifs (graname, std::ifstream::in);
+#if READ_TYPE == 1
+	std::ifstream ifs(graname, std::ifstream::in);
 	if (!ifs.is_open())
 	{
 		cout << "Error: File doesn't exist." << endl;
 		return -1;
 	}
+#else
+	FILE *fp;
+	if ((fp = fopen(graname.c_str(), "r")) == NULL)
+	{
+		cout << "Error: File doesn't exist." << endl;
+		return -1;
+	}
+#endif
 	if (strcmp(argv[2], "parallel") == 0)
 	{
 		auto istart = std::chrono::steady_clock::now();
+#if READ_TYPE == 1
 		Graph gp(ifs);
 		ifs.close();
+#else
+		Graph gp(fp);
+        fclose(fp);
+#endif
 		gp.sortVectors();
 		auto iend = std::chrono::steady_clock::now();
 		// gp.printGraph();
@@ -55,11 +74,17 @@ int main(int argc, const char *argv[])
 		std::chrono::duration<double> pptotal = itotalend - itotal;
 		cout << "total time taken:" << pptotal.count() << endl;
 		//gp.printNodesStatus();
-	} else if (strcmp(argv[2], "sequential") == 0)
+	}
+	else if (strcmp(argv[2], "sequential") == 0)
 	{
 		auto istart = std::chrono::steady_clock::now();
+#if READ_TYPE == 1
 		Graph gs(ifs);
 		ifs.close();
+#else
+		Graph gs(fp);
+        fclose(fp);
+#endif
 		gs.sortVectors();
 		auto iend = std::chrono::steady_clock::now();
 		std::chrono::duration<double> ielapsed_seconds = iend - istart;
