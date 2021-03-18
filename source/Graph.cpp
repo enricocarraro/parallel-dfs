@@ -48,6 +48,8 @@ Graph::Graph(FILE *fp) {
         startNode->visitato.at(i) = true;
         endNode->prevNode.at(i) = startingNode;
         endNode->prevNodeToVisit.at(i) = startingNode;
+        endNode->nextNode.at(i) = endingNode;
+        endNode->nextNodeToVisit.at(i) = endingNode;
         endNode->visitato.at(i) = true;
         //endNode->pronto.at(i) = true;
         //endNode->bs.at(i)->signal();

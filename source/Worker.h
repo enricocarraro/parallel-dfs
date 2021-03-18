@@ -9,17 +9,20 @@
 
 #include "Graph.h"
 #include "OPTIONS.h"
+#include "BusySemaphore.h"
 
 
 class Worker {
 
     bool checkSuccessivo(Node *n, int epoca, int epocaAttuale);
     bool controllaValidita(Node *n, int epoca, int epocaAttuale);
+    void insertGrigio(int epoca, int questoLivello, int doveInserire, Node *prevNode, Node *prevNodeToBeVisited, Node *toBeInserted, Node *nextNode, Node *nextNodeToBeInserted);
     void insertGiallo(int epoca, int questoLivello, int doveInserire, Node *prevNode, Node *prevNodeToBeVisited, Node *toBeInserted, Node *nextNode, Node *nextNodeToBeInserted);
     bool insertArancio(int epoca, int questoLivello, int doveInserire, Node *prevNode, Node *prevNodeToBeVisited, Node *toBeInserted, Node *nextNode, Node *nextNodeToBeInserted);
 
 public:
 
+    BusySemaphore *sem;
     Graph *g;
 
     int start(int position);

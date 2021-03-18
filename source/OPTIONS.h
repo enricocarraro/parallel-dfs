@@ -1,9 +1,9 @@
 #ifndef SDP_PIPELINERESOLUTION_OPTIONS_H
 #define SDP_PIPELINERESOLUTION_OPTIONS_H
 
-#define N_THREADS 1
+#define N_THREADS 4
 
-#define MULTIRUN 0
+#define MULTIRUN 1
 #define USE_BSEM 0
 
 #define DEBUG 0

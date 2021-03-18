@@ -30,8 +30,9 @@ struct Node {
         prevNode.resize(N_THREADS+1, -1);
         prevNodeToVisit.resize(N_THREADS+1, -1);
         visitato.resize(N_THREADS+1, false);
-        visitatoInQuestoLivello.resize(N_THREADS+1, -1);
-        pronto.resize(N_THREADS+1, false);
+        //visitatoInQuestoLivello.resize(N_THREADS+1, -1);
+        pronto.resize(N_THREADS+1, -1);
+        valoreCountdown.resize(N_THREADS+1, N_THREADS);
 
 #if USE_BSEM
         for(int i=0; i<N_THREADS+1; i++){
@@ -40,24 +41,30 @@ struct Node {
 #endif
     }
 #if USE_BSEM
-    ~Node() { for (BusySemaphore *b : bs) delete b; }
+    ~Node() { for (BusySemaphore *b : bs) delete b; delete nVisitedFathers; }
+#else
+
+    ~Node() { delete nVisitedFathers; delete ultimaEpoca; delete ultimaEpocaFantasma; }
 #endif
 
     std::vector<int> nextNode;
     std::vector<int> nextNodeToVisit;
     std::vector<int> prevNode;
     std::vector<int> prevNodeToVisit;
-    std::vector<char> pronto;
-    std::vector<char> visitato;
-    std::vector<int> visitatoInQuestoLivello;
+    std::vector<int> pronto;
+    std::vector<char> visitato; //potrebbe essere una variabile invece che un vettore
+    //std::vector<int> visitatoInQuestoLivello;
+    std::vector<int> valoreCountdown;
 
 #if USE_BSEM
     std::vector<BusySemaphore *> bs;
 #endif
 
+    std::atomic<int> *ultimaEpoca = new std::atomic<int> (-1);
+    std::atomic<int> *ultimaEpocaFantasma = new std::atomic<int> (-1);
     std::atomic<int> *nVisitedFathers = new std::atomic<int> (0);
-    int nFathers;
-    int countdown = N_THREADS;
+    int nFathers = 0;
+    std::atomic<int> *countdown = new std::atomic<int> (N_THREADS);
 };
 
 #endif //SDP_PARALLELSOLUTION_NODE_H
