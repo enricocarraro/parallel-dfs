@@ -60,11 +60,11 @@ void sort_start_indexes(Graph *g, int indice) {
 
 int start(int nWorkers, Graph *g) {
 
-    BusySemaphore *sem = new BusySemaphore(false);
+    //BusySemaphore *sem = new BusySemaphore(false);
     vector<Worker> allWorkers(nWorkers);
     for (int i = 0; i < nWorkers; i++) {
         allWorkers.at(i).initialize(g);
-        allWorkers.at(i).sem = sem;
+//        allWorkers.at(i).sem = sem;
     }
     vector<thread> t_workers(nWorkers-1);
 
@@ -133,15 +133,15 @@ int main(int argc, const char *argv[]) {
 
         auto timeEnd = std::chrono::steady_clock::now();
         std::chrono::duration<double> elapsed_seconds = timeEnd - timeStart;
-        std::cout << "Creazione grafo: " << elapsed_seconds.count() << "s\n";
+        std::cout << "Creazione grafo: \t" << elapsed_seconds.count() << "s\n";
 
         timeStart = std::chrono::steady_clock::now();
         int check = start(N_THREADS, g);
         timeEnd = std::chrono::steady_clock::now();
         elapsed_seconds = timeEnd - timeStart;
 
-        std::cout << i << ":\t";
-        std::cout << "Esecuzione: " << elapsed_seconds.count() << "s\n";
+        //std::cout << i << ":\t";
+        std::cout << "Esecuzione: \t\t" << elapsed_seconds.count() << "s\n";
 
 
         if ((fp = fopen(dstName.c_str(), "w")) == NULL) {

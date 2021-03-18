@@ -14,7 +14,7 @@ void Worker::initialize(Graph *g) {
 
 void Worker::insertGrigio(int epoca, int questoLivello, int doveInserire, Node *prevNode, Node *prevNodeToBeVisited, Node *toBeInserted, Node *nextNode, Node *nextNodeToBeInserted) {
 
-    sem->wait();
+    //sem->wait();
 #if DEBUG
     /*if(toBeInserted->pronto.at(doveInserire) == epoca-1) {
         printf("r ");
@@ -50,13 +50,13 @@ void Worker::insertGrigio(int epoca, int questoLivello, int doveInserire, Node *
 
     int ultimaEpoca = toBeInserted->ultimaEpoca->load();
     while(!toBeInserted->ultimaEpoca->compare_exchange_weak(ultimaEpoca, epoca > ultimaEpoca ? epoca : ultimaEpoca, std::memory_order_release, std::memory_order_relaxed));
-    sem->signal();
+    //sem->signal();
 
 }
 
 void Worker::insertGiallo(int epoca, int questoLivello, int doveInserire, Node *prevNode, Node *prevNodeToBeVisited, Node *toBeInserted, Node *nextNode, Node *nextNodeToBeInserted) {
 
-    sem->wait();
+    //sem->wait();
 
 #if DEBUG
     /*if(toBeInserted->pronto.at(doveInserire) == epoca-1 && epoca!=0) {
@@ -131,16 +131,21 @@ void Worker::insertGiallo(int epoca, int questoLivello, int doveInserire, Node *
 #if USE_BSEM
     prevNodeToBeVisited->bs.at(doveInserire)->signal();
 #endif
-    sem->signal();
+    //sem->signal();
 
 
     prevNodeToBeVisited->pronto.at(doveInserire) = epoca;
+    //v.push_back(prevNode->id);
+
+
+    ultimaEpoca = toBeInserted->ultimaEpocaFantasma->load();
+    while(!toBeInserted->ultimaEpocaFantasma->compare_exchange_weak(ultimaEpoca, epoca > ultimaEpoca ? epoca : ultimaEpoca, std::memory_order_release, std::memory_order_relaxed));
 }
 
 bool Worker::insertArancio(int epoca, int questoLivello, int doveInserire, Node *prevNode, Node *prevNodeToBeVisited, Node *toBeInserted, Node *nextNode, Node *nextNodeToBeInserted) {
 
 
-    if(toBeInserted->ultimaEpoca->load() >= epoca) {
+    /*if(toBeInserted->ultimaEpoca->load() >= epoca) {
         printf("nono");
     }
     if(prevNodeToBeVisited->ultimaEpoca->load() >= epoca) {
@@ -148,7 +153,7 @@ bool Worker::insertArancio(int epoca, int questoLivello, int doveInserire, Node 
     }
     if(nextNodeToBeInserted->ultimaEpoca->load() >= epoca) {
         printf("nono");
-    }
+    }*/
 
     int countdown = toBeInserted->countdown->fetch_sub(1);
     toBeInserted->valoreCountdown.at(questoLivello) = countdown;
@@ -192,14 +197,14 @@ bool Worker::controllaValidita (Node *n, int epoca, int epocaAttuale) {
             nextNodeToBeVisited = &g->nodes.at(n->nextNodeToVisit.at(epocaAttuale));
         }
 
-        sem->wait();
+        //sem->wait();
         Node *prevNode = &g->nodes.at(n->prevNode.at(epocaAttuale));
         Node *prevNodeToBeVisited = &g->nodes.at(n->prevNodeToVisit.at(epocaAttuale));
         Node *nextNode = &g->nodes.at(n->nextNode.at(epocaAttuale));
 
-        if(prevNode->id == 2 && nextNode->id == 7 && epoca > 11) {
-            printf("voih");
-        }
+        /*if(n->id == 7 && prevNodeToBeVisited->id == 2 && nextNode->id == 1) {
+            printf("eccovi");
+        }*/
 
         /*if(prevNode->id == 7 && nextNode->id == 1) {
             printf("boh");
@@ -264,7 +269,7 @@ bool Worker::controllaValidita (Node *n, int epoca, int epocaAttuale) {
 
 
         ans = false;
-        sem->signal();
+        //sem->signal();
 
     }
 /*
@@ -278,8 +283,8 @@ bool Worker::controllaValidita (Node *n, int epoca, int epocaAttuale) {
         printf(".. ma");
     }*/
 
-    int ultimaEpoca = n->ultimaEpocaFantasma->load();
-    while(!n->ultimaEpocaFantasma->compare_exchange_weak(ultimaEpoca, epoca > ultimaEpoca ? epoca : ultimaEpoca, std::memory_order_release, std::memory_order_relaxed));
+    //int ultimaEpoca = n->ultimaEpocaFantasma->load();
+    //while(!n->ultimaEpocaFantasma->compare_exchange_weak(ultimaEpoca, epoca > ultimaEpoca ? epoca : ultimaEpoca, std::memory_order_release, std::memory_order_relaxed));
 
     return ans;
 }
@@ -328,6 +333,7 @@ int Worker::start2(int position) {
         epoca += N_THREADS;
     }
 
+    //v.clear();
 
     while(modificato == true) {
         epocaAttuale = epoca%(N_THREADS+1);
@@ -344,13 +350,17 @@ int Worker::start2(int position) {
         while(nodoPrecedenteDaVisitare->ultimaEpoca->load() < epoca-1) {}
         //nodoPrecedenteDaVisitare->pronto.at(epocaAttuale) = false;
 
+        nodoAttuale = &g->nodes.at(nodoPrecedenteDaVisitare->nextNodeToVisit.at(epocaAttuale));
+        controllaValidita(nodoAttuale, epoca, epocaAttuale);
+
         while (nodoPrecedenteDaVisitare->nextNodeToVisit.at(epocaAttuale) != g->endingNode) {
 
             nodoAttuale = &g->nodes.at(nodoPrecedenteDaVisitare->nextNodeToVisit.at(epocaAttuale));
 
-            if(!controllaValidita(nodoAttuale, epoca, epocaAttuale)) {
+            /*if(!controllaValidita(nodoAttuale, epoca, epocaAttuale)) {
                 continue;
-            }
+            }*/
+
 
 #if DEBUG
             if(nodoPrecedenteDaVisitare == g->startNode) {
@@ -368,7 +378,7 @@ int Worker::start2(int position) {
 
                 if (!nodoAttuale->visitato.at(epocaAttuale)) {
 
-                    if (nodoAttuale->nFathers == nodoAttuale->nVisitedFathers->load()) {
+                    if (nodoAttuale->nFathers == nodoAttuale->nVisitedFathers->load() && nodoAttuale->ultimaEpocaFantasma->load() < epoca) {
 
                         Node *nodoFiglio = nullptr;
 
@@ -465,9 +475,6 @@ int Worker::start2(int position) {
                         nodoSuccessivoDaVisitare->ultimaEpocaFantasma->compare_exchange_weak(ultimaEpoca, ultimaEpoca == epoca ? epoca-1 : ultimaEpoca);
 
                     }
-                    else if (nodoAttuale->nVisitedFathers->load() > nodoAttuale->nFathers) {
-                        printf("Eh, no!");
-                    }
                     else {
 
                         modificato = true;
@@ -484,7 +491,6 @@ int Worker::start2(int position) {
                         insertGiallo(epoca, epocaAttuale, epocaSuccessiva, nodoPrecedenteScritto, nodoPrecedenteDaVisitareScritto, nodoAttuale, nodoSuccessivo, nodoSuccessivoDaVisitare);
                         nodoPrecedenteScritto = nodoPrecedenteDaVisitareScritto = nodoPrecedente = nodoPrecedenteDaVisitare = nodoAttuale;
 
-                        //nodoSuccessivoDaVisitare->ultimaEpocaFantasma
 
                         ultimaEpoca = nodoSuccessivoDaVisitare->ultimaEpocaFantasma->load();
                         nodoSuccessivoDaVisitare->ultimaEpocaFantasma->compare_exchange_weak(ultimaEpoca, ultimaEpoca == epoca ? epoca-1 : ultimaEpoca);
@@ -536,7 +542,6 @@ int Worker::start2(int position) {
                     nodoSuccessivoDaVisitare->bs.at(epocaAttuale)->signal();
 #endif
 
-                    //nodoSuccessivoDaVisitare->ultimaEpocaFantasma
 
                     ultimaEpoca = nodoSuccessivoDaVisitare->ultimaEpocaFantasma->load();
                     nodoSuccessivoDaVisitare->ultimaEpocaFantasma->compare_exchange_weak(ultimaEpoca, ultimaEpoca == epoca ? epoca-1 : ultimaEpoca);
@@ -565,6 +570,7 @@ int Worker::start2(int position) {
         g->endNode->ultimaEpoca->store(epoca);
         //g->endNode->pronto.at(epocaSuccessiva) = epoca;
         g->endNode->pronto.at(epocaSuccessiva) = epoca;
+        //v.clear();
 
 #if USE_BSEM
         g->endNode->bs.at(epocaSuccessiva)->signal();

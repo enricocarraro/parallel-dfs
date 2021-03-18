@@ -9,7 +9,7 @@
 
 #include "Graph.h"
 #include "OPTIONS.h"
-#include "BusySemaphore.h"
+//#include "BusySemaphore.h"
 
 
 class Worker {
@@ -22,7 +22,8 @@ class Worker {
 
 public:
 
-    BusySemaphore *sem;
+    //std::vector<int> v;
+    //BusySemaphore *sem;
     Graph *g;
 
     int start(int position);
