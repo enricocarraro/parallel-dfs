@@ -9,16 +9,8 @@ using namespace std;
 Graph::Graph(FILE *fp) {
 
     fscanf(fp, "%d\n", &nNodes);
-    startingNode = nNodes;
+    //startingNode = nNodes;
     nodes.resize(nNodes+1);
-
-#if PRINT_MAT
-    int size = nNodes*2;
-    mat.resize(size);
-    for(int i=0; i<size; i++) {
-        mat.at(i).resize(nNodes, -5);
-    }
-#endif
 
     rootsSize = nNodes;
 
@@ -37,82 +29,39 @@ Graph::Graph(FILE *fp) {
 
     for (int i = 0; i < nNodes; i++) {
 
+        nodes[i].id = i;
         if (nodes[i].root) {
             roots.at(rootsPos++) = i;
         }
 
     }
 
-}
+    startNode = &nodes.at(nNodes);
 
-void Graph::printTrueLabelsPreWeights() {
-    for (int v = 0; v < nNodes; ++v) {
-        cout << "\n Adjacency list of vertex " << v << "\n head ";
-        printf("\nStart-end time: %d -> %d\n", nodes[v].start, nodes[v].end);
-    }
 }
 
 void Graph::sortVectors() {
     for (int v = 0; v < nNodes; ++v) {
-        sort(nodes[v].adj.begin(), nodes[v].adj.end(), std::less<int>());
+        //sort(nodes[v].adj.begin(), nodes[v].adj.end(), std::less<int>());
+        sort(nodes[v].adjN.begin(), nodes[v].adjN.end());
     }
 }
 
 void Graph::build_addEdges(unsigned u, vector<unsigned> &adj, unsigned adj_size) {
     if (adj_size > 0) {
-        nodes[u].adj.resize(adj_size);
+        //nodes[u].adj.resize(adj_size);
+        nodes[u].adjN.resize(adj_size);
         for (int i = 0; i < adj_size; i++) {
-            nodes[u].adj.at(i) = adj[i];
+            //nodes[u].adj.at(i) = adj[i];
+            nodes[u].adjN.at(i) = &nodes.at(adj[i]);
             if (nodes.at(adj[i]).root) {
                 nodes.at(adj[i]).root = false;
                 rootsSize--;
             }
         }
-        nodes[u].adjSize = nodes[u].adj.size();
+        nodes[u].adjSize = adj_size;
     }
 }
-
-#if GRAPH_DOUBLE_READ
-void Graph::addAncestor(unsigned int u, std::vector<unsigned int> &adj, unsigned int adj_size) {
-    for (int i = 0; i < adj_size; i++) {
-        nodes[adj[i]].ancestors->at(nodes[adj[i]].ancNumber++) = u;
-    }
-}
-
-void Graph::reBuild(FILE * fp) {
-    unsigned u, v;
-    unsigned max_line_size = (log10(nNodes) + 2) * (nNodes + 1) + 3;
-    char str[max_line_size];
-    char dontcare[3];
-    vector<unsigned> buf = vector<unsigned> (nNodes + 1);
-
-    while(fscanf(fp, "%[^#]s", str) != EOF) {
-        fscanf(fp, "%s", dontcare);
-        char *token;
-        unsigned i = 0;
-
-        /* get the first token */
-        token = strtok(str, " ");
-#if GRAPH_DEBUG
-        printf( " %s\n", token );
-#endif
-        sscanf(token, "%d", &u);
-        token = strtok(NULL, " ");
-        /* walk through other tokens */
-        while(token != NULL){
-
-            sscanf(token, "%d", &v);
-            buf[i++] = v;
-
-            token = strtok(NULL, " ");
-        }
-
-        this->addAncestor(u, buf, i);
-
-    }
-
-}
-#endif
 
 #if READ_TYPE == 0
 void Graph::build(FILE *fp) {

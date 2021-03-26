@@ -26,8 +26,6 @@ public:
 
     void build_addEdges(unsigned u, std::vector<unsigned> &adj, unsigned adj_size);
 
-    void printTrueLabelsPreWeights();
-
     void sortVectors();
 
 #if READ_TYPE == 0
@@ -38,16 +36,15 @@ public:
     void build3(FILE *fp);
 #endif
 
-    int startingNode;
-    int epoca = 0;
+    //int startingNode;
+    Node* startNode;
 
     int rootsSize = 0;
     int rootsPos = 0;
 
     std::vector<int> roots;
-#if PRINT_MAT
-    std::vector<std::vector<int>> mat;
-#endif
+
+    Node terminator;
 
 };
 
